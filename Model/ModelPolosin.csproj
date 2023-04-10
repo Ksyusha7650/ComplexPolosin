@@ -1,34 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Fonts\Inter-V.ttf" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Remove="Fonts\Inter-V.ttf"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Page Remove="Style\Style.xaml" />
-  </ItemGroup>
+    <ItemGroup>
+        <Page Remove="Style\Style.xaml"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="Fonts\Inter-V.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+    <ItemGroup>
+        <Content Include="Fonts\Inter-V.ttf">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Algorithm\Algorithm.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Algorithm\Algorithm.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Style\Style.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Style\Style.xaml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Resource>
+    </ItemGroup>
 
 </Project>
