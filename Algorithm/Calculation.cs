@@ -3,19 +3,12 @@
 public class Calculation
 {
     private readonly double _alphaU = 425;
-    private double _beta;
     private readonly double _c = 2250;
     private readonly double _Ea = 30000;
-    private double _F;
-    private double _gammaPoint;
     private readonly double _H = 0.02;
     private readonly double _L = 7.5;
     private readonly double _m0 = 29940;
     private readonly double _n = 0.35;
-    private int _Q = 0;
-    private double _qAlpha;
-    private double _Qch;
-    private double _qGamma;
     private readonly double _R = 8.314;
     private readonly double _ro = 950;
     private readonly double _step = 0.1;
@@ -24,6 +17,13 @@ public class Calculation
     private readonly double _Tu = 205;
     private readonly double _Vu = 0.5;
     private readonly double _W = 0.12;
+    private double _beta;
+    private double _F;
+    private double _gammaPoint;
+    private int _Q = 0;
+    private double _qAlpha;
+    private double _Qch;
+    private double _qGamma;
     private double _z = 0;
 
     public void InitializingVariables()
@@ -76,7 +76,7 @@ public class Calculation
     public List<double> ListOfTemperatures(List<double> coordinates)
     {
         List<double> listOfTemperatures = new();
-        foreach (var coordinate in coordinates) 
+        foreach (var coordinate in coordinates)
             listOfTemperatures.Add(Temperature(coordinate));
         return listOfTemperatures;
     }
