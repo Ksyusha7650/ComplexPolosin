@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelPolosin", "Model\ModelPolosin.csproj", "{0E169435-E31F-4A67-B71D-26605668CAA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithms", "Algorithms\Algorithms.csproj", "{9593E7A3-E991-4DE8-9AFF-8E8FA474E745}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm", "Algorithm\Algorithm.csproj", "{3F42A178-3B9F-48D4-A521-57F284160AF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{0E169435-E31F-4A67-B71D-26605668CAA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E169435-E31F-4A67-B71D-26605668CAA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E169435-E31F-4A67-B71D-26605668CAA4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9593E7A3-E991-4DE8-9AFF-8E8FA474E745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9593E7A3-E991-4DE8-9AFF-8E8FA474E745}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9593E7A3-E991-4DE8-9AFF-8E8FA474E745}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9593E7A3-E991-4DE8-9AFF-8E8FA474E745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F42A178-3B9F-48D4-A521-57F284160AF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F42A178-3B9F-48D4-A521-57F284160AF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F42A178-3B9F-48D4-A521-57F284160AF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F42A178-3B9F-48D4-A521-57F284160AF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

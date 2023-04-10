@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Algorithm\Algorithm.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Style\Style.xaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
