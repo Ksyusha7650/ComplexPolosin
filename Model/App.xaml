@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:ModelPolosin"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./Style/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="Inter">./Fonts/Inter-V.ttf#Inter</FontFamily>
+        </ResourceDictionary>
     </Application.Resources>
+    
 </Application>

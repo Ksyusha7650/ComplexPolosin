@@ -5,10 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ModelPolosin"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="145,22,0,0" TextWrapping="Wrap" Text="Почитай ридми в гитхабе" VerticalAlignment="Top" Width="125" Height="52"/>
-        <Label Content="Привет, Оль!" Margin="31,22,660,360"/>
+        
+        Title="Input Data Window" Height="383" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontFamily="{StaticResource Inter}">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="800" Height="407">
+        <ComboBox HorizontalAlignment="Left" Margin="111,157,0,0" VerticalAlignment="Top" Width="87" FontFamily="Informal Roman" BorderBrush="{x:Null}" Cursor="Hand"/>
+        <Label Content="Mark:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="55,160,697,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+        <Label Content="Channel" Padding="5,0,5,0" UseLayoutRounding="False" Margin="37,106,679,0" VerticalAlignment="Top" FontSize="20"/>
+        <Label Content="Input data:"  Padding="5,0,5,0" UseLayoutRounding="False" Margin="0,42,0,0" VerticalAlignment="Top" FontSize="30" HorizontalAlignment="Center" Width="689" FontWeight="Bold" HorizontalContentAlignment="Center" Height="37"/>
+        <Expander HorizontalAlignment="Left" Height="115" Header="Geometric parameters" Margin="55,203,0,0" VerticalAlignment="Top" Width="208" Cursor="Hand">
+            <Grid Background="White">
+                <TextBox HorizontalAlignment="Left" Margin="80,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Height="22"/>
+                <Label Content="Height:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,10,101,0" VerticalAlignment="Top"/>
+                <Label Content="Length:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,0,99,0" VerticalAlignment="Center"/>
+                <TextBox HorizontalAlignment="Left" Margin="80,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="81" Height="22"/>
+                <TextBox HorizontalAlignment="Left" Margin="80,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Height="22"/>
+                <Label Content="Width:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,68,99,0" VerticalAlignment="Top"/>
+                <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="169,10,10,0" VerticalAlignment="Top"/>
+                <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="169,0,10,0" VerticalAlignment="Center"/>
+                <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="169,68,10,0" VerticalAlignment="Top"/>
+            </Grid>
+        </Expander>
+        <Button Content="Create new" HorizontalAlignment="Left" Margin="219,156,0,0" VerticalAlignment="Top" Width="88" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16"/>
+        <Label Content="Material" Padding="5,0,5,0" UseLayoutRounding="False" Margin="384,106,334,0" VerticalAlignment="Top" FontSize="20"/>
+        <ComboBox HorizontalAlignment="Left" Margin="462,157,0,0" VerticalAlignment="Top" Width="87" FontFamily="Informal Roman" BorderBrush="{x:Null}" Cursor="Hand"/>
+        <Label Content="Type:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="403,158,349,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
+        <Label Content="Cover" Padding="5,0,5,0" UseLayoutRounding="False" Margin="386,203,332,0" VerticalAlignment="Top" FontSize="20"/>
+        <TextBox HorizontalAlignment="Left" Margin="504,240,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" Height="22"/>
+        <Label Content="Velocity:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="411,241,309,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="m/s" Padding="5,0,5,0" UseLayoutRounding="False" Margin="584,239,179,0" VerticalAlignment="Top" FontSize="14"/>
+        <TextBox HorizontalAlignment="Left" Margin="504,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70" Height="22"/>
+        <Label Content="Temprature:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="403,272,301,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="584,272,179,0" VerticalAlignment="Top" FontSize="14"/>
+        <Button Content="Calculate" HorizontalAlignment="Left" Margin="584,328,0,0" VerticalAlignment="Top" Width="88" Height="28" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" />
 
     </Grid>
 </Window>

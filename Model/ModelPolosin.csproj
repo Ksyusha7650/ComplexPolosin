@@ -7,4 +7,24 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Fonts\Inter-V.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Style\Style.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Fonts\Inter-V.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Style\Style.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>
