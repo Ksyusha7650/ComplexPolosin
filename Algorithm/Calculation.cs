@@ -57,7 +57,7 @@
             return Math.Round(_ro * _Qch, 5);
         }
 
-        // список координат по длине канала
+        // список координат по длине канала для таблицы
         public List<double> ListOfChannelLength() {
             List<double> coordinates = new();
             for (double i = 0; i <= _L; i += _step) {
@@ -66,7 +66,7 @@
             return coordinates;
         }
 
-        // список температур
+        // список температур для таблицы
         public List<double> ListOfTemperatures(List<double> coordinates) {
             List<double> listOfTemperatures = new();
             foreach (double coordinate in coordinates) {
@@ -75,7 +75,7 @@
             return listOfTemperatures;
         }
 
-        // список вязкости
+        // список вязкости для таблицы
         public List<double> ListOfViscosity(List<double> listOfTemperatures) {
             List<double> listOfViscosity = new();
             foreach (double temp in listOfTemperatures) {
