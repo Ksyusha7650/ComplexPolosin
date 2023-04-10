@@ -5,30 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
 
-        Title="Input Data Window" Height="383" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Title="Input Data Window" Height="598" Width="822" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         FontFamily="{StaticResource Inter}">
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="800" Height="407">
-        <ComboBox HorizontalAlignment="Left" Margin="111,157,0,0" VerticalAlignment="Top" Width="87"
+    <Grid HorizontalAlignment="Center" Width="822" Height="588" VerticalAlignment="Top">
+        <Rectangle HorizontalAlignment="Left" Height="57" Margin="-4,512,0,0" Stroke="#7F797979" VerticalAlignment="Top" Width="826"/>
+        <ComboBox x:Name="MarkComboBox" HorizontalAlignment="Left" Margin="111,157,0,0" VerticalAlignment="Top" Width="147"
                   FontFamily="Informal Roman" BorderBrush="{x:Null}" Cursor="Hand" />
         <Label Content="Mark:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="55,160,697,0"
                VerticalAlignment="Top" FontWeight="Bold" FontSize="14" />
         <Label Content="Channel" Padding="5,0,5,0" UseLayoutRounding="False" Margin="37,106,679,0"
                VerticalAlignment="Top" FontSize="20" />
-        <Label Content="Input data:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="0,42,0,0"
-               VerticalAlignment="Top" FontSize="30" HorizontalAlignment="Center" Width="689" FontWeight="Bold"
-               HorizontalContentAlignment="Center" Height="37" />
+        <Label Content="Input data" Padding="5,0,5,0" UseLayoutRounding="False" Margin="37,31,0,0"
+               VerticalAlignment="Top" FontSize="30" HorizontalAlignment="Left" Width="689" FontWeight="Bold" Height="37" VerticalContentAlignment="Center" />
         <Expander HorizontalAlignment="Left" Height="115" Header="Geometric parameters" Margin="55,203,0,0"
                   VerticalAlignment="Top" Width="208" Cursor="Hand">
             <Grid Background="White">
-                <TextBox HorizontalAlignment="Left" Margin="80,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                <TextBox x:Name="HeightTextBox" HorizontalAlignment="Left" Margin="80,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
                          Width="81" Height="22" />
                 <Label Content="Height:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,10,101,0"
                        VerticalAlignment="Top" />
                 <Label Content="Length:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,0,99,0"
                        VerticalAlignment="Center" />
-                <TextBox HorizontalAlignment="Left" Margin="80,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center"
+                <TextBox x:Name="LengthTextBox" HorizontalAlignment="Left" Margin="80,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center"
                          Width="81" Height="22" />
-                <TextBox HorizontalAlignment="Left" Margin="80,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                <TextBox x:Name="WidthTextBox" HorizontalAlignment="Left" Margin="80,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
                          Width="81" Height="22" />
                 <Label Content="Width:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,68,99,0"
                        VerticalAlignment="Top" />
@@ -40,30 +40,84 @@
                        VerticalAlignment="Top" />
             </Grid>
         </Expander>
-        <Button Content="Create new" HorizontalAlignment="Left" Margin="219,156,0,0" VerticalAlignment="Top" Width="88"
+        <Button x:Name="CreateMarkButton" Content="Create new" HorizontalAlignment="Left" Margin="276,157,0,0" VerticalAlignment="Top" Width="88"
                 Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" />
         <Label Content="Material" Padding="5,0,5,0" UseLayoutRounding="False" Margin="384,106,334,0"
                VerticalAlignment="Top" FontSize="20" />
-        <ComboBox HorizontalAlignment="Left" Margin="462,157,0,0" VerticalAlignment="Top" Width="87"
+        <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Left" Margin="462,157,0,0" VerticalAlignment="Top" Width="188"
                   FontFamily="Informal Roman" BorderBrush="{x:Null}" Cursor="Hand" />
         <Label Content="Type:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="403,158,349,0"
                VerticalAlignment="Top" FontWeight="Bold" FontSize="14" />
-        <Label Content="Cover" Padding="5,0,5,0" UseLayoutRounding="False" Margin="386,203,332,0"
+        <Label Content="Cover" Padding="5,0,5,0" UseLayoutRounding="False" Margin="46,329,672,0"
                VerticalAlignment="Top" FontSize="20" />
-        <TextBox HorizontalAlignment="Left" Margin="504,240,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"
+        <TextBox x:Name="VelocityTextBox" HorizontalAlignment="Left" Margin="163,375,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"
                  Height="22" />
-        <Label Content="Velocity:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="411,241,309,0"
-               VerticalAlignment="Top" FontSize="14" />
-        <Label Content="m/s" Padding="5,0,5,0" UseLayoutRounding="False" Margin="584,239,179,0" VerticalAlignment="Top"
-               FontSize="14" />
-        <TextBox HorizontalAlignment="Left" Margin="504,269,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"
+        <Label Content="Velocity:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="63,378,0,0"
+               VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
+        <Label Content="m/s" Padding="5,0,5,0" UseLayoutRounding="False" Margin="243,378,519,0" VerticalAlignment="Top" />
+        <TextBox x:Name="TemperatureTextBox" HorizontalAlignment="Left" Margin="163,404,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"
                  Height="22" />
-        <Label Content="Temprature:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="403,272,301,0"
+        <Label Content="Temperature:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="63,407,641,0"
                VerticalAlignment="Top" FontSize="14" />
-        <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="584,272,179,0" VerticalAlignment="Top"
-               FontSize="14" />
-        <Button Content="Calculate" HorizontalAlignment="Left" Margin="584,328,0,0" VerticalAlignment="Top" Width="88"
-                Height="28" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" />
+        <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="243,409,519,0" VerticalAlignment="Top" />
+        <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Margin="438,523,0,0" VerticalAlignment="Top" Width="78"
+                Height="25" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" />
+        <Button x:Name="CreateTypeButton" Content="Create new" HorizontalAlignment="Left" Margin="667,156,0,0" VerticalAlignment="Top" Width="88"
+            Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" />
+        <Expander HorizontalAlignment="Left" Height="115" Header="Properties of material" Margin="403,203,0,0"
+            VerticalAlignment="Top" Width="297" Cursor="Hand">
+            <Grid Background="White">
+                <TextBox x:Name="DensityTextBox" HorizontalAlignment="Left" Margin="121,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                    Width="81" Height="22" />
+                <Label Content="Density:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,10,220,0"
+                    VerticalAlignment="Top" />
+                <Label Content="Specific heat:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,39,202,0"
+                    VerticalAlignment="Top" />
+                <TextBox x:Name="SpecificHeartTextBox" HorizontalAlignment="Left" Margin="121,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                    Width="81" Height="22" />
+                <TextBox x:Name="MeltingPointTextBox" HorizontalAlignment="Left" Margin="121,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                    Width="81" Height="22" />
+                <Label Content="Melting point:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,68,194,0"
+                    VerticalAlignment="Top" />
+                <Label Content="kg/m^3" Padding="5,0,5,0" UseLayoutRounding="False" Margin="220,10,20,0"
+                    VerticalAlignment="Top" />
+                <Label Content="J/(kg*°С)" Padding="5,0,5,0" UseLayoutRounding="False" Margin="220,39,20,0"
+                    VerticalAlignment="Top" />
+                <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="220,68,46,0"
+                    VerticalAlignment="Top" />
+            </Grid>
+        </Expander>
+        <TextBox x:Name="StepTextBox" HorizontalAlignment="Left" Margin="352,524,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="70"
+            Height="22" />
+        <Label Content="Step:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="272,527,482,0"
+            VerticalAlignment="Top" FontSize="14" HorizontalContentAlignment="Right" />
+        <Expander HorizontalAlignment="Left" Height="123" Header="Values" Margin="403,371,0,0"
+            VerticalAlignment="Top" Width="365" Cursor="Hand">
+            <Grid Background="White" Width="339" Margin="0,0,0,-2">
+                <TextBox x:Name="EC1TextBox" HorizontalAlignment="Left" Margin="56,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                    Width="81" Height="22" />
+                <Label Content="μ0:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,10,288,0"
+                    VerticalAlignment="Top" />
+                <Label Content="Ea:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,39,288,0"
+                    VerticalAlignment="Top" />
+                <TextBox x:Name="EC2TextBox" HorizontalAlignment="Left" Margin="56,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                    Width="81" Height="22" />
+                <TextBox x:Name="EC3TextBox" HorizontalAlignment="Left" Margin="56,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                    Width="81" Height="22" />
+                <Label Content="Tr:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,68,288,0"
+                    VerticalAlignment="Top" />
+                <Label Content="n:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="170,10,124,0"
+                    VerticalAlignment="Top" />
+                <TextBox x:Name="EC4TextBox" HorizontalAlignment="Left" Margin="220,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                    Width="81" Height="22" />
+                <TextBox x:Name="EC5TextBox" HorizontalAlignment="Left" Margin="220,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                    Width="81" Height="22" />
+                <Label Content="α_u:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="170,39,124,0"
+                    VerticalAlignment="Top" />
+            </Grid>
+        </Expander>
+        <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="384,329,252,0"
+            VerticalAlignment="Top" FontSize="20" />
 
     </Grid>
 </Window>
