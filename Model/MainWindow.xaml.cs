@@ -10,5 +10,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        TableWindow tableWindow = new();
+        tableWindow.Show();
     }
 }

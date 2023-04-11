@@ -68,7 +68,7 @@ public class Calculation
     public List<double> ListOfChannelLength()
     {
         List<double> coordinates = new();
-        for (double i = 0; i <= _L; i += _step) coordinates.Add(i);
+        for (var i = 0m; i <= (decimal)_L; i += (decimal)_step) coordinates.Add((double)i);
         return coordinates;
     }
 
@@ -84,6 +84,6 @@ public class Calculation
     // список вязкости для таблицы
     public List<double> ListOfViscosity(List<double> listOfTemperatures)
     {
-        return listOfTemperatures.Select(Temperature).ToList();
+        return listOfTemperatures.Select(Viscosity).ToList();
     }
 }
