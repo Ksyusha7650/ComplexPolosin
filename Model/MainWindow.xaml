@@ -25,17 +25,17 @@
             <Grid Background="White">
                 <TextBox x:Name="HeightTextBox" HorizontalAlignment="Left" Margin="80,6,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
-                         Width="81" Height="22" />
+                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" />
                 <Label Content="Height:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,10,101,0"
-                       VerticalAlignment="Top" />
+                       VerticalAlignment="Top"  />
                 <Label Content="Length:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,0,99,0"
                        VerticalAlignment="Center" />
                 <TextBox x:Name="LengthTextBox" HorizontalAlignment="Left" Margin="80,0,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Center"
-                         Width="81" Height="22" />
+                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" />
                 <TextBox x:Name="WidthTextBox" HorizontalAlignment="Left" Margin="80,64,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
-                         Width="81" Height="22" />
+                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox"/>
                 <Label Content="Width:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,68,99,0"
                        VerticalAlignment="Top" />
                 <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="169,10,10,0"
@@ -60,13 +60,13 @@
                VerticalAlignment="Top" FontSize="20" />
         <TextBox x:Name="VelocityTextBox" HorizontalAlignment="Left" Margin="163,375,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="70"
-                 Height="22" />
+                 Height="22" PreviewTextInput="NumberValidationTextBox" />
         <Label Content="Velocity:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="63,378,0,0"
                VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
         <Label Content="m/s" Padding="5,0,5,0" UseLayoutRounding="False" Margin="243,378,519,0" VerticalAlignment="Top" />
         <TextBox x:Name="TemperatureTextBox" HorizontalAlignment="Left" Margin="163,404,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="70"
-                 Height="22" />
+                 Height="22" PreviewTextInput="NumberValidationTextBox"/>
         <Label Content="Temperature:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="63,407,641,0"
                VerticalAlignment="Top" FontSize="14" />
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="243,409,519,0" VerticalAlignment="Top" />
@@ -81,17 +81,17 @@
             <Grid Background="White">
                 <TextBox x:Name="DensityTextBox" HorizontalAlignment="Left" Margin="121,6,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
-                         Width="81" Height="22" />
+                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox"/>
                 <Label Content="Density:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,10,220,0"
                        VerticalAlignment="Top" />
                 <Label Content="Specific heat:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,39,202,0"
                        VerticalAlignment="Top" />
                 <TextBox x:Name="SpecificHeartTextBox" HorizontalAlignment="Left" Margin="121,37,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top"
-                         Width="81" Height="22" />
+                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox"/>
                 <TextBox x:Name="MeltingPointTextBox" HorizontalAlignment="Left" Margin="121,64,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top"
-                         Width="81" Height="22" />
+                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox"/>
                 <Label Content="Melting point:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,68,194,0"
                        VerticalAlignment="Top" />
                 <Label Content="kg/m^3" Padding="5,0,5,0" UseLayoutRounding="False" Margin="220,10,20,0"
@@ -104,55 +104,55 @@
         </Expander>
         <TextBox x:Name="StepTextBox" HorizontalAlignment="Left" Margin="94,528,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="70"
-                 Height="22" />
+                 Height="22" PreviewTextInput="NumberValidationTextBox" />
         <Label Content="Step:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="14,532,740,0"
                VerticalAlignment="Top" FontSize="14" HorizontalContentAlignment="Right" />
         <Expander HorizontalAlignment="Left" Height="123" Header="Values" Margin="403,371,0,0"
                   VerticalAlignment="Top" Width="365" Cursor="Hand">
             <Grid Background="White" Width="339" Margin="0,0,0,-2">
-                <TextBox x:Name="EC1TextBox" HorizontalAlignment="Left" Margin="56,6,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="Ec1TextBox" HorizontalAlignment="Left" Margin="56,6,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
-                         Width="81" Height="22" />
+                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
                 <Label Content="μ0:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,10,288,0"
                        VerticalAlignment="Top" />
                 <Label Content="Ea:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,39,288,0"
                        VerticalAlignment="Top" />
-                <TextBox x:Name="EC2TextBox" HorizontalAlignment="Left" Margin="56,35,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="Ec2TextBox" HorizontalAlignment="Left" Margin="56,35,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
-                         Width="81" Height="22" />
-                <TextBox x:Name="EC3TextBox" HorizontalAlignment="Left" Margin="56,64,0,0" TextWrapping="Wrap"
+                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
+                <TextBox x:Name="Ec3TextBox" HorizontalAlignment="Left" Margin="56,64,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
-                         Width="81" Height="22" />
+                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
                 <Label Content="Tr:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,68,288,0"
                        VerticalAlignment="Top" />
                 <Label Content="n:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="170,10,124,0"
                        VerticalAlignment="Top" />
-                <TextBox x:Name="EC4TextBox" HorizontalAlignment="Left" Margin="220,6,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="Ec4TextBox" HorizontalAlignment="Left" Margin="220,6,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
-                         Width="81" Height="22" />
-                <TextBox x:Name="EC5TextBox" HorizontalAlignment="Left" Margin="220,35,0,0" TextWrapping="Wrap"
+                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
+                <TextBox x:Name="Ec5TextBox" HorizontalAlignment="Left" Margin="220,35,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
-                         Width="81" Height="22" />
+                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
                 <Label Content="α_u:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="170,39,124,0"
                        VerticalAlignment="Top" />
             </Grid>
         </Expander>
         <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="384,329,252,0"
                VerticalAlignment="Top" FontSize="20" />
-        <TextBox x:Name="VelocityTextBox_Copy" HorizontalAlignment="Left" Margin="421,528,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="TemperatureProductTextBox" HorizontalAlignment="Left" Margin="421,528,0,0" TextWrapping="Wrap"
             VerticalAlignment="Top" Width="45"
-            Height="22" />
+            Height="22" IsReadOnly="True"/>
         <Label Content="Temperature product:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="273,531,0,0"
             VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
-        <TextBox x:Name="VelocityTextBox_Copy1" HorizontalAlignment="Left" Margin="612,528,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="ViscosityProductTextBox" HorizontalAlignment="Left" Margin="612,528,0,0" TextWrapping="Wrap"
             VerticalAlignment="Top" Width="53"
-            Height="22" />
+            Height="22" IsReadOnly="True" />
         <Label Content="Viscosity product:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="488,531,0,0"
             VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
-        <TextBox x:Name="VelocityTextBox_Copy2" HorizontalAlignment="Left" Margin="750,528,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="EfficiencyTextBox" HorizontalAlignment="Left" Margin="750,528,0,0" TextWrapping="Wrap"
             VerticalAlignment="Top" Width="50"
-            Height="22" />
-        <Label Content="Effiency:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="684,531,0,0"
+            Height="22" IsReadOnly="True" />
+        <Label Content="Efficiency:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="684,531,0,0"
             VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
 
     </Grid>
