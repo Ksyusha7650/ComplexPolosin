@@ -46,16 +46,14 @@ public class Calculation
     // температура материала в канале
     public double Temperature(double z)
     {
-        return Math.Round(
-            _Tr + 1 / _beta * Math.Log(_beta * _qGamma + _W * _alphaU / (_beta * _qAlpha) *
-                (1 - Math.Exp(-(_beta * _qAlpha / (_ro * _c * _Qch) * z) +
-                              Math.Exp(_beta * (_T0 - _Tr - _qAlpha / (_ro * _c * _Qch) * z))))), 5);
+         return _Tr + (1 / _beta) * Math.Log((_beta * _qGamma + _W * _alphaU) / (_beta * _qAlpha) * (1 - Math.Exp((-_beta * _qAlpha * z) / (_ro * _c * _Qch)))
++ Math.Exp(_beta * (_T0 - _Tr - (_qAlpha * z) / (_ro * _c * _Qch))));
     }
 
     // вязкость материала в канале
     public double Viscosity(double T)
     {
-        return Math.Round(_m0 * Math.Exp(-_beta * (T - _Tr)) * Math.Pow(_gammaPoint, _n + 1), 5);
+        return Math.Round(_m0 * Math.Exp(-_beta * (T - _Tr)) * Math.Pow(_gammaPoint, _n - 1), 5);
     }
 
     // производительность канала
@@ -77,7 +75,7 @@ public class Calculation
     {
         List<double> listOfTemperatures = new();
         foreach (var coordinate in coordinates)
-            listOfTemperatures.Add(Temperature(coordinate));
+            listOfTemperatures.Add(Math.Round(Temperature(coordinate), 5));
         return listOfTemperatures;
     }
 
