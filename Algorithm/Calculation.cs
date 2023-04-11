@@ -47,7 +47,7 @@ public class Calculation
     public double Temperature(double z)
     {
         return Math.Round(
-            _Tr + 1 / _beta * Math.Log(_beta * _qGamma + _W * _alphaU / (_beta * _qAlpha) *
+            _Tr + 1 / _beta * Math.Log((_beta * _qGamma + _W * _alphaU) / (_beta * _qAlpha) *
                 (1 - Math.Exp(-(_beta * _qAlpha / (_ro * _c * _Qch) * z) +
                               Math.Exp(_beta * (_T0 - _Tr - _qAlpha / (_ro * _c * _Qch) * z))))), 5);
     }

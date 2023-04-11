@@ -70,9 +70,9 @@
         <Label Content="Temperature:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="63,407,641,0"
                VerticalAlignment="Top" FontSize="14" />
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="243,409,519,0" VerticalAlignment="Top" />
-        <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Margin="438,523,0,0"
+        <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Margin="180,528,0,0"
                 VerticalAlignment="Top" Width="78"
-                Height="25" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" />
+                Height="24" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" Click="CalculateButton_Click" />
         <Button x:Name="CreateTypeButton" Content="Create new" HorizontalAlignment="Left" Margin="667,156,0,0"
                 VerticalAlignment="Top" Width="88"
                 Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" />
@@ -102,10 +102,10 @@
                        VerticalAlignment="Top" />
             </Grid>
         </Expander>
-        <TextBox x:Name="StepTextBox" HorizontalAlignment="Left" Margin="352,524,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="StepTextBox" HorizontalAlignment="Left" Margin="94,528,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="70"
                  Height="22" />
-        <Label Content="Step:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="272,527,482,0"
+        <Label Content="Step:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="14,532,740,0"
                VerticalAlignment="Top" FontSize="14" HorizontalContentAlignment="Right" />
         <Expander HorizontalAlignment="Left" Height="123" Header="Values" Margin="403,371,0,0"
                   VerticalAlignment="Top" Width="365" Cursor="Hand">
@@ -139,6 +139,21 @@
         </Expander>
         <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="384,329,252,0"
                VerticalAlignment="Top" FontSize="20" />
+        <TextBox x:Name="VelocityTextBox_Copy" HorizontalAlignment="Left" Margin="421,528,0,0" TextWrapping="Wrap"
+            VerticalAlignment="Top" Width="45"
+            Height="22" />
+        <Label Content="Temperature product:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="273,531,0,0"
+            VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
+        <TextBox x:Name="VelocityTextBox_Copy1" HorizontalAlignment="Left" Margin="612,528,0,0" TextWrapping="Wrap"
+            VerticalAlignment="Top" Width="53"
+            Height="22" />
+        <Label Content="Viscosity product:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="488,531,0,0"
+            VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
+        <TextBox x:Name="VelocityTextBox_Copy2" HorizontalAlignment="Left" Margin="750,528,0,0" TextWrapping="Wrap"
+            VerticalAlignment="Top" Width="50"
+            Height="22" />
+        <Label Content="Effiency:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="684,531,0,0"
+            VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
 
     </Grid>
 </Window>
