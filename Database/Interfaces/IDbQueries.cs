@@ -4,5 +4,5 @@ namespace Database.Interfaces;
 
 public interface IDbQueries
 {
-    Task<GeometricParameters> GetGeometricParameters(string mark);
+    Task<GeometricParametersModel> GetGeometricParameters(string mark);
 }

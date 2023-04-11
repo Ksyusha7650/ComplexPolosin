@@ -1,6 +1,6 @@
 ﻿namespace Database.Models;
 
-public record GeometricParameters(
+public record GeometricParametersModel(
     int Height,
     int Lenght,
     int Width);
