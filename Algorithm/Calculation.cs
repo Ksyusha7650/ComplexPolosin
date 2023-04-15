@@ -26,6 +26,10 @@ public class Calculation
     private double _qGamma;
     private double _z = 0;
 
+    // public Calculation(double alphaU)
+    // {
+    //     _alphaU = alphaU;
+    // }
     public void InitializingVariables()
     {
         // скорость деформации сдвига
@@ -53,7 +57,7 @@ public class Calculation
     // вязкость материала в канале
     public double Viscosity(double T)
     {
-        return Math.Round(_m0 * Math.Exp(-_beta * (T - _Tr)) * Math.Pow(_gammaPoint, _n - 1), 5);
+        return Math.Round(_m0 * Math.Exp(-_beta * (T - _Tr)) * Math.Pow(_gammaPoint, _n - 1), 2);
     }
 
     // производительность канала
