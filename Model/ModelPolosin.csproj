@@ -23,6 +23,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Algorithm\Algorithm.csproj"/>
+        <ProjectReference Include="..\Database\Database.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

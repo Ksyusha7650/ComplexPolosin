@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ModelPolosin"
         mc:Ignorable="d"
         Title="Table" Height="450" Width="800">
     <Grid>
@@ -15,7 +14,8 @@
             </DataGrid.Columns>-->
 
         </DataGrid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="706,381,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="706,381,0,0" VerticalAlignment="Top"
+                Click="Button_Click" />
 
     </Grid>
 </Window>

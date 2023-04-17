@@ -50,8 +50,10 @@ public class Calculation
     // температура материала в канале
     public double Temperature(double z)
     {
-         return _Tr + (1 / _beta) * Math.Log((_beta * _qGamma + _W * _alphaU) / (_beta * _qAlpha) * (1 - Math.Exp((-_beta * _qAlpha * z) / (_ro * _c * _Qch)))
-+ Math.Exp(_beta * (_T0 - _Tr - (_qAlpha * z) / (_ro * _c * _Qch))));
+        return _Tr + 1 / _beta * Math.Log(
+            (_beta * _qGamma + _W * _alphaU) / (_beta * _qAlpha) *
+            (1 - Math.Exp(-_beta * _qAlpha * z / (_ro * _c * _Qch)))
+            + Math.Exp(_beta * (_T0 - _Tr - _qAlpha * z / (_ro * _c * _Qch))));
     }
 
     // вязкость материала в канале

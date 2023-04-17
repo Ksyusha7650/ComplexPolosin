@@ -2,5 +2,5 @@
 
 public record GeometricParametersModel(
     int Height,
-    int Lenght,
+    int Length,
     int Width);

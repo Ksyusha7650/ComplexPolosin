@@ -1,4 +1,3 @@
-using System.Configuration;
 using Database.Interfaces;
 using MySql.Data.MySqlClient;
 
@@ -6,7 +5,8 @@ namespace Database;
 
 public abstract class BaseRepository : IDbRepository
 {
-    private readonly string _connectionString = ConfigurationManager.ConnectionStrings["MyDatabaseCS"].ConnectionString;
+    private readonly string _connectionString =
+        "host=localhost;port=3306;database=models_for_pc;username=root;password=04042002Mm!";
 
     public async Task<MySqlConnection> GetAndOpenConnection()
     {
@@ -25,16 +25,10 @@ public abstract class BaseRepository : IDbRepository
 
     public async Task<int[]> GetDataByProperty(int idProperty)
     {
-        for (var i = 0.0; i <= 1; i+=0.1)
-        {
-            Console.WriteLine(i);
-        }
-        
-        
         const string sqlQuery = @"
 select Value
 from property_in_set
-where ID_Property_set = @IdPropertySet
+where ID_PropertySet = @IdPropertySet
 ";
         await using var connection = await GetAndOpenConnection();
         var cmd = new MySqlCommand();
