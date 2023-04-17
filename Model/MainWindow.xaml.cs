@@ -26,12 +26,15 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        // _dataService = new DataService();
-        // _calculation = new Calculation();
-        // marks = _dataService.GetMarks();
+        System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+        customCulture.NumberFormat.NumberDecimalSeparator = ".";
+        System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+        _dataService = new DataService();
+        marks = _dataService.GetMarks();
         MarkComboBox.Items.Add("--default");
         TypeComboBox.Items.Add("--default");
-        // foreach (var mark in marks) MarkComboBox.Items.Add(mark);
+        foreach (var mark in marks) 
+            MarkComboBox.Items.Add(mark);
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -91,29 +94,34 @@ public partial class MainWindow : Window
         // HeightTextBox.Text = model.Height.ToString();
         // WidthTextBox.Text = model.Width.ToString();1
         // LengthTextBox.Text = model.Length.ToString();
-
-        _calculation = new Calculation(
-            new EmpiricCoefficients(
-                Convert.ToDouble(M0TextBox.Text),
-                Convert.ToDouble(EaTextBox.Text),
-                Convert.ToDouble(TrTextBox.Text),
-                Convert.ToDouble(NTextBox.Text),
-                Convert.ToDouble(AlphaUTextBox.Text)),
-            new GeometricParameters(
-                MarkComboBox.SelectedItem.ToString(),
-                Convert.ToDouble(HeightTextBox.Text),
-                Convert.ToDouble(LengthTextBox.Text),
-                Convert.ToDouble(WidthTextBox.Text)),
-            new PropertiesOfMaterial(
-                TypeComboBox.SelectedItem.ToString(),
-                Convert.ToDouble(DensityTextBox.Text),
-                Convert.ToDouble(SpecificHeartTextBox.Text),
-                Convert.ToDouble(MeltingPointTextBox.Text)),
-            new VariableParameters(
-                Convert.ToDouble(CoverTemperatureTextBox.Text),
-                Convert.ToDouble(CoverVelocityTextBox.Text),
-                Convert.ToDouble(StepTextBox.Text)));
-
+        try
+        {
+            _calculation = new Calculation(
+                new EmpiricCoefficients(
+                    Convert.ToDouble(M0TextBox.Text),
+                    Convert.ToDouble(EaTextBox.Text),
+                    Convert.ToDouble(TrTextBox.Text),
+                    Convert.ToDouble(NTextBox.Text),
+                    Convert.ToDouble(AlphaUTextBox.Text)),
+                new GeometricParameters(
+                    MarkComboBox.SelectedItem.ToString(),
+                    Convert.ToDouble(HeightTextBox.Text),
+                    Convert.ToDouble(LengthTextBox.Text),
+                    Convert.ToDouble(WidthTextBox.Text)),
+                new PropertiesOfMaterial(
+                    TypeComboBox.SelectedItem.ToString(),
+                    Convert.ToDouble(DensityTextBox.Text),
+                    Convert.ToDouble(SpecificHeartTextBox.Text),
+                    Convert.ToDouble(MeltingPointTextBox.Text)),
+                new VariableParameters(
+                    Convert.ToDouble(CoverTemperatureTextBox.Text),
+                    Convert.ToDouble(CoverVelocityTextBox.Text),
+                    Convert.ToDouble(StepTextBox.Text)));
+        }
+        catch (Exception)
+        {
+            MessageBox.Show("Check have all input fields!");
+        }
     }
 
     private void MarkComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -125,16 +133,16 @@ public partial class MainWindow : Window
             return;
         }
 
-        // var result = _dataService.GetGeometricParameters(mark).Result;
-        // var model = new GeometricParameters(
-        //     mark,
-        //     result.Height,
-        //     result.Width,
-        //     result.Length);
-        // MarkComboBox.SelectedItem = model.Mark;
-        // HeightTextBox.Text = model.Height.ToString();
-        // WidthTextBox.Text = model.Width.ToString();
-        // LengthTextBox.Text = model.Length.ToString();
+        var result = _dataService.GetGeometricParameters(mark).Result;
+        var model = new GeometricParameters(
+            mark,
+            result.Height,
+            result.Width,
+            result.Length);
+        MarkComboBox.SelectedItem = model.Mark;
+        HeightTextBox.Text = model.Height.ToString();
+        WidthTextBox.Text = model.Width.ToString();
+        LengthTextBox.Text = model.Length.ToString();
     }
 
     private void Clear()

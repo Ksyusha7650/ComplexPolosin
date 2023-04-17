@@ -5,20 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
 
-        Title="Input Data Window" Height="598" Width="822" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Title="Input Data Window" Height="598" Width="1016" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         FontFamily="{StaticResource Inter}">
-    <Grid HorizontalAlignment="Center" Width="822" Height="588" VerticalAlignment="Top">
-        <Rectangle HorizontalAlignment="Left" Height="57" Margin="-4,512,0,0" Stroke="#7F797979"
-                   VerticalAlignment="Top" Width="826" />
+    <Grid HorizontalAlignment="Center" Width="1016" Height="598" VerticalAlignment="Top">
+
+        <Rectangle HorizontalAlignment="Center" Height="76" Margin="0,502,0,0" Stroke="#7F797979"
+                   VerticalAlignment="Top" Width="1014" />
         <ComboBox x:Name="MarkComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="111,157,0,0" VerticalAlignment="Top"
                   Width="147"
-                  BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="MarkComboBox_OnSelectionChanged" />
-        <Label Content="Mark:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="55,160,697,0"
-               VerticalAlignment="Top" FontWeight="Bold" FontSize="14" />
+                  BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="MarkComboBox_OnSelectionChanged" >
+            <ComboBoxItem Content="--default"/>
+        </ComboBox>
+        <Label Content="Mark:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="55,158,910,0"
+               VerticalAlignment="Top" FontWeight="Bold" FontSize="14" Height="19" />
         <Label Content="Channel" Padding="5,0,5,0" UseLayoutRounding="False" Margin="37,106,679,0"
                VerticalAlignment="Top" FontSize="20" />
         <Label Content="Input data" Padding="5,0,5,0" UseLayoutRounding="False" Margin="37,31,0,0"
-               VerticalAlignment="Top" FontSize="30" HorizontalAlignment="Left" Width="689" FontWeight="Bold"
+               VerticalAlignment="Top" FontSize="30" HorizontalAlignment="Left" Width="945" FontWeight="Bold"
                Height="37" VerticalContentAlignment="Center" />
         <Expander HorizontalAlignment="Left" Height="115" Header="Geometric parameters" Margin="55,203,0,0"
                   VerticalAlignment="Top" Width="208" Cursor="Hand">
@@ -52,12 +55,12 @@
         <Button x:Name="CreateMarkButton" Content="Create new" HorizontalAlignment="Left" Margin="276,157,0,0"
                 VerticalAlignment="Top" Width="88"
                 Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" />
-        <Label Content="Material" Padding="5,0,5,0" UseLayoutRounding="False" Margin="384,106,334,0"
+        <Label Content="Material" Padding="5,0,5,0" UseLayoutRounding="False" Margin="508,106,210,0"
                VerticalAlignment="Top" FontSize="20" />
-        <ComboBox x:Name="TypeComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="462,157,0,0" VerticalAlignment="Top"
+        <ComboBox x:Name="TypeComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="586,157,0,0" VerticalAlignment="Top"
                   Width="188"
                   BorderBrush="{x:Null}" Cursor="Hand" />
-        <Label Content="Type:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="403,158,349,0"
+        <Label Content="Type:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="527,158,225,0"
                VerticalAlignment="Top" FontWeight="Bold" FontSize="14" />
         <Label Content="Cover" Padding="5,0,5,0" UseLayoutRounding="False" Margin="46,329,672,0"
                VerticalAlignment="Top" FontSize="20" />
@@ -75,14 +78,10 @@
         <Label Content="Temperature:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="63,407,641,0"
                VerticalAlignment="Top" FontSize="14" />
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="243,409,519,0" VerticalAlignment="Top" />
-        <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Margin="180,528,0,0"
-                VerticalAlignment="Top" Width="78"
-                Height="24" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16"
-                Click="CalculateButton_Click" />
-        <Button x:Name="CreateTypeButton" Content="Create new" HorizontalAlignment="Left" Margin="667,156,0,0"
+        <Button x:Name="CreateTypeButton" Content="Create new" HorizontalAlignment="Left" Margin="791,156,0,0"
                 VerticalAlignment="Top" Width="88"
                 Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" />
-        <Expander HorizontalAlignment="Left" Height="115" Header="Properties of material" Margin="403,203,0,0"
+        <Expander HorizontalAlignment="Left" Height="115" Header="Properties of material" Margin="527,203,0,0"
                   VerticalAlignment="Top" Width="297" Cursor="Hand">
             <Grid Background="White">
                 <TextBox x:Name="DensityTextBox" Text="950" HorizontalAlignment="Left" Margin="121,6,0,0"
@@ -109,12 +108,7 @@
                        VerticalAlignment="Top" />
             </Grid>
         </Expander>
-        <TextBox x:Name="StepTextBox" Text="0.1" HorizontalAlignment="Left" Margin="94,528,0,0" TextWrapping="Wrap"
-                 VerticalAlignment="Top" Width="70"
-                 Height="22" PreviewTextInput="NumberValidationTextBox" />
-        <Label Content="Step:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="14,532,740,0"
-               VerticalAlignment="Top" FontSize="14" HorizontalContentAlignment="Right" />
-        <Expander HorizontalAlignment="Left" Height="123" Header="Values" Margin="403,371,0,0"
+        <Expander HorizontalAlignment="Left" Height="123" Header="Values" Margin="527,371,0,0"
                   VerticalAlignment="Top" Width="365" Cursor="Hand">
             <Grid Background="White" Width="339" Margin="0,0,0,-2">
                 <TextBox x:Name="M0TextBox" Text="29940" HorizontalAlignment="Left" Margin="56,6,0,0"
@@ -149,23 +143,45 @@
                        VerticalAlignment="Top" />
             </Grid>
         </Expander>
-        <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="384,329,252,0"
+        <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="508,329,128,0"
                VerticalAlignment="Top" FontSize="20" />
-        <TextBox x:Name="TemperatureProductTextBox" HorizontalAlignment="Left" Margin="421,528,0,0" TextWrapping="Wrap"
-                 VerticalAlignment="Top" Width="45"
-                 Height="22" IsReadOnly="True" />
-        <Label Content="Temperature product:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="273,531,0,0"
-               VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
-        <TextBox x:Name="ViscosityProductTextBox" HorizontalAlignment="Left" Margin="612,528,0,0" TextWrapping="Wrap"
-                 VerticalAlignment="Top" Width="53"
-                 Height="22" IsReadOnly="True" />
-        <Label Content="Viscosity product:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="488,531,0,0"
-               VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
-        <TextBox x:Name="EfficiencyTextBox" HorizontalAlignment="Left" Margin="750,528,0,0" TextWrapping="Wrap"
-                 VerticalAlignment="Top" Width="50"
-                 Height="22" IsReadOnly="True" />
-        <Label Content="Efficiency:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="684,531,0,0"
-               VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
+        <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Margin="863,528,0,0"
+            VerticalAlignment="Top" Width="78"
+            Height="24" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16"
+            Click="CalculateButton_Click" />
+        <TextBox x:Name="StepTextBox" Text="0.1" HorizontalAlignment="Left" Margin="765,529,0,0" TextWrapping="Wrap"
+            VerticalAlignment="Top" Width="70"
+            Height="22" PreviewTextInput="NumberValidationTextBox" />
+        <Label Content="Step:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="699,532,264,0"
+            VerticalAlignment="Top" FontSize="14" HorizontalContentAlignment="Right" />
+        <TextBox x:Name="TemperatureProductTextBox" HorizontalAlignment="Left" Margin="188,529,0,0" TextWrapping="Wrap"
+            VerticalAlignment="Top" Width="45"
+            Height="22" IsReadOnly="True" />
+        <Label Content="Temperature product:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="40,532,0,0"
+            VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
+        <TextBox x:Name="ViscosityProductTextBox" HorizontalAlignment="Left" Margin="379,529,0,0" TextWrapping="Wrap"
+            VerticalAlignment="Top" Width="53"
+            Height="22" IsReadOnly="True" />
+        <Label Content="Viscosity product:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="255,532,0,0"
+            VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
+        <TextBox x:Name="EfficiencyTextBox" HorizontalAlignment="Left" Margin="527,529,0,0" TextWrapping="Wrap"
+            VerticalAlignment="Top" Width="50"
+            Height="22" IsReadOnly="True" />
+        <Label Content="Efficiency:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="451,532,0,0"
+            VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
+        <Expander HorizontalAlignment="Left" Height="391" Header="Charts" Margin="369,35,0,0" VerticalAlignment="Top" Width="637" ExpandDirection="Left" Background="White">
+            <Grid Background="White">
+                <ComboBox x:Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="124,10,0,0" VerticalAlignment="Top"
+                    Width="233"
+                    BorderBrush="{x:Null}" Cursor="Hand" >
+                    <ComboBoxItem Content="material temperature - channel length"/>
+                    <ComboBoxItem Content="material viscosity - channel length"/>
+                </ComboBox>
+                <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
+                    VerticalAlignment="Top" FontSize="16" />
+                <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" />
+            </Grid>
+        </Expander>
 
     </Grid>
 </Window>
