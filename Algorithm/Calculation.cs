@@ -29,17 +29,18 @@ public class Calculation
     private double _z = 0;
 
     private EmpiricCoefficients _empiricCoefficients;
-    private GeometricParametersModel _geometricParameters;
+    private GeometricParameters _geometricParameters;
     private PropertiesOfMaterial _propertiesOfMaterial;
     private VariableParameters _variableParameters;
     
-    public Calculation(EmpiricCoefficients empiricCoefficients, GeometricParametersModel geometricParameters, PropertiesOfMaterial propertiesOfMaterial, VariableParameters variableParameters)
+    public Calculation(EmpiricCoefficients empiricCoefficients, GeometricParameters geometricParameters, PropertiesOfMaterial propertiesOfMaterial, VariableParameters variableParameters)
     {
         _empiricCoefficients = empiricCoefficients;
         _geometricParameters = geometricParameters;
         _propertiesOfMaterial = propertiesOfMaterial;
         _variableParameters = variableParameters;
         SetFields();
+        InitializingVariables();
     }
 
     private void SetFields()

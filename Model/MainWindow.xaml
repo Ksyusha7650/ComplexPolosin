@@ -10,7 +10,7 @@
     <Grid HorizontalAlignment="Center" Width="822" Height="588" VerticalAlignment="Top">
         <Rectangle HorizontalAlignment="Left" Height="57" Margin="-4,512,0,0" Stroke="#7F797979"
                    VerticalAlignment="Top" Width="826" />
-        <ComboBox x:Name="MarkComboBox" HorizontalAlignment="Left" Margin="111,157,0,0" VerticalAlignment="Top"
+        <ComboBox x:Name="MarkComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="111,157,0,0" VerticalAlignment="Top"
                   Width="147"
                   BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="MarkComboBox_OnSelectionChanged" />
         <Label Content="Mark:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="55,160,697,0"
@@ -54,7 +54,7 @@
                 Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" />
         <Label Content="Material" Padding="5,0,5,0" UseLayoutRounding="False" Margin="384,106,334,0"
                VerticalAlignment="Top" FontSize="20" />
-        <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Left" Margin="462,157,0,0" VerticalAlignment="Top"
+        <ComboBox x:Name="TypeComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="462,157,0,0" VerticalAlignment="Top"
                   Width="188"
                   BorderBrush="{x:Null}" Cursor="Hand" />
         <Label Content="Type:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="403,158,349,0"

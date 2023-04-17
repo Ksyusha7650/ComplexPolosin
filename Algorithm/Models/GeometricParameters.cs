@@ -1,6 +1,6 @@
 ﻿namespace Algorithm.Models;
 
-public record GeometricParametersModel(
+public record GeometricParameters(
     string? Mark,
     double Height,
     double Length,

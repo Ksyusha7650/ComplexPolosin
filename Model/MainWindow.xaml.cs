@@ -28,7 +28,8 @@ public partial class MainWindow : Window
         // _dataService = new DataService();
         // _calculation = new Calculation();
         // marks = _dataService.GetMarks();
-        // MarkComboBox.Items.Add("--default");
+        MarkComboBox.Items.Add("--default");
+        TypeComboBox.Items.Add("--default");
         // foreach (var mark in marks) MarkComboBox.Items.Add(mark);
     }
 
@@ -51,7 +52,7 @@ public partial class MainWindow : Window
 
     private double GetTemperature()
     {
-        return _calculation.Temperature(Convert.ToDouble(LengthTextBox.Text));
+        return Math.Round(_calculation.Temperature(Convert.ToDouble(LengthTextBox.Text)), 2);
     }
 
     private double GetViscosity()
@@ -74,7 +75,7 @@ public partial class MainWindow : Window
 
         //var mark = MarkComboBox.SelectedItem.ToString();
         // var result = await _dataService.GetGeometricParameters(mark);
-        // var model = new GeometricParametersModel(
+        // var model = new GeometricParameters(
         //     mark,
         //     result.Height,
         //     result.Width,
@@ -83,6 +84,7 @@ public partial class MainWindow : Window
         // HeightTextBox.Text = model.Height.ToString();
         // WidthTextBox.Text = model.Width.ToString();1
         // LengthTextBox.Text = model.Length.ToString();
+
         _calculation = new Calculation(
             new EmpiricCoefficients(
                 Convert.ToDouble(M0TextBox.Text),
@@ -90,11 +92,11 @@ public partial class MainWindow : Window
                 Convert.ToDouble(TrTextBox.Text),
                 Convert.ToDouble(NTextBox.Text),
                 Convert.ToDouble(AlphaUTextBox.Text)),
-            new GeometricParametersModel(
+            new GeometricParameters(
                 MarkComboBox.SelectedItem.ToString(),
-                Convert.ToDouble(HeightTextBox),
-                Convert.ToDouble(WidthTextBox),
-                Convert.ToDouble(LengthTextBox)),
+                Convert.ToDouble(HeightTextBox.Text),
+                Convert.ToDouble(WidthTextBox.Text),
+                Convert.ToDouble(LengthTextBox.Text)),
             new PropertiesOfMaterial(
                 TypeComboBox.SelectedItem.ToString(),
                 Convert.ToDouble(DensityTextBox.Text),
@@ -117,7 +119,7 @@ public partial class MainWindow : Window
         }
 
         // var result = _dataService.GetGeometricParameters(mark).Result;
-        // var model = new GeometricParametersModel(
+        // var model = new GeometricParameters(
         //     mark,
         //     result.Height,
         //     result.Width,
@@ -130,9 +132,9 @@ public partial class MainWindow : Window
 
     private void Clear()
     {
-        MarkComboBox.SelectedItem = "--default";
-        HeightTextBox.Text = "0";
-        WidthTextBox.Text = "0";
-        LengthTextBox.Text = "0";
+        //MarkComboBox.SelectedItem = "--default";
+        // HeightTextBox.Text = "0";
+        // WidthTextBox.Text = "0";
+        // LengthTextBox.Text = "0";
     }
 }
