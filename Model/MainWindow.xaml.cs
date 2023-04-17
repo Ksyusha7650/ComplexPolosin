@@ -47,6 +47,8 @@ public partial class MainWindow : Window
         TemperatureProductTextBox.Text = GetTemperature().ToString();
         ViscosityProductTextBox.Text = GetViscosity().ToString();
         EfficiencyTextBox.Text = GetEfficiency().ToString();
+        ChartsWindow chartsWindow = new();
+        chartsWindow.Show();
 
     }
 
