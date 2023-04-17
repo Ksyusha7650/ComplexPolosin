@@ -23,17 +23,17 @@
         <Expander HorizontalAlignment="Left" Height="115" Header="Geometric parameters" Margin="55,203,0,0"
                   VerticalAlignment="Top" Width="208" Cursor="Hand">
             <Grid Background="White">
-                <TextBox x:Name="HeightTextBox" HorizontalAlignment="Left" Margin="80,6,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="HeightTextBox" Text="0.02" HorizontalAlignment="Left" Margin="80,6,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
                          Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" />
                 <Label Content="Height:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,10,101,0"
                        VerticalAlignment="Top"  />
                 <Label Content="Length:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,0,99,0"
                        VerticalAlignment="Center" />
-                <TextBox x:Name="LengthTextBox" HorizontalAlignment="Left" Margin="80,0,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="LengthTextBox" Text="7.5" HorizontalAlignment="Left" Margin="80,0,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Center"
                          Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" />
-                <TextBox x:Name="WidthTextBox" HorizontalAlignment="Left" Margin="80,64,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="WidthTextBox" Text="0.12" HorizontalAlignment="Left" Margin="80,64,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
                          Width="81" Height="22" PreviewTextInput="NumberValidationTextBox"/>
                 <Label Content="Width:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,68,99,0"
@@ -58,13 +58,13 @@
                VerticalAlignment="Top" FontWeight="Bold" FontSize="14" />
         <Label Content="Cover" Padding="5,0,5,0" UseLayoutRounding="False" Margin="46,329,672,0"
                VerticalAlignment="Top" FontSize="20" />
-        <TextBox x:Name="VelocityTextBox" HorizontalAlignment="Left" Margin="163,375,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="CoverVelocityTextBox" Text="0.5" HorizontalAlignment="Left" Margin="163,375,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="70"
                  Height="22" PreviewTextInput="NumberValidationTextBox" />
         <Label Content="Velocity:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="63,378,0,0"
                VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
         <Label Content="m/s" Padding="5,0,5,0" UseLayoutRounding="False" Margin="243,378,519,0" VerticalAlignment="Top" />
-        <TextBox x:Name="TemperatureTextBox" HorizontalAlignment="Left" Margin="163,404,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="CoverTemperatureTextBox" Text="205" HorizontalAlignment="Left" Margin="163,404,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="70"
                  Height="22" PreviewTextInput="NumberValidationTextBox"/>
         <Label Content="Temperature:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="63,407,641,0"
@@ -79,17 +79,17 @@
         <Expander HorizontalAlignment="Left" Height="115" Header="Properties of material" Margin="403,203,0,0"
                   VerticalAlignment="Top" Width="297" Cursor="Hand">
             <Grid Background="White">
-                <TextBox x:Name="DensityTextBox" HorizontalAlignment="Left" Margin="121,6,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="DensityTextBox" Text="950" HorizontalAlignment="Left" Margin="121,6,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
                          Width="81" Height="22" PreviewTextInput="NumberValidationTextBox"/>
                 <Label Content="Density:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,10,220,0"
                        VerticalAlignment="Top" />
                 <Label Content="Specific heat:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,39,202,0"
                        VerticalAlignment="Top" />
-                <TextBox x:Name="SpecificHeartTextBox" HorizontalAlignment="Left" Margin="121,37,0,0"
+                <TextBox x:Name="SpecificHeartTextBox" Text="2250" HorizontalAlignment="Left" Margin="121,37,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top"
                          Width="81" Height="22" PreviewTextInput="NumberValidationTextBox"/>
-                <TextBox x:Name="MeltingPointTextBox" HorizontalAlignment="Left" Margin="121,64,0,0"
+                <TextBox x:Name="MeltingPointTextBox" Text="120" HorizontalAlignment="Left" Margin="121,64,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top"
                          Width="81" Height="22" PreviewTextInput="NumberValidationTextBox"/>
                 <Label Content="Melting point:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,68,194,0"
@@ -102,7 +102,7 @@
                        VerticalAlignment="Top" />
             </Grid>
         </Expander>
-        <TextBox x:Name="StepTextBox" HorizontalAlignment="Left" Margin="94,528,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="StepTextBox" Text="0.1" HorizontalAlignment="Left" Margin="94,528,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="70"
                  Height="22" PreviewTextInput="NumberValidationTextBox" />
         <Label Content="Step:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="14,532,740,0"
@@ -110,27 +110,27 @@
         <Expander HorizontalAlignment="Left" Height="123" Header="Values" Margin="403,371,0,0"
                   VerticalAlignment="Top" Width="365" Cursor="Hand">
             <Grid Background="White" Width="339" Margin="0,0,0,-2">
-                <TextBox x:Name="Ec1TextBox" HorizontalAlignment="Left" Margin="56,6,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="M0TextBox" Text="29940" HorizontalAlignment="Left" Margin="56,6,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
                          Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
                 <Label Content="μ0:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,10,288,0"
                        VerticalAlignment="Top" />
                 <Label Content="Ea:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,39,288,0"
                        VerticalAlignment="Top" />
-                <TextBox x:Name="Ec2TextBox" HorizontalAlignment="Left" Margin="56,35,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="EaTextBox" Text="30000" HorizontalAlignment="Left" Margin="56,35,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
                          Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
-                <TextBox x:Name="Ec3TextBox" HorizontalAlignment="Left" Margin="56,64,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="TrTextBox" Text="190" HorizontalAlignment="Left" Margin="56,64,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
                          Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
                 <Label Content="Tr:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="10,68,288,0"
                        VerticalAlignment="Top" />
                 <Label Content="n:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="170,10,124,0"
                        VerticalAlignment="Top" />
-                <TextBox x:Name="Ec4TextBox" HorizontalAlignment="Left" Margin="220,6,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="NTextBox" Text="0.35" HorizontalAlignment="Left" Margin="220,6,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
                          Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
-                <TextBox x:Name="Ec5TextBox" HorizontalAlignment="Left" Margin="220,35,0,0" TextWrapping="Wrap"
+                <TextBox x:Name="AlphaUTextBox" Text="425" HorizontalAlignment="Left" Margin="220,35,0,0" TextWrapping="Wrap"
                          VerticalAlignment="Top"
                          Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
                 <Label Content="α_u:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="170,39,124,0"
