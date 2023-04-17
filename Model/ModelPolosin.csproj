@@ -8,11 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="Fonts\Inter-V.ttf"/>
+        <None Remove="Fonts\Inter-V.ttf" />
     </ItemGroup>
 
     <ItemGroup>
-        <Page Remove="Style\Style.xaml"/>
+        <Page Remove="Style\Style.xaml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -22,8 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Algorithm\Algorithm.csproj"/>
-        <ProjectReference Include="..\Database\Database.csproj"/>
+        <ProjectReference Include="..\Algorithm\Algorithm.csproj" />
+        <ProjectReference Include="..\Database\Database.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -16,18 +16,18 @@ public partial class TableWindow : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        Calculation calc = new();
-        calc.InitializingVariables();
-        var listOfCoordinates = calc.ListOfChannelLength();
-        var listOfTemperatures = calc.ListOfTemperatures(listOfCoordinates);
-        var listOfViscosity = calc.ListOfViscosity(listOfTemperatures);
-        List<dataForTable> data = new();
-        for (var i = 0; i < listOfCoordinates.Count; i++)
-            data.Add(new dataForTable
-            {
-                coordinate = listOfCoordinates[i], temperature = listOfTemperatures[i], viscosity = listOfViscosity[i]
-            });
-        tableWithCalc.ItemsSource = data;
+        // Calculation calc = new();
+        // calc.InitializingVariables();
+        // var listOfCoordinates = calc.ListOfChannelLength();
+        // var listOfTemperatures = calc.ListOfTemperatures(listOfCoordinates);
+        // var listOfViscosity = calc.ListOfViscosity(listOfTemperatures);
+        // List<dataForTable> data = new();
+        // for (var i = 0; i < listOfCoordinates.Count; i++)
+        //     data.Add(new dataForTable
+        //     {
+        //         coordinate = listOfCoordinates[i], temperature = listOfTemperatures[i], viscosity = listOfViscosity[i]
+        //     });
+        // tableWithCalc.ItemsSource = data;
     }
 
 

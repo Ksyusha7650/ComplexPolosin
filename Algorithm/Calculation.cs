@@ -1,35 +1,67 @@
-﻿namespace Algorithm;
+﻿using Algorithm.Models;
+
+namespace Algorithm;
 
 public class Calculation
 {
-    private readonly double _alphaU = 425;
-    private readonly double _c = 2250;
-    private readonly double _Ea = 30000;
-    private readonly double _H = 0.02;
-    public readonly double _L = 7.5;
-    private readonly double _m0 = 29940;
-    private readonly double _n = 0.35;
+    private double _alphaU;
+    private double _c;
+    private double _Ea;
+    private double _H;
+    public double _L;
+    private double _m0;
+    private double _n;
     private readonly double _R = 8.314;
-    private readonly double _ro = 950;
-    private readonly double _step = 0.1;
-    private readonly double _T0 = 120;
-    private readonly double _Tr = 190;
-    private readonly double _Tu = 205;
-    private readonly double _Vu = 0.5;
-    private readonly double _W = 0.12;
+    private double _ro;
+    private double _step;
+    private double _T0;
+    private double _Tr;
+    private double _Tu;
+    private double _Vu;
+    private double _W;
     private double _beta;
     private double _F;
     private double _gammaPoint;
-    private int _Q = 0;
+    private double _Q = 0;
     private double _qAlpha;
     private double _Qch;
     private double _qGamma;
     private double _z = 0;
 
-    // public Calculation(double alphaU)
-    // {
-    //     _alphaU = alphaU;
-    // }
+    private EmpiricCoefficients _empiricCoefficients;
+    private GeometricParametersModel _geometricParameters;
+    private PropertiesOfMaterial _propertiesOfMaterial;
+    private VariableParameters _variableParameters;
+    
+    public Calculation(EmpiricCoefficients empiricCoefficients, GeometricParametersModel geometricParameters, PropertiesOfMaterial propertiesOfMaterial, VariableParameters variableParameters)
+    {
+        _empiricCoefficients = empiricCoefficients;
+        _geometricParameters = geometricParameters;
+        _propertiesOfMaterial = propertiesOfMaterial;
+        _variableParameters = variableParameters;
+        SetFields();
+    }
+
+    private void SetFields()
+    {
+        _m0 = _empiricCoefficients.M0;
+        _Ea = _empiricCoefficients.Ea;
+        _Tr = _empiricCoefficients.Tr;
+        _n = _empiricCoefficients.N;
+        _alphaU = _empiricCoefficients.AlphaU;
+
+        _H = _geometricParameters.Height;
+        _L = _geometricParameters.Length;
+        _W = _geometricParameters.Width;
+
+        _Tu = _variableParameters.CoverTemperature;
+        _Vu = _variableParameters.CoverVelocity;
+        _step = _variableParameters.Step;
+
+        _ro = _propertiesOfMaterial.Denisty;
+        _c = _propertiesOfMaterial.SpecificHeat;
+        _T0 = _propertiesOfMaterial.MeltingPoint;
+    }
     public void InitializingVariables()
     {
         // скорость деформации сдвига
