@@ -6,7 +6,7 @@ public class Calculation
     private readonly double _c = 2250;
     private readonly double _Ea = 30000;
     private readonly double _H = 0.02;
-    private readonly double _L = 7.5;
+    public readonly double _L = 7.5;
     private readonly double _m0 = 29940;
     private readonly double _n = 0.35;
     private readonly double _R = 8.314;
@@ -63,7 +63,7 @@ public class Calculation
     // производительность канала
     public double Effiency()
     {
-        return Math.Round(_ro * _Qch, 5);
+        return Math.Round(_ro * _Qch, 2);
     }
 
     // список координат по длине канала для таблицы

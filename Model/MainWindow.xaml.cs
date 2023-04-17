@@ -1,6 +1,8 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using Algorithm;
 
 namespace ModelPolosin;
 
@@ -14,6 +16,9 @@ public partial class MainWindow : Window
         Regex regex = new Regex("[^0-9.-]+");
         e.Handled = regex.IsMatch(e.Text);
     }
+
+    private Calculation calculation = new();
+    
     public MainWindow()
     {
         InitializeComponent();
@@ -23,5 +28,23 @@ public partial class MainWindow : Window
     {
         TableWindow tableWindow = new();
         tableWindow.Show();
+        TemperatureProductTextBox.Text = GetTemperature().ToString();
+        ViscosityProductTextBox.Text = GetViscosity().ToString();
+        EfficiencyTextBox.Text = GetEffiency().ToString();
+    }
+
+    private double GetTemperature()
+    {
+        return calculation.Temperature(calculation._L);
+    }
+    
+    private double GetViscosity()
+    {
+        return calculation.Viscosity(GetTemperature());
+    }
+    
+    private double GetEffiency()
+    {
+        return calculation.Effiency();
     }
 }
