@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -47,7 +48,11 @@ public partial class MainWindow : Window
         TemperatureProductTextBox.Text = GetTemperature().ToString();
         ViscosityProductTextBox.Text = GetViscosity().ToString();
         EfficiencyTextBox.Text = GetEfficiency().ToString();
-        ChartsWindow chartsWindow = new();
+        List<double> listOfChannelLength = _calculation.ListOfChannelLength();
+        List<double> listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
+        List<double> listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
+        
+        ChartsWindow chartsWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
         chartsWindow.Show();
 
     }
@@ -97,8 +102,8 @@ public partial class MainWindow : Window
             new GeometricParameters(
                 MarkComboBox.SelectedItem.ToString(),
                 Convert.ToDouble(HeightTextBox.Text),
-                Convert.ToDouble(WidthTextBox.Text),
-                Convert.ToDouble(LengthTextBox.Text)),
+                Convert.ToDouble(LengthTextBox.Text),
+                Convert.ToDouble(WidthTextBox.Text)),
             new PropertiesOfMaterial(
                 TypeComboBox.SelectedItem.ToString(),
                 Convert.ToDouble(DensityTextBox.Text),

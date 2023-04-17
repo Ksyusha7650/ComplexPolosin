@@ -11,18 +11,66 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Color = System.Drawing.Color;
 
 namespace ModelPolosin {
     /// <summary>
     /// Interaction logic for ChartsWindow.xaml
     /// </summary>
-    public partial class ChartsWindow : Window {
-        public ChartsWindow() {
+    public partial class ChartsWindow : Window
+    {
+        private readonly List<double> _listOfChannelLength;
+        private readonly List<double> _listOfTemperatures;
+        private readonly List<double> _listOfViscosity;
+        public ChartsWindow(List<double> listOfChannelLength, List<double> listOfTemperatures, List<double> listOfViscosity)
+        {
+            _listOfChannelLength = listOfChannelLength;
+            _listOfTemperatures = listOfTemperatures;
+            _listOfViscosity = listOfViscosity;
             InitializeComponent();
-            double[] dataX = new double[] { 1, 2, 3, 4, 5 };
-            double[] dataY = new double[] { 1, 4, 9, 16, 25 };
-            WpfPlot1.Plot.AddScatter(dataX, dataY);
+        }
+
+        private static double[] ConvertToArray(IReadOnlyList<double> list)
+        {
+            var res = new double[list.Count];
+            var i = 0;
+            for (; i < list.Count; i++)
+            {
+                res[i] = list[i];
+            }
+            return res;
+        }
+        
+        private void TemperatureLength()
+        {
+            WpfPlot1.Plot.Clear();
+            WpfPlot1.Plot.Title("Graph of material temperature distribution along the length of the channel");
+            WpfPlot1.Plot.XLabel("Length of the channel, m");
+            WpfPlot1.Plot.YLabel("Material temperature, C");
+            WpfPlot1.Plot.AddScatter(ConvertToArray(_listOfChannelLength), ConvertToArray(_listOfTemperatures));
             WpfPlot1.Refresh();
+        }
+        
+        private void ViscosityLength()
+        {
+            WpfPlot1.Plot.Clear();
+            WpfPlot1.Plot.Title("Graph of material viscosity distribution along the length of the channel");
+            WpfPlot1.Plot.XLabel("Length of the channel, m");
+            WpfPlot1.Plot.YLabel("Material viscosity, Pa*s");
+            WpfPlot1.Plot.AddScatter(ConvertToArray(_listOfChannelLength), ConvertToArray(_listOfViscosity));
+            WpfPlot1.Refresh();
+        }
+
+        private void ChartComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) 
+        {
+            if (ChartComboBox.SelectedIndex == 0)
+            {
+                TemperatureLength();
+            }
+            else
+            {
+                ViscosityLength();
+            }
         }
     }
 }
