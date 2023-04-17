@@ -17,11 +17,12 @@ public partial class MainWindow : Window
         e.Handled = regex.IsMatch(e.Text);
     }
 
-    private Calculation calculation = new();
+    private readonly Calculation _calculation;
     
     public MainWindow()
     {
         InitializeComponent();
+        _calculation = new Calculation();
     }
 
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
@@ -30,21 +31,21 @@ public partial class MainWindow : Window
         tableWindow.Show();
         TemperatureProductTextBox.Text = GetTemperature().ToString();
         ViscosityProductTextBox.Text = GetViscosity().ToString();
-        EfficiencyTextBox.Text = GetEffiency().ToString();
+        EfficiencyTextBox.Text = GetEfficiency().ToString();
     }
 
     private double GetTemperature()
     {
-        return calculation.Temperature(calculation._L);
+        return _calculation.Temperature(_calculation._L);
     }
     
     private double GetViscosity()
     {
-        return calculation.Viscosity(GetTemperature());
+        return _calculation.Viscosity(GetTemperature());
     }
     
-    private double GetEffiency()
+    private double GetEfficiency()
     {
-        return calculation.Effiency();
+        return _calculation.Effiency();
     }
 }
