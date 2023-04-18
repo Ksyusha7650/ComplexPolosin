@@ -47,8 +47,8 @@ public partial class MainWindow : Window
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
         Calculate();
-        // TableWindow tableWindow = new();
-        // tableWindow.Show();
+        TableWindow tableWindow = new();
+        tableWindow.Show();
         TemperatureProductTextBox.Text = GetTemperature().ToString();
         ViscosityProductTextBox.Text = GetViscosity().ToString();
         EfficiencyTextBox.Text = GetEfficiency().ToString();
