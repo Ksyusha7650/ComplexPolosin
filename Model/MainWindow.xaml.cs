@@ -20,6 +20,7 @@ public partial class MainWindow : Window
 {
     private Calculation _calculation;
     private readonly DataService _dataService;
+    private DrawCharts _charts;
 
     private readonly string[] marks;
     
@@ -54,9 +55,12 @@ public partial class MainWindow : Window
         List<double> listOfChannelLength = _calculation.ListOfChannelLength();
         List<double> listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
         List<double> listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
-        
-        ChartsWindow chartsWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
-        chartsWindow.Show();
+        _charts = new(
+            listOfChannelLength,
+            listOfTemperatures,
+            listOfViscosity,
+            WpfPlot1);
+        _charts.TemperatureLength();
 
     }
 
@@ -151,5 +155,18 @@ public partial class MainWindow : Window
         // HeightTextBox.Text = "0";
         // WidthTextBox.Text = "0";
         // LengthTextBox.Text = "0";
+    }
+    
+    private void ChartComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) 
+    {
+        if (_charts is null) return;
+        if (ChartComboBox.SelectedIndex == 0)
+        {
+            _charts.TemperatureLength();
+        }
+        else
+        {
+            _charts.ViscosityLength();
+        }
     }
 }
