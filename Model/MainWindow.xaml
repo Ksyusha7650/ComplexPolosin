@@ -108,6 +108,7 @@
                        VerticalAlignment="Top" />
             </Grid>
         </Expander>
+       
         <Expander HorizontalAlignment="Left" Height="123" Header="Values" Margin="527,371,0,0"
                   VerticalAlignment="Top" Width="365" Cursor="Hand">
             <Grid Background="White" Width="339" Margin="0,0,0,-2">
@@ -145,6 +146,19 @@
         </Expander>
         <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="508,329,128,0"
                VerticalAlignment="Top" FontSize="20" />
+        <Expander HorizontalAlignment="Left" Height="391" Header="Charts" Margin="509,35,0,0" VerticalAlignment="Top" Width="497" ExpandDirection="Left" Background="{x:Null}">
+            <Grid Background="White">
+                <ComboBox x:Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="124,10,0,0" VerticalAlignment="Top"
+                    Width="233"
+                    BorderBrush="{x:Null}" Cursor="Hand" >
+                    <ComboBoxItem Content="material temperature - channel length"/>
+                    <ComboBoxItem Content="material viscosity - channel length"/>
+                </ComboBox>
+                <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
+                    VerticalAlignment="Top" FontSize="16" />
+                <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" />
+            </Grid>
+        </Expander>
         <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Margin="863,528,0,0"
             VerticalAlignment="Top" Width="78"
             Height="24" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16"
@@ -169,19 +183,6 @@
             Height="22" IsReadOnly="True" />
         <Label Content="Efficiency:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="451,532,0,0"
             VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
-        <Expander HorizontalAlignment="Left" Height="391" Header="Charts" Margin="369,35,0,0" VerticalAlignment="Top" Width="637" ExpandDirection="Left" Background="White">
-            <Grid Background="White">
-                <ComboBox x:Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="124,10,0,0" VerticalAlignment="Top"
-                    Width="233"
-                    BorderBrush="{x:Null}" Cursor="Hand" >
-                    <ComboBoxItem Content="material temperature - channel length"/>
-                    <ComboBoxItem Content="material viscosity - channel length"/>
-                </ComboBox>
-                <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
-                    VerticalAlignment="Top" FontSize="16" />
-                <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" />
-            </Grid>
-        </Expander>
 
     </Grid>
 </Window>
