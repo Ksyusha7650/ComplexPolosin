@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="ChartsWindow" Height="450" Width="800">
     <Grid>
-        <scottPlot:WpfPlot Name="WpfPlot1" Margin="0,0,0,37" />
+        <scottPlot:WpfPlot Name="WpfPlot1" Margin="0,0,0,37" MouseMove="WpfPlot1_MouseMove"/>
         <ComboBox Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="561,397,0,0" VerticalAlignment="Top" Width="229" Height="27" SelectionChanged="ChartComboBox_SelectionChanged">
             <ComboBoxItem Content="material temperature - channel length"></ComboBoxItem>
             <ComboBoxItem Content="material viscosity - channel length"></ComboBoxItem>

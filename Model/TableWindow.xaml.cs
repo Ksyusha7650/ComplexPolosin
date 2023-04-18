@@ -9,32 +9,33 @@ namespace ModelPolosin;
 /// </summary>
 public partial class TableWindow : Window
 {
-    public TableWindow()
+    private readonly List<double> _listOfChannelLength;
+    private readonly List<double> _listOfTemperatures;
+    private readonly List<double> _listOfViscosity;
+    public TableWindow(List<double> listOfChannelLength, List<double> listOfTemperatures, List<double> listOfViscosity)
     {
+        _listOfChannelLength = listOfChannelLength;
+        _listOfTemperatures = listOfTemperatures;
+        _listOfViscosity = listOfViscosity;
         InitializeComponent();
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        // Calculation calc = new();
-        // calc.InitializingVariables();
-        // var listOfCoordinates = calc.ListOfChannelLength();
-        // var listOfTemperatures = calc.ListOfTemperatures(listOfCoordinates);
-        // var listOfViscosity = calc.ListOfViscosity(listOfTemperatures);
-        // List<dataForTable> data = new();
-        // for (var i = 0; i < listOfCoordinates.Count; i++)
-        //     data.Add(new dataForTable
-        //     {
-        //         coordinate = listOfCoordinates[i], temperature = listOfTemperatures[i], viscosity = listOfViscosity[i]
-        //     });
-        // tableWithCalc.ItemsSource = data;
+        List<DataForTable> data = new();
+        for (var i = 0; i < _listOfChannelLength.Count; i++)
+            data.Add(new DataForTable
+            {
+                Coordinate = _listOfChannelLength[i], Temperature = _listOfTemperatures[i], Viscosity = _listOfViscosity[i]
+            });
+        tableWithCalc.ItemsSource = data;
     }
 
 
-    private class dataForTable
+    private class DataForTable
     {
-        public double coordinate { get; set; }
-        public double temperature { get; set; }
-        public double viscosity { get; set; }
+        public double Coordinate { get; set; }
+        public double Temperature { get; set; }
+        public double Viscosity { get; set; }
     }
 }
