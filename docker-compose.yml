@@ -1,0 +1,22 @@
+﻿services:
+  app:
+    image: node:18-alpine
+    command: sh -c "yarn install && yarn run dev"
+    ports:
+      - "8080:3306"
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      MYSQL_HOST: localhost
+      MYSQL_USER: girls
+      MYSQL_PASSWORD: 123456
+      MYSQL_DB: models_for_pc
+
+  mysql:
+    image: mysql:8.0
+    volumes: 
+      - ./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: 04042002Mm!
+      MYSQL_DATABASE: models_for_pc

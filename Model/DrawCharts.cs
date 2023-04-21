@@ -1,104 +1,80 @@
-﻿ using System.Collections.Generic;
- using System.Windows.Controls;
- using ScottPlot;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Input;
+using ScottPlot;
+using ScottPlot.Plottable;
 
- public class DrawCharts
+namespace ModelPolosin;
+
+public class DrawCharts
+{
+    private readonly List<double> _listOfChannelLength;
+    private readonly List<double> _listOfTemperatures;
+    private readonly List<double> _listOfViscosity;
+    private MarkerPlot _highlightedPoint;
+    private int _lastHighlightedIndex = -1;
+    private readonly WpfPlot _plot;
+    private ScatterPlot? _scatterPlot;
+
+    public DrawCharts(
+        List<double> listOfChannelLength,
+        List<double> listOfTemperatures,
+        List<double> listOfViscosity,
+        WpfPlot plot)
     {
-        private readonly List<double> _listOfChannelLength;
-        private readonly List<double> _listOfTemperatures;
-        private readonly List<double> _listOfViscosity;
-        private readonly WpfPlot _plot;
-        public DrawCharts(
-            List<double> listOfChannelLength, 
-            List<double> listOfTemperatures,
-            List<double> listOfViscosity,
-            WpfPlot plot)
-        {
-            _listOfChannelLength = listOfChannelLength;
-            _listOfTemperatures = listOfTemperatures;
-            _listOfViscosity = listOfViscosity;
-            _plot = plot;
-        }
-
-        private static double[] ConvertToArray(IReadOnlyList<double> list)
-        {
-            var res = new double[list.Count];
-            var i = 0;
-            for (; i < list.Count; i++)
-            {
-                res[i] = list[i];
-            }
-            return res;
-        }
-        
-        public void TemperatureLength()
-        {
-            _plot.Plot.Clear();
-            _plot.Plot.Title("Graph of material temperature distribution along the length of the channel");
-            _plot.Plot.XLabel("Length of the channel, m");
-            _plot.Plot.YLabel("Material temperature, C");
-            _plot.Plot.AddScatter(ConvertToArray(_listOfChannelLength), ConvertToArray(_listOfTemperatures));
-            _plot.Refresh();
-        }
-        
-        public void ViscosityLength()
-        {
-            _plot.Plot.Clear();
-            _plot.Plot.Title("Graph of material viscosity distribution along the length of the channel");
-            _plot.Plot.XLabel("Length of the channel, m");
-            _plot.Plot.YLabel("Material viscosity, Pa*s");
-            _plot.Plot.AddScatter(ConvertToArray(_listOfChannelLength), ConvertToArray(_listOfViscosity));
-            _plot.Refresh();
-        }
-
-      
+        _listOfChannelLength = listOfChannelLength;
+        _listOfTemperatures = listOfTemperatures;
+        _listOfViscosity = listOfViscosity;
+        _plot = plot;
+        SetupHighlightedPoint();
     }
 
-    //public partial class PointShapeLineExample : UserControl {
-    //    public PointShapeLineExample() {
-    //        //InitializeComponent();
+    private void SetupHighlightedPoint()
+    {
+        _highlightedPoint = _plot.Plot.AddPoint(0, 0);
+        _highlightedPoint.Color = Color.Red;
+        _highlightedPoint.MarkerSize = 10;
+        _highlightedPoint.MarkerShape = MarkerShape.openCircle;
+        _highlightedPoint.IsVisible = false;
+        _plot.Refresh();
+    }
 
-    //        SeriesCollection = new SeriesCollection
-    //        {
-    //            new LineSeries
-    //            {
-    //                Title = "Series 1",
-    //                Values = new ChartValues<double> { 4, 6, 5, 2 ,4 }
-    //            },
-    //            new LineSeries
-    //            {
-    //                Title = "Series 2",
-    //                Values = new ChartValues<double> { 6, 7, 3, 4 ,6 },
-    //                PointGeometry = null
-    //            },
-    //            new LineSeries
-    //            {
-    //                Title = "Series 3",
-    //                Values = new ChartValues<double> { 4,2,7,2,7 },
-    //                PointGeometry = DefaultGeometries.Square,
-    //                PointGeometrySize = 15
-    //            }
-    //        };
+    public void TemperatureLength()
+    {
+        _plot.Plot.Clear();
+        _plot.Plot.Title("Graph of material temperature distribution along the length of the channel");
+        _plot.Plot.XLabel("Length of the channel, m");
+        _plot.Plot.YLabel("Material temperature, C");
+        _scatterPlot = _plot.Plot.AddScatter(_listOfChannelLength.ToArray(), _listOfTemperatures.ToArray());
+        _plot.Refresh();
+    }
 
-    //        Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May" };
-    //        YFormatter = value => value.ToString("C");
-
-    //        //modifying the series collection will animate and update the chart
-    //        SeriesCollection.Add(new LineSeries {
-    //            Title = "Series 4",
-    //            Values = new ChartValues<double> { 5, 3, 2, 4 },
-    //            LineSmoothness = 0, //0: straight lines, 1: really smooth lines
-    //            PointGeometry = Geometry.Parse("m 25 70.36218 20 -28 -20 22 -8 -6 z"),
-    //            PointGeometrySize = 50,
-    //            PointForeground = Brushes.Gray
-    //        });
-
-    //        //modifying any series values will also animate and update the chart
-    //        SeriesCollection[3].Values.Add(5d);
-
-    //        DataContext = this;
-    //    }
-
-    //    public SeriesCollection SeriesCollection { get; set; }
-    //    public string[] Labels { get; set; }
-    //    public Func<double, string> YFormatter { get; set; }
+    public void ViscosityLength()
+    {
+        _plot.Plot.Clear();
+        _plot.Plot.Title("Graph of material viscosity distribution along the length of the channel");
+        _plot.Plot.XLabel("Length of the channel, m");
+        _plot.Plot.YLabel("Material viscosity, Pa*s");
+        _scatterPlot = _plot.Plot.AddScatter(_listOfChannelLength.ToArray(), _listOfViscosity.ToArray());
+        _plot.Refresh();
+    }
+    public void plot_MouseMove(object sender, MouseEventArgs e)
+    {
+        var (mouseCoordX, mouseCoordY) = _plot.GetMouseCoordinates();
+        var xyRatio = _plot.Plot.XAxis.Dims.PxPerUnit / _plot.Plot.YAxis.Dims.PxPerUnit;
+        if (_scatterPlot is null) return;
+        var (pointX, pointY, pointIndex) = _scatterPlot.GetPointNearest(mouseCoordX, mouseCoordY, xyRatio);
+        _highlightedPoint.X = pointX;
+        _highlightedPoint.Y = pointY;
+        _highlightedPoint.IsVisible = true;
+        if (_lastHighlightedIndex == pointIndex) 
+            return;
+        _lastHighlightedIndex = pointIndex;
+        _plot.Render();
+        
+    //    _plot.Plot.Title = $"({Math.Round(mouseCoordX, 2)}, {Math.Round(mouseCoordY, 2)})";
+         _plot.Plot.PlotText("",0, 100);
+         _plot.Plot.PlotText($"Point index {pointIndex} at ({pointX}, {pointY})",0,100);
+    }
+}

@@ -3,15 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ModelPolosin"
         xmlns:scottPlot="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
         Title="ChartsWindow" Height="450" Width="800">
     <Grid>
-        <scottPlot:WpfPlot Name="WpfPlot1" Margin="0,0,0,37" MouseMove="WpfPlot1_MouseMove"/>
-        <ComboBox Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="561,397,0,0" VerticalAlignment="Top" Width="229" Height="27" SelectionChanged="ChartComboBox_SelectionChanged">
-            <ComboBoxItem Content="material temperature - channel length"></ComboBoxItem>
-            <ComboBoxItem Content="material viscosity - channel length"></ComboBoxItem>
+        <scottPlot:WpfPlot Name="WpfPlot1" Margin="0,0,0,37" MouseMove="WpfPlot1_MouseMove" />
+        <ComboBox Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="561,397,0,0"
+                  VerticalAlignment="Top" Width="229" Height="27" SelectionChanged="ChartComboBox_SelectionChanged">
+            <ComboBoxItem Content="material temperature - channel length" />
+            <ComboBoxItem Content="material viscosity - channel length" />
         </ComboBox>
     </Grid>
 </Window>

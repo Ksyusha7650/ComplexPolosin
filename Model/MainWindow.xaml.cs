@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Algorithm;
 using Algorithm.Models;
 using Database;
-using Database.Interfaces;
-using ModelPolosin.Models;
 
 namespace ModelPolosin;
 
@@ -18,23 +16,23 @@ namespace ModelPolosin;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private Calculation _calculation;
     private readonly DataService _dataService;
-    private DrawCharts _charts;
 
     private readonly string[] marks;
-    
+    private Calculation _calculation;
+    private DrawCharts _charts;
+
     public MainWindow()
     {
         InitializeComponent();
-        System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+        var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
-        System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+        Thread.CurrentThread.CurrentCulture = customCulture;
         _dataService = new DataService();
         marks = _dataService.GetMarks();
         MarkComboBox.Items.Add("--default");
         TypeComboBox.Items.Add("--default");
-        foreach (var mark in marks) 
+        foreach (var mark in marks)
             MarkComboBox.Items.Add(mark);
     }
 
@@ -47,21 +45,23 @@ public partial class MainWindow : Window
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
         Calculate();
-        TableWindow tableWindow = new();
-        tableWindow.Show();
         TemperatureProductTextBox.Text = GetTemperature().ToString();
         ViscosityProductTextBox.Text = GetViscosity().ToString();
         EfficiencyTextBox.Text = GetEfficiency().ToString();
-        List<double> listOfChannelLength = _calculation.ListOfChannelLength();
-        List<double> listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
-        List<double> listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
-        _charts = new(
+        var listOfChannelLength = _calculation.ListOfChannelLength();
+        var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
+        var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
+        _charts = new DrawCharts(
             listOfChannelLength,
             listOfTemperatures,
             listOfViscosity,
             WpfPlot1);
         _charts.TemperatureLength();
-
+        TableWindow tableWindow = new(
+            listOfChannelLength,
+            listOfTemperatures,
+            listOfViscosity);
+        tableWindow.Show();
     }
 
     private double GetTemperature()
@@ -156,17 +156,18 @@ public partial class MainWindow : Window
         // WidthTextBox.Text = "0";
         // LengthTextBox.Text = "0";
     }
-    
-    private void ChartComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) 
+
+    private void ChartComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (_charts is null) return;
         if (ChartComboBox.SelectedIndex == 0)
-        {
             _charts.TemperatureLength();
-        }
         else
-        {
             _charts.ViscosityLength();
-        }
+    }
+
+    private void WpfPlot1_OnMouseMove(object sender, MouseEventArgs e)
+    {
+        _charts.plot_MouseMove(sender, e);
     }
 }

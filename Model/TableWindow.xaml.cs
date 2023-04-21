@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
-using Algorithm;
 
 namespace ModelPolosin;
 
@@ -12,6 +11,7 @@ public partial class TableWindow : Window
     private readonly List<double> _listOfChannelLength;
     private readonly List<double> _listOfTemperatures;
     private readonly List<double> _listOfViscosity;
+
     public TableWindow(List<double> listOfChannelLength, List<double> listOfTemperatures, List<double> listOfViscosity)
     {
         _listOfChannelLength = listOfChannelLength;
@@ -26,7 +26,8 @@ public partial class TableWindow : Window
         for (var i = 0; i < _listOfChannelLength.Count; i++)
             data.Add(new DataForTable
             {
-                Coordinate = _listOfChannelLength[i], Temperature = _listOfTemperatures[i], Viscosity = _listOfViscosity[i]
+                Coordinate = _listOfChannelLength[i], Temperature = _listOfTemperatures[i],
+                Viscosity = _listOfViscosity[i]
             });
         tableWithCalc.ItemsSource = data;
     }

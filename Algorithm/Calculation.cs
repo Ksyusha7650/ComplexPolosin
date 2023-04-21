@@ -4,36 +4,37 @@ namespace Algorithm;
 
 public class Calculation
 {
+    private readonly double _R = 8.314;
     private double _alphaU;
+    private double _beta;
     private double _c;
     private double _Ea;
+
+    private readonly EmpiricCoefficients _empiricCoefficients;
+    private double _F;
+    private double _gammaPoint;
+    private readonly GeometricParameters _geometricParameters;
     private double _H;
     public double _L;
     private double _m0;
     private double _n;
-    private readonly double _R = 8.314;
+    private readonly PropertiesOfMaterial _propertiesOfMaterial;
+    private double _Q = 0;
+    private double _qAlpha;
+    private double _Qch;
+    private double _qGamma;
     private double _ro;
     private double _step;
     private double _T0;
     private double _Tr;
     private double _Tu;
+    private readonly VariableParameters _variableParameters;
     private double _Vu;
     private double _W;
-    private double _beta;
-    private double _F;
-    private double _gammaPoint;
-    private double _Q = 0;
-    private double _qAlpha;
-    private double _Qch;
-    private double _qGamma;
     private double _z = 0;
 
-    private EmpiricCoefficients _empiricCoefficients;
-    private GeometricParameters _geometricParameters;
-    private PropertiesOfMaterial _propertiesOfMaterial;
-    private VariableParameters _variableParameters;
-    
-    public Calculation(EmpiricCoefficients empiricCoefficients, GeometricParameters geometricParameters, PropertiesOfMaterial propertiesOfMaterial, VariableParameters variableParameters)
+    public Calculation(EmpiricCoefficients empiricCoefficients, GeometricParameters geometricParameters,
+        PropertiesOfMaterial propertiesOfMaterial, VariableParameters variableParameters)
     {
         _empiricCoefficients = empiricCoefficients;
         _geometricParameters = geometricParameters;
@@ -63,6 +64,7 @@ public class Calculation
         _c = _propertiesOfMaterial.SpecificHeat;
         _T0 = _propertiesOfMaterial.MeltingPoint;
     }
+
     public void InitializingVariables()
     {
         // скорость деформации сдвига
