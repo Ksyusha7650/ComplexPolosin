@@ -39,7 +39,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ScottPlot.WPF" Version="4.1.63" />
+        <PackageReference Include="ScottPlot.WPF" Version="5.0.4-beta" />
     </ItemGroup>
 
 </Project>
