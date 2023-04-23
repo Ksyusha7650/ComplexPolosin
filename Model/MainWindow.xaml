@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
 
         Title="Input Data Window" Height="598" Width="1016" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
@@ -146,10 +147,9 @@
         </Expander>
         <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="508,329,128,0"
                VerticalAlignment="Top" FontSize="20" />
-        <Expander HorizontalAlignment="Left" Height="391" Header="Charts" Margin="509,35,0,0" VerticalAlignment="Top"
-                  Width="497" ExpandDirection="Left" Background="{x:Null}">
+        <Expander Height="391" Header="Charts" Margin="509,83,10,0" VerticalAlignment="Top" ExpandDirection="Left" Background="{x:Null}">
             <Grid Background="White">
-                <ComboBox x:Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="124,10,0,0"
+                <ComboBox x:Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="124,5,0,0"
                           VerticalAlignment="Top"
                           Width="233"
                           BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="ChartComboBox_SelectionChanged">
@@ -158,7 +158,8 @@
                 </ComboBox>
                 <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
                        VerticalAlignment="Top" FontSize="16" />
-                <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" />
+                <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
+                <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="389" VerticalAlignment="Bottom" Loaded="Plot_Loaded" />
             </Grid>
         </Expander>
         <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Margin="863,528,0,0"
