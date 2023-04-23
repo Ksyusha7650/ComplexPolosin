@@ -1,6 +1,6 @@
-﻿namespace Algorithm.Models;
+﻿namespace Database.Models;
 
-public record PropertiesOfMaterial(
+public record PropertiesOfMaterialModel(
     string? Type,
     double Density,
     double SpecificHeat,

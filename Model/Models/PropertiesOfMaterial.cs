@@ -2,6 +2,6 @@
 
 // public record PropertiesOfMaterial(
 //     string? Type,
-//     double Denisty,
+//     double Density,
 //     double SpecificHeat,
 //     double MeltingPoint);

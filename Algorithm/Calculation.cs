@@ -60,7 +60,7 @@ public class Calculation
         _Vu = _variableParameters.CoverVelocity;
         _step = _variableParameters.Step;
 
-        _ro = _propertiesOfMaterial.Denisty;
+        _ro = _propertiesOfMaterial.Density;
         _c = _propertiesOfMaterial.SpecificHeat;
         _T0 = _propertiesOfMaterial.MeltingPoint;
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -18,7 +19,8 @@ public partial class MainWindow : Window
 {
     private readonly DataService _dataService;
 
-    private readonly string[] marks;
+    private string[] _marks;
+    private List<EmpiricCoefficients> _empiricCoefficients;
     private Calculation _calculation;
     private DrawCharts _charts;
 
@@ -29,11 +31,9 @@ public partial class MainWindow : Window
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
         Thread.CurrentThread.CurrentCulture = customCulture;
         _dataService = new DataService();
-        marks = _dataService.GetMarks();
-        MarkComboBox.Items.Add("--default");
-        TypeComboBox.Items.Add("--default");
-        foreach (var mark in marks)
-            MarkComboBox.Items.Add(mark);
+        SetFieldsFromDataBase();
+        MarkComboBox.Items.Add("--default");//вынести в другой метод 
+        TypeComboBox.Items.Add("--default");//вынести в другой метод
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -81,23 +81,6 @@ public partial class MainWindow : Window
 
     private void Calculate()
     {
-        // if (MarkComboBox.SelectedItem.ToString() is null)
-        // {
-        //     MessageBox.Show("Mark isn't chosen");
-        //     return;
-        // }
-
-        //var mark = MarkComboBox.SelectedItem.ToString();
-        // var result = await _dataService.GetGeometricParameters(mark);
-        // var model = new GeometricParameters(
-        //     mark,
-        //     result.Height,
-        //     result.Width,
-        //     result.Length);
-        // MarkComboBox.SelectedItem = model.Mark;
-        // HeightTextBox.Text = model.Height.ToString();
-        // WidthTextBox.Text = model.Width.ToString();1
-        // LengthTextBox.Text = model.Length.ToString();
         try
         {
             _calculation = new Calculation(
@@ -137,7 +120,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        var result = _dataService.GetGeometricParameters(mark).Result;
+        var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
         var model = new GeometricParameters(
             mark,
             result.Height,
@@ -169,5 +152,14 @@ public partial class MainWindow : Window
     private void WpfPlot1_OnMouseMove(object sender, MouseEventArgs e)
     {
         _charts.plot_MouseMove(sender, e);
+    }
+
+    private void SetFieldsFromDataBase()
+    {
+        _marks = _dataService.ChannelDataBase.GetMarks();
+        foreach (var mark in _marks)
+            MarkComboBox.Items.Add(mark);
+        _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients();
+
     }
 }
