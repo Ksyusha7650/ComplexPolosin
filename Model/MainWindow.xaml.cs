@@ -8,6 +8,9 @@ using System.Windows.Input;
 using Algorithm;
 using Algorithm.Models;
 using Database;
+using LiveCharts;
+using LiveCharts.Wpf;
+using LiveCharts.Defaults;
 
 namespace ModelPolosin;
 
@@ -16,7 +19,7 @@ namespace ModelPolosin;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private readonly DataService _dataService;
+    // private readonly DataService _dataService;
 
     private readonly string[] marks;
     private Calculation _calculation;
@@ -25,15 +28,15 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
-        customCulture.NumberFormat.NumberDecimalSeparator = ".";
-        Thread.CurrentThread.CurrentCulture = customCulture;
-        _dataService = new DataService();
-        marks = _dataService.GetMarks();
+        // var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+        // customCulture.NumberFormat.NumberDecimalSeparator = ".";
+        // Thread.CurrentThread.CurrentCulture = customCulture;
+        // _dataService = new DataService();
+        // marks = _dataService.GetMarks();
         MarkComboBox.Items.Add("--default");
         TypeComboBox.Items.Add("--default");
-        foreach (var mark in marks)
-            MarkComboBox.Items.Add(mark);
+        // foreach (var mark in marks)
+        //     MarkComboBox.Items.Add(mark);
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -51,12 +54,16 @@ public partial class MainWindow : Window
         var listOfChannelLength = _calculation.ListOfChannelLength();
         var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
         var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
-        _charts = new DrawCharts(
-            listOfChannelLength,
-            listOfTemperatures,
-            listOfViscosity,
-            WpfPlot1);
-        _charts.TemperatureLength();
+        if (ChartComboBox.SelectedIndex == 0)
+        {
+            _charts = new DrawCharts(
+                listOfChannelLength,
+                listOfTemperatures,
+                listOfViscosity,
+                Plot);
+            _charts.TemperatureLength();
+        }
+        
         TableWindow tableWindow = new(
             listOfChannelLength,
             listOfTemperatures,
@@ -137,16 +144,16 @@ public partial class MainWindow : Window
             return;
         }
 
-        var result = _dataService.GetGeometricParameters(mark).Result;
-        var model = new GeometricParameters(
-            mark,
-            result.Height,
-            result.Width,
-            result.Length);
-        MarkComboBox.SelectedItem = model.Mark;
-        HeightTextBox.Text = model.Height.ToString();
-        WidthTextBox.Text = model.Width.ToString();
-        LengthTextBox.Text = model.Length.ToString();
+        // var result = _dataService.GetGeometricParameters(mark).Result;
+        // var model = new GeometricParameters(
+        //     mark,
+        //     result.Height,
+        //     result.Width,
+        //     result.Length);
+        // MarkComboBox.SelectedItem = model.Mark;
+        // HeightTextBox.Text = model.Height.ToString();
+        // WidthTextBox.Text = model.Width.ToString();
+        // LengthTextBox.Text = model.Length.ToString();
     }
 
     private void Clear()
@@ -166,8 +173,12 @@ public partial class MainWindow : Window
             _charts.ViscosityLength();
     }
 
-    private void WpfPlot1_OnMouseMove(object sender, MouseEventArgs e)
-    {
-        _charts.plot_MouseMove(sender, e);
+    private void Plot_Loaded(object sender, RoutedEventArgs e) {
+
     }
+
+    // private void WpfPlot1_OnMouseMove(object sender, MouseEventArgs e)
+    // {
+    //     _charts.plot_MouseMove(sender, e);
+    // }
 }
