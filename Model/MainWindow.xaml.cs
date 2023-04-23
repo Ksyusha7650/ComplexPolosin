@@ -173,10 +173,6 @@ public partial class MainWindow : Window
             _charts.ViscosityLength();
     }
 
-    private void Plot_Loaded(object sender, RoutedEventArgs e) {
-
-    }
-
     // private void WpfPlot1_OnMouseMove(object sender, MouseEventArgs e)
     // {
     //     _charts.plot_MouseMove(sender, e);
