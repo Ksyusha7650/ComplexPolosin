@@ -1,14 +1,14 @@
-﻿using Database.Models;
-using MySql.Data.MySqlClient;
-
-namespace Database;
+﻿namespace Database;
 
 public class DataService : BaseRepository
 {
     public readonly DataChannel ChannelDataBase;
-    public DataEmpiricCoefficients EmpiricCoefficientsDataBase;
+    public readonly DataEmpiricCoefficients EmpiricCoefficientsDataBase;
+    public readonly DataMaterial MaterialDataBase;
+
     public DataService()
     {
+        MaterialDataBase = new DataMaterial(this);
         ChannelDataBase = new DataChannel(this);
         EmpiricCoefficientsDataBase = new DataEmpiricCoefficients(this);
     }

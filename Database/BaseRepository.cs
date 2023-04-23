@@ -45,7 +45,7 @@ where ID_PropertySet = @IdPropertySet
 
         return result.ToArray();
     }
-    
+
     public async Task<string> GetNameUnit(int idUnit)
     {
         const string sqlQuery = @"
@@ -60,14 +60,11 @@ where ID_Unit = @IdUnit
         cmd.CommandText = sqlQuery;
         var reader = cmd.ExecuteReader();
         string result = null;
-        while (reader.Read())
-        {
-            result = reader.GetString(0);
-        }
+        while (reader.Read()) result = reader.GetString(0);
 
         return result;
     }
-    
+
     public async Task<string> GetNameProperty(int idProperty)
     {
         const string sqlQuery = @"
@@ -82,10 +79,7 @@ where ID_Property = @IdProperty
         cmd.CommandText = sqlQuery;
         var reader = cmd.ExecuteReader();
         string result = null;
-        while (reader.Read())
-        {
-            result = reader.GetString(0);
-        }
+        while (reader.Read()) result = reader.GetString(0);
         return result;
     }
 }

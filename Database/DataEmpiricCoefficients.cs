@@ -15,8 +15,8 @@ public class DataEmpiricCoefficients
     public async Task<EmpiricCoefficientsModel[]> GetEmpiricCoefficients(int idMaterial)
     {
         const string sqlQuery = @"
-select ID_EC, ID_Unit, ID_Property, Value
-from empiricalcoefficients
+select *
+from empiriccoefficients
 where ID_material = @IdMaterial
 ";
         await using var connection = await _baseRepository.GetAndOpenConnection();
@@ -29,7 +29,9 @@ where ID_material = @IdMaterial
         while (reader.Read())
         {
             var idEc = reader.GetInt32(1);
-            var idUnit = reader.GetInt32(2);
+            var idUnit = -1;
+            if (!reader.IsDBNull(2))
+            idUnit = reader.GetInt32(2);
             var unit = await _baseRepository.GetNameUnit(idUnit);
             var idProperty = reader.GetInt32(3);
             var property = await _baseRepository.GetNameProperty(idProperty);
@@ -41,7 +43,7 @@ where ID_material = @IdMaterial
                 unit,
                 value));
         }
+
         return empiricCoefficients.ToArray();
     }
-    
 }

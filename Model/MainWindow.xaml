@@ -60,7 +60,7 @@
         <ComboBox x:Name="TypeComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="586,157,0,0"
                   VerticalAlignment="Top"
                   Width="188"
-                  BorderBrush="{x:Null}" Cursor="Hand" />
+                  BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="TypeComboBox_OnSelectionChanged" />
         <Label Content="Type:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="527,158,225,0"
                VerticalAlignment="Top" FontWeight="Bold" FontSize="14" />
         <Label Content="Cover" Padding="5,0,5,0" UseLayoutRounding="False" Margin="46,329,672,0"
@@ -96,7 +96,8 @@
                 <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
                        VerticalAlignment="Top" FontSize="16" />
                 <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
-                <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="241" VerticalAlignment="Top" Loaded="Plot_Loaded" Margin="0,35,0,0" />
+                <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="241"
+                                    VerticalAlignment="Top" Loaded="Plot_Loaded" Margin="0,35,0,0" />
             </Grid>
         </Expander>
         <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Margin="863,528,0,0"
@@ -124,33 +125,33 @@
         <Label Content="Efficiency:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="451,532,0,0"
                VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
         <TextBox x:Name="DensityTextBox" Text="950" HorizontalAlignment="Left" Margin="646,199,0,0"
-                         TextWrapping="Wrap"
-                         VerticalAlignment="Top"
-                         Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" />
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" />
         <Label Content="Density:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="536,202,416,0"
-                       VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <Label Content="Specific heat:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="536,232,398,0"
-                       VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <TextBox x:Name="SpecificHeartTextBox" Text="2250" HorizontalAlignment="Left" Margin="646,230,0,0"
-                         TextWrapping="Wrap" VerticalAlignment="Top"
-                         Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" />
+                 TextWrapping="Wrap" VerticalAlignment="Top"
+                 Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" />
         <TextBox x:Name="MeltingPointTextBox" Text="120" HorizontalAlignment="Left" Margin="646,256,0,0"
-                         TextWrapping="Wrap" VerticalAlignment="Top"
-                         Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" />
+                 TextWrapping="Wrap" VerticalAlignment="Top"
+                 Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" />
         <Label Content="Melting point:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="536,260,390,0"
-                       VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <Label Content="kg/m^3" Padding="5,0,5,0" UseLayoutRounding="False" Margin="746,202,216,0"
-                       VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <Label Content="J/(kg*°С)" Padding="5,0,5,0" UseLayoutRounding="False" Margin="746,232,216,0"
-                       VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="746,260,242,0"
-                       VerticalAlignment="Top" />
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="536,349,137,132" AutoGenerateColumns="False">
+               VerticalAlignment="Top" />
+        <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="536,349,137,132" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="№" CanUserResize="False" Width="30"/>
-                <DataGridTextColumn Header="Name" CanUserResize="False" Width="150"/>
-                <DataGridTextColumn Header="Unit" CanUserResize="False" Width="75"/>
-                <DataGridTextColumn Header="Value" CanUserResize="False" Width="75"/>
+                <DataGridTextColumn Header="№" CanUserResize="False" Width="30" />
+                <DataGridTextColumn Header="Name" CanUserResize="False" Width="150" />
+                <DataGridTextColumn Header="Unit" CanUserResize="False" Width="75" />
+                <DataGridTextColumn Header="Value" CanUserResize="False" Width="75" />
             </DataGrid.Columns>
         </DataGrid>
 

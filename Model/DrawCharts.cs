@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Input;
-using ScottPlot;
-using ScottPlot.Plottable;
+﻿using System.Collections.Generic;
 using LiveCharts;
-using LiveCharts.Wpf;
 using LiveCharts.Defaults;
+using LiveCharts.Wpf;
 
 namespace ModelPolosin;
 
@@ -15,70 +10,67 @@ public class DrawCharts
     private readonly List<double> _listOfChannelLength;
     private readonly List<double> _listOfTemperatures;
     private readonly List<double> _listOfViscosity;
-    // private MarkerPlot _highlightedPoint;
-    // private int _lastHighlightedIndex = -1;
-    // private readonly WpfPlot _plot;
-    // private ScatterPlot? _scatterPlot;
-    
-    public SeriesCollection SeriesCollection { get; set; }
-    private CartesianChart _plot;
+    private readonly CartesianChart _plot;
 
-    public DrawCharts(List<double> listOfChannelLength, List<double> listOfTemperatures, List<double> listOfViscosity, CartesianChart plot)
+    public DrawCharts(List<double> listOfChannelLength, List<double> listOfTemperatures, List<double> listOfViscosity,
+        CartesianChart plot)
     {
         _listOfChannelLength = listOfChannelLength;
         _listOfTemperatures = listOfTemperatures;
         _listOfViscosity = listOfViscosity;
         _plot = plot;
     }
-    
+    // private MarkerPlot _highlightedPoint;
+    // private int _lastHighlightedIndex = -1;
+    // private readonly WpfPlot _plot;
+    // private ScatterPlot? _scatterPlot;
+
+    public SeriesCollection SeriesCollection { get; set; }
+
     public void TemperatureLength()
     {
-        _plot.AxisX.Add(new Axis{Title = "Length of the channel, m", FontSize = 15});
-        _plot.AxisY.Add(new Axis{Title = "Material temperature, C", FontSize = 15});
+        _plot.AxisX.Add(new Axis { Title = "Length of the channel, m", FontSize = 15 });
+        _plot.AxisY.Add(new Axis { Title = "Material temperature, C", FontSize = 15 });
         var points = new ChartValues<ObservablePoint>();
-        for (int i = 0; i < _listOfChannelLength.Count; i++)
-        {
+        for (var i = 0; i < _listOfChannelLength.Count; i++)
             points.Add(new ObservablePoint
             {
                 X = _listOfChannelLength[i],
                 Y = _listOfTemperatures[i]
             });
-        }
         SeriesCollection = new SeriesCollection
         {
             new LineSeries
             {
-                Values = new ChartValues<ObservablePoint> (points),
+                Values = new ChartValues<ObservablePoint>(points),
                 PointGeometrySize = 10
             }
         };
         _plot.DataContext = this;
     }
-    
+
     public void ViscosityLength()
     {
-        _plot.AxisX.Add(new Axis{Title = "Length of the channel, m", FontSize = 15});
-        _plot.AxisY.Add(new Axis{Title = "Material viscosity, Pa*s", FontSize = 15});
+        _plot.AxisX.Add(new Axis { Title = "Length of the channel, m", FontSize = 15 });
+        _plot.AxisY.Add(new Axis { Title = "Material viscosity, Pa*s", FontSize = 15 });
         var points = new ChartValues<ObservablePoint>();
-        for (int i = 0; i < _listOfChannelLength.Count; i++)
-        {
+        for (var i = 0; i < _listOfChannelLength.Count; i++)
             points.Add(new ObservablePoint
             {
                 X = _listOfChannelLength[i],
                 Y = _listOfViscosity[i]
             });
-        }
         SeriesCollection = new SeriesCollection
         {
             new LineSeries
             {
-                Values = new ChartValues<ObservablePoint> (points),
+                Values = new ChartValues<ObservablePoint>(points),
                 PointGeometrySize = 10
             }
         };
         _plot.DataContext = this;
     }
-    
+
 
     // private void SetupHighlightedPoint()
     // {

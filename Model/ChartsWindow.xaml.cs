@@ -77,7 +77,7 @@ public partial class ChartsWindow : Window
     {
         var (mouseCoordX, mouseCoordY) = WpfPlot1.GetMouseCoordinates();
         var xyRatio = WpfPlot1.Plot.XAxis.Dims.PxPerUnit / WpfPlot1.Plot.YAxis.Dims.PxPerUnit;
-        (var pointX, var pointY, var pointIndex) = MyPlot.GetPointNearest(mouseCoordX, mouseCoordY, xyRatio);
+        var (pointX, pointY, pointIndex) = MyPlot.GetPointNearest(mouseCoordX, mouseCoordY, xyRatio);
         //(double pointX, double pointY, int pointIndex) = MyPlot.GetPointNearestX(mouseCoordX);
         HighlightedPoint.X = pointX;
         HighlightedPoint.Y = pointY;
@@ -100,7 +100,7 @@ public partial class ChartsWindow : Window
     {
         var (mouseCoordX, mouseCoordY) = WpfPlot1.GetMouseCoordinates();
         var xyRatio = WpfPlot1.Plot.XAxis.Dims.PxPerUnit / WpfPlot1.Plot.YAxis.Dims.PxPerUnit;
-        (var pointX, var pointY, var pointIndex) = MyPlot.GetPointNearest(mouseCoordX, mouseCoordY, xyRatio);
+        var (pointX, pointY, pointIndex) = MyPlot.GetPointNearest(mouseCoordX, mouseCoordY, xyRatio);
         Title = $"Point index {pointIndex} at ({pointX}, {pointY})";
     }
 
@@ -108,7 +108,7 @@ public partial class ChartsWindow : Window
     {
         var (mouseCoordX, mouseCoordY) = WpfPlot1.GetMouseCoordinates();
         var xyRatio = WpfPlot1.Plot.XAxis.Dims.PxPerUnit / WpfPlot1.Plot.YAxis.Dims.PxPerUnit;
-        (var pointX, var pointY, var pointIndex) = MyPlot.GetPointNearest(mouseCoordX, mouseCoordY, xyRatio);
+        var (pointX, pointY, pointIndex) = MyPlot.GetPointNearest(mouseCoordX, mouseCoordY, xyRatio);
         Title = $"Point index {pointIndex} at ({pointX}, {pointY})";
     }
 }

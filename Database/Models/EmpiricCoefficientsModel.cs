@@ -4,5 +4,5 @@ public record EmpiricCoefficientsModel(
     int IdMaterial,
     int IdEc,
     string Name,
-    string Unit,
+    string? Unit,
     double Value);

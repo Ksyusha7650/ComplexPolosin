@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Algorithm;
 using Algorithm.Models;
 using Database;
+using Database.Models;
 
 namespace ModelPolosin;
 
@@ -16,11 +19,12 @@ namespace ModelPolosin;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private readonly DataService _dataService;
-
-    private readonly string[] marks;
     private Calculation _calculation;
     private DrawCharts _charts;
+    private DataService _dataService;
+    private EmpiricCoefficientsModel[] _empiricCoefficients;
+
+    private string[] _marks, _types;
 
     public MainWindow()
     {
@@ -28,12 +32,9 @@ public partial class MainWindow : Window
         var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
         Thread.CurrentThread.CurrentCulture = customCulture;
-        _dataService = new DataService();
-        marks = _dataService.GetMarks();
-        MarkComboBox.Items.Add("--default");
-        TypeComboBox.Items.Add("--default");
-        foreach (var mark in marks)
-            MarkComboBox.Items.Add(mark);
+        GetDataFromDataBase();
+        //MarkComboBox.Items.Add("--default");
+        //TypeComboBox.Items.Add("--default");
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -51,12 +52,16 @@ public partial class MainWindow : Window
         var listOfChannelLength = _calculation.ListOfChannelLength();
         var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
         var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
-        _charts = new DrawCharts(
-            listOfChannelLength,
-            listOfTemperatures,
-            listOfViscosity,
-            WpfPlot1);
-        _charts.TemperatureLength();
+        if (ChartComboBox.SelectedIndex == 0)
+        {
+            _charts = new DrawCharts(
+                listOfChannelLength,
+                listOfTemperatures,
+                listOfViscosity,
+                Plot);
+            _charts.TemperatureLength();
+        }
+
         TableWindow tableWindow = new(
             listOfChannelLength,
             listOfTemperatures,
@@ -102,11 +107,11 @@ public partial class MainWindow : Window
         {
             _calculation = new Calculation(
                 new EmpiricCoefficients(
-                    Convert.ToDouble(M0TextBox.Text),
-                    Convert.ToDouble(EaTextBox.Text),
-                    Convert.ToDouble(TrTextBox.Text),
-                    Convert.ToDouble(NTextBox.Text),
-                    Convert.ToDouble(AlphaUTextBox.Text)),
+                    Convert.ToDouble(_empiricCoefficients[0].Value),
+                    Convert.ToDouble(_empiricCoefficients[1].Value),
+                    Convert.ToDouble(_empiricCoefficients[2].Value),
+                    Convert.ToDouble(_empiricCoefficients[3].Value),
+                    Convert.ToDouble(_empiricCoefficients[4].Value)),
                 new GeometricParameters(
                     MarkComboBox.SelectedItem.ToString(),
                     Convert.ToDouble(HeightTextBox.Text),
@@ -137,7 +142,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        var result = _dataService.GetGeometricParameters(mark).Result;
+        var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
         var model = new GeometricParameters(
             mark,
             result.Height,
@@ -166,8 +171,32 @@ public partial class MainWindow : Window
             _charts.ViscosityLength();
     }
 
-    private void WpfPlot1_OnMouseMove(object sender, MouseEventArgs e)
+    private void Plot_Loaded(object sender, RoutedEventArgs e)
     {
-        _charts.plot_MouseMove(sender, e);
+    }
+
+    private void GetDataFromDataBase()
+    {
+        _dataService = new DataService();
+        _marks = _dataService.ChannelDataBase.GetMarks();
+        foreach (var mark in _marks)
+            MarkComboBox.Items.Add(mark);
+        _types = _dataService.MaterialDataBase.GetTypes();
+        foreach (var type in _types)
+        {
+            TypeComboBox.Items.Add(type);
+        }
+    }
+
+    // private void WpfPlot1_OnMouseMove(object sender, MouseEventArgs e)
+    // {
+    //     _charts.plot_MouseMove(sender, e);
+    // }
+    private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var type = TypeComboBox.SelectedItem.ToString();
+        var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
+        _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
+        EmpiricCoefficientsDataGrid.ItemsSource = _empiricCoefficients;
     }
 }
