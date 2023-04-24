@@ -8,12 +8,48 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="Fonts\Inter-V.ttf"/>
+        <None Remove="Fonts\Inter-V.ttf" />
     </ItemGroup>
 
     <ItemGroup>
-        <Page Remove="Style\Style.xaml"/>
+        <Page Remove="Style\Style.xaml" />
     </ItemGroup>
+
+    <ItemGroup>
+      <COMReference Include="Microsoft.Office.Interop.Excel">
+        <WrapperTool>tlbimp</WrapperTool>
+        <VersionMinor>9</VersionMinor>
+        <VersionMajor>1</VersionMajor>
+        <Guid>00020813-0000-0000-c000-000000000046</Guid>
+        <Lcid>0</Lcid>
+        <Isolated>false</Isolated>
+        <EmbedInteropTypes>true</EmbedInteropTypes>
+      </COMReference>
+    </ItemGroup>
+
+<!--    <ItemGroup>-->
+<!--      <COMReference Include="Microsoft.Office.Interop.Excel">-->
+<!--        <WrapperTool>tlbimp</WrapperTool>-->
+<!--        <VersionMinor>8</VersionMinor>-->
+<!--        <VersionMajor>1</VersionMajor>-->
+<!--        <Guid>00020813-0000-0000-c000-000000000046</Guid>-->
+<!--        <Lcid>0</Lcid>-->
+<!--        <Isolated>false</Isolated>-->
+<!--        <EmbedInteropTypes>true</EmbedInteropTypes>-->
+<!--      </COMReference>-->
+<!--    </ItemGroup>-->
+
+<!--    <ItemGroup>-->
+<!--      <COMReference Include="Microsoft.Office.Interop.Excel">-->
+<!--        <WrapperTool>tlbimp</WrapperTool>-->
+<!--        <VersionMinor>9</VersionMinor>-->
+<!--        <VersionMajor>1</VersionMajor>-->
+<!--        <Guid>00020813-0000-0000-c000-000000000046</Guid>-->
+<!--        <Lcid>0</Lcid>-->
+<!--        <Isolated>false</Isolated>-->
+<!--        <EmbedInteropTypes>true</EmbedInteropTypes>-->
+<!--      </COMReference>-->
+<!--    </ItemGroup>-->
 
     <ItemGroup>
         <Content Include="Fonts\Inter-V.ttf">
@@ -22,14 +58,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="LiveCharts" Version="0.9.7"/>
-        <PackageReference Include="LiveCharts.Wpf" Version="0.9.7"/>
-        <PackageReference Include="ScottPlot.WPF" Version="4.1.63"/>
+        <PackageReference Include="LiveCharts" Version="0.9.7" />
+        <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+        <PackageReference Include="ScottPlot.WPF" Version="4.1.63" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Algorithm\Algorithm.csproj"/>
-        <ProjectReference Include="..\Database\Database.csproj"/>
+        <ProjectReference Include="..\Algorithm\Algorithm.csproj" />
+        <ProjectReference Include="..\Database\Database.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -39,7 +75,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ScottPlot.WPF" Version="5.0.4-beta"/>
+        <PackageReference Include="ScottPlot.WPF" Version="5.0.4-beta" />
     </ItemGroup>
+
+    <!--<ItemGroup>
+      <Reference Include="Microsoft.Office.Interop.Excel">
+        <HintPath>bin\Debug\net6.0-windows\Microsoft.Office.Interop.Excel.dll</HintPath>
+      </Reference>
+    </ItemGroup>-->
 
 </Project>

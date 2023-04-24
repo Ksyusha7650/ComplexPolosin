@@ -154,6 +154,7 @@
                 <DataGridTextColumn Header="Value" CanUserResize="False" Width="75" />
             </DataGrid.Columns>
         </DataGrid>
+        <Button x:Name="ExcelButton" Content="Excel" HorizontalAlignment="Left" Margin="233,10,0,0" VerticalAlignment="Top" Click="ExcelButton_Click"/>
 
     </Grid>
 </Window>

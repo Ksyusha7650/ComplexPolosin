@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -11,6 +12,7 @@ using Algorithm;
 using Algorithm.Models;
 using Database;
 using Database.Models;
+using Microsoft.Win32;
 
 namespace ModelPolosin;
 
@@ -21,7 +23,7 @@ public partial class MainWindow : Window
 {
     private Calculation _calculation;
     private DrawCharts _charts;
-    private DataService _dataService;
+    // private DataService _dataService;
     private EmpiricCoefficientsModel[] _empiricCoefficients;
 
     private string[] _marks, _types;
@@ -29,12 +31,12 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
-        customCulture.NumberFormat.NumberDecimalSeparator = ".";
-        Thread.CurrentThread.CurrentCulture = customCulture;
-        GetDataFromDataBase();
-        //MarkComboBox.Items.Add("--default");
-        //TypeComboBox.Items.Add("--default");
+        // var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+        // customCulture.NumberFormat.NumberDecimalSeparator = ".";
+        // Thread.CurrentThread.CurrentCulture = customCulture;
+        // GetDataFromDataBase();
+        MarkComboBox.Items.Add("--default");
+        TypeComboBox.Items.Add("--default");
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -142,16 +144,16 @@ public partial class MainWindow : Window
             return;
         }
 
-        var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
-        var model = new GeometricParameters(
-            mark,
-            result.Height,
-            result.Width,
-            result.Length);
-        MarkComboBox.SelectedItem = model.Mark;
-        HeightTextBox.Text = model.Height.ToString();
-        WidthTextBox.Text = model.Width.ToString();
-        LengthTextBox.Text = model.Length.ToString();
+        // var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
+        // var model = new GeometricParameters(
+        //     mark,
+        //     result.Height,
+        //     result.Width,
+        //     result.Length);
+        // MarkComboBox.SelectedItem = model.Mark;
+        // HeightTextBox.Text = model.Height.ToString();
+        // WidthTextBox.Text = model.Width.ToString();
+        // LengthTextBox.Text = model.Length.ToString();
     }
 
     private void Clear()
@@ -177,14 +179,86 @@ public partial class MainWindow : Window
 
     private void GetDataFromDataBase()
     {
-        _dataService = new DataService();
-        _marks = _dataService.ChannelDataBase.GetMarks();
-        foreach (var mark in _marks)
-            MarkComboBox.Items.Add(mark);
-        _types = _dataService.MaterialDataBase.GetTypes();
-        foreach (var type in _types)
-        {
-            TypeComboBox.Items.Add(type);
+        // _dataService = new DataService();
+        // _marks = _dataService.ChannelDataBase.GetMarks();
+        // foreach (var mark in _marks)
+        //     MarkComboBox.Items.Add(mark);
+        // _types = _dataService.MaterialDataBase.GetTypes();
+        // foreach (var type in _types)
+        // {
+        //     TypeComboBox.Items.Add(type);
+        // }
+    }
+
+    private void ExcelButton_Click(object sender, RoutedEventArgs e) {
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.xlsx)|*.xlsx";
+        saveFileDialog.FilterIndex = 2;
+        saveFileDialog.RestoreDirectory = true;
+        string filePath;
+        if (saveFileDialog.ShowDialog() == true) {
+            filePath = saveFileDialog.FileName;
+            try {
+                File.Delete(filePath);
+            } catch (IOException) {
+                MessageBox.Show("This file is opened!", "Warning!");
+                return;
+            }
+            WorkWithExcel excelWork = new();
+            if (excelWork.Open(filePath)) {
+                excelWork.SetData("A", 1, "Channel");
+                excelWork.SetData("A", 2, "Mark:");
+                excelWork.SetData("B", 2, MarkComboBox.Text);
+                
+                excelWork.SetData("A", 3, "Geometric parameters:");
+                excelWork.SetData("A", 4, "Height");
+                excelWork.SetData("B", 4, HeightTextBox.Text);
+                excelWork.SetData("A", 5, "Length");
+                excelWork.SetData("B", 5, LengthTextBox.Text);
+                excelWork.SetData("A", 6, "Width");
+                excelWork.SetData("B", 6, WidthTextBox.Text);
+                
+                excelWork.SetData("A", 7, "Cover:");
+                excelWork.SetData("A", 8, "Velocity");
+                excelWork.SetData("B", 8, CoverVelocityTextBox.Text);
+                excelWork.SetData("A", 9, "Temperature");
+                excelWork.SetData("B", 9, CoverTemperatureTextBox.Text);
+                
+                excelWork.SetData("D", 1, "Material");
+                excelWork.SetData("D", 2, "Mark:");
+                excelWork.SetData("E", 2, MarkComboBox.Text);
+                
+                excelWork.SetData("D", 3, "Density");
+                excelWork.SetData("E", 3, DensityTextBox.Text);
+                excelWork.SetData("D", 4, "Specific heat");
+                excelWork.SetData("E", 4, SpecificHeartTextBox.Text);
+                excelWork.SetData("D", 5, "Melting point");
+                excelWork.SetData("E", 5, MeltingPointTextBox.Text);
+                
+                excelWork.SetData("D", 6, "Empiric Coefficients:");
+
+                
+                var listOfChannelLength = _calculation.ListOfChannelLength();
+                var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
+                var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
+                excelWork.SetData("G", 1, "Coordinates");
+                excelWork.SetData("H", 1, "Temperature");
+                excelWork.SetData("I", 1, "Viscosity");
+                for (int i = 0; i < listOfChannelLength.Count; i++)
+                {
+                    excelWork.SetData("G", i + 1, Math.Round(listOfChannelLength[i]).ToString());
+                    excelWork.SetData("H", i + 1, Math.Round(listOfTemperatures[i]).ToString());
+                    excelWork.SetData("I", i + 1, Math.Round(listOfViscosity[i]).ToString());
+                    
+                }
+                //excelWork.DrawInExcel(witchOfAgnesi.pairs.Count);
+
+                excelWork.Save();
+            }
+
+            MessageBox.Show("Excel was successfully saved!", "Saving!");
+        } else {
+            MessageBox.Show("File was not saved!", "Warning!");
         }
     }
 
@@ -194,9 +268,9 @@ public partial class MainWindow : Window
     // }
     private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var type = TypeComboBox.SelectedItem.ToString();
-        var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
-        _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
-        EmpiricCoefficientsDataGrid.ItemsSource = _empiricCoefficients;
+        // var type = TypeComboBox.SelectedItem.ToString();
+        // var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
+        // _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
+        // EmpiricCoefficientsDataGrid.ItemsSource = _empiricCoefficients;
     }
 }
