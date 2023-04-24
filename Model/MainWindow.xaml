@@ -84,22 +84,7 @@
                 Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16" />
         <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="508,302,290,0"
                VerticalAlignment="Top" FontSize="20" />
-        <Expander Height="363" Header="Charts" Margin="383,10,137,0" VerticalAlignment="Top" Background="{x:Null}">
-            <Grid Background="White" Margin="0,10,0,44">
-                <ComboBox x:Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="124,5,0,0"
-                          VerticalAlignment="Top"
-                          Width="233"
-                          BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="ChartComboBox_SelectionChanged">
-                    <ComboBoxItem Content="material temperature - channel length" />
-                    <ComboBoxItem Content="material viscosity - channel length" />
-                </ComboBox>
-                <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
-                       VerticalAlignment="Top" FontSize="16" />
-                <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
-                <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="241"
-                                    VerticalAlignment="Top" Loaded="Plot_Loaded" Margin="0,35,0,0" />
-            </Grid>
-        </Expander>
+        
         <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Margin="863,528,0,0"
                 VerticalAlignment="Top" Width="78"
                 Height="24" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16"
@@ -146,9 +131,33 @@
                VerticalAlignment="Top" />
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="746,260,242,0"
                VerticalAlignment="Top" />
+        <Expander Height="363" Header="Charts" Margin="383,10,137,0" VerticalAlignment="Top" Background="{x:Null}">
+            <Grid Background="White" Margin="0,10,0,44">
+                <ComboBox x:Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="124,5,0,0"
+                          VerticalAlignment="Top"
+                          Width="233"
+                          BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="ChartComboBox_SelectionChanged">
+                    <ComboBoxItem Content="material temperature - channel length" />
+                    <ComboBoxItem Content="material viscosity - channel length" />
+                </ComboBox>
+                <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
+                       VerticalAlignment="Top" FontSize="16" />
+                <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
+                <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="241"
+                                    VerticalAlignment="Top" Loaded="Plot_Loaded" Margin="0,35,0,0" />
+            </Grid>
+        </Expander>
         <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="536,349,137,132" AutoGenerateColumns="False">
             
         </DataGrid>
+        <Expander Height="363" Header="Table with calculations" Margin="478,10,42,0" VerticalAlignment="Top" Background="{x:Null}">
+            <Grid Background="White" Margin="0,10,0,44">
+                <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
+                    VerticalAlignment="Top" FontSize="16" />
+                <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
+            </Grid>
+        </Expander>
 
     </Grid>
 </Window>
