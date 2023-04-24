@@ -1,8 +1,7 @@
 ﻿namespace ModelPolosin.Models;
 
-// public record EmpiricCoefficientsDataBase(
-//     double M0,
-//     double Ea,
-//     double Tr,
-//     double N,
-//     double AlphaU);
+public record EmpiricCoefficientsToDataGrid(
+    int IdEc,
+    string Name,
+    string? Unit,
+    double Value);

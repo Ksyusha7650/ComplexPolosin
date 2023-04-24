@@ -7,12 +7,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using Algorithm;
 using Algorithm.Models;
 using Database;
 using Database.Models;
 using Microsoft.Win32;
+using ModelPolosin.Models;
 
 namespace ModelPolosin;
 
@@ -23,7 +25,7 @@ public partial class MainWindow : Window
 {
     private Calculation _calculation;
     private DrawCharts _charts;
-    // private DataService _dataService;
+    private DataService _dataService;
     private EmpiricCoefficientsModel[] _empiricCoefficients;
 
     private string[] _marks, _types;
@@ -31,12 +33,13 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        // var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
-        // customCulture.NumberFormat.NumberDecimalSeparator = ".";
-        // Thread.CurrentThread.CurrentCulture = customCulture;
-        // GetDataFromDataBase();
-        MarkComboBox.Items.Add("--default");
-        TypeComboBox.Items.Add("--default");
+        var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+        customCulture.NumberFormat.NumberDecimalSeparator = ".";
+        Thread.CurrentThread.CurrentCulture = customCulture;
+        GetDataFromDataBase();
+        SetUpColumns();
+        //MarkComboBox.Items.Add("--default");
+        //TypeComboBox.Items.Add("--default");
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -144,16 +147,16 @@ public partial class MainWindow : Window
             return;
         }
 
-        // var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
-        // var model = new GeometricParameters(
-        //     mark,
-        //     result.Height,
-        //     result.Width,
-        //     result.Length);
-        // MarkComboBox.SelectedItem = model.Mark;
-        // HeightTextBox.Text = model.Height.ToString();
-        // WidthTextBox.Text = model.Width.ToString();
-        // LengthTextBox.Text = model.Length.ToString();
+        var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
+        var model = new GeometricParameters(
+            mark,
+            result.Height,
+            result.Width,
+            result.Length);
+        MarkComboBox.SelectedItem = model.Mark;
+        HeightTextBox.Text = model.Height.ToString();
+        WidthTextBox.Text = model.Width.ToString();
+        LengthTextBox.Text = model.Length.ToString();
     }
 
     private void Clear()
@@ -179,18 +182,66 @@ public partial class MainWindow : Window
 
     private void GetDataFromDataBase()
     {
-        // _dataService = new DataService();
-        // _marks = _dataService.ChannelDataBase.GetMarks();
-        // foreach (var mark in _marks)
-        //     MarkComboBox.Items.Add(mark);
-        // _types = _dataService.MaterialDataBase.GetTypes();
-        // foreach (var type in _types)
-        // {
-        //     TypeComboBox.Items.Add(type);
-        // }
+        _dataService = new DataService();
+        _marks = _dataService.ChannelDataBase.GetMarks();
+        foreach (var mark in _marks)
+            MarkComboBox.Items.Add(mark);
+        _types = _dataService.MaterialDataBase.GetTypes();
+        foreach (var type in _types)
+        {
+            TypeComboBox.Items.Add(type);
+        }
     }
 
-    private void ExcelButton_Click(object sender, RoutedEventArgs e) {
+    // private void WpfPlot1_OnMouseMove(object sender, MouseEventArgs e)
+    // {
+    //     _charts.plot_MouseMove(sender, e);
+    // }
+    private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var type = TypeComboBox.SelectedItem.ToString();
+        var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
+        _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
+        foreach (var empiricCoefficient in _empiricCoefficients)
+        {
+            EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
+                empiricCoefficient.IdEc,
+                empiricCoefficient.Name,
+                empiricCoefficient.Unit ?? " ",
+                empiricCoefficient.Value));
+        }
+    }
+
+    private void SetUpColumns()
+    {
+        var column = new DataGridTextColumn
+        {
+            Header = "№",
+            Binding = new Binding("IdEc")
+        };
+        EmpiricCoefficientsDataGrid.Columns.Add(column);
+        column = new()
+        {
+            Header = "Name",
+            Binding = new Binding("Name")
+        };
+        EmpiricCoefficientsDataGrid.Columns.Add(column);
+        column = new DataGridTextColumn
+        {
+            Header = "Unit",
+            Binding = new Binding("Unit")
+        };
+        EmpiricCoefficientsDataGrid.Columns.Add(column);
+        column = new()
+        {
+            Header = "Value",
+            Binding = new Binding("Value")
+        };
+        EmpiricCoefficientsDataGrid.Columns.Add(column);
+
+    }
+    
+     private void ExcelButton_Click(object sender, RoutedEventArgs e) {
         SaveFileDialog saveFileDialog = new SaveFileDialog();
         saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.xlsx)|*.xlsx";
         saveFileDialog.FilterIndex = 2;
@@ -261,16 +312,5 @@ public partial class MainWindow : Window
             MessageBox.Show("File was not saved!", "Warning!");
         }
     }
-
-    // private void WpfPlot1_OnMouseMove(object sender, MouseEventArgs e)
-    // {
-    //     _charts.plot_MouseMove(sender, e);
-    // }
-    private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        // var type = TypeComboBox.SelectedItem.ToString();
-        // var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
-        // _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
-        // EmpiricCoefficientsDataGrid.ItemsSource = _empiricCoefficients;
-    }
+            
 }
