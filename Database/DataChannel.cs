@@ -64,7 +64,6 @@ set Mark = @Mark, ID_PropertySet = @IdProSet
         var reader = cmd.ExecuteReader();
         var idProSet = 0;
         while (reader.Read()) idProSet = reader.GetInt32(0);
-
         var values = await _baseRepository.GetDataByPropertySet(idProSet);
     }
 }

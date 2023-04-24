@@ -147,12 +147,7 @@
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="746,260,242,0"
                VerticalAlignment="Top" />
         <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="536,349,137,132" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="№" CanUserResize="False" Width="30" />
-                <DataGridTextColumn Header="Name" CanUserResize="False" Width="150" />
-                <DataGridTextColumn Header="Unit" CanUserResize="False" Width="75" />
-                <DataGridTextColumn Header="Value" CanUserResize="False" Width="75" />
-            </DataGrid.Columns>
+            
         </DataGrid>
 
     </Grid>

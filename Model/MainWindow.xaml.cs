@@ -6,11 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using Algorithm;
 using Algorithm.Models;
 using Database;
 using Database.Models;
+using ModelPolosin.Models;
 
 namespace ModelPolosin;
 
@@ -33,6 +35,7 @@ public partial class MainWindow : Window
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
         Thread.CurrentThread.CurrentCulture = customCulture;
         GetDataFromDataBase();
+        SetUpColumns();
         //MarkComboBox.Items.Add("--default");
         //TypeComboBox.Items.Add("--default");
     }
@@ -197,6 +200,43 @@ public partial class MainWindow : Window
         var type = TypeComboBox.SelectedItem.ToString();
         var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
         _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
-        EmpiricCoefficientsDataGrid.ItemsSource = _empiricCoefficients;
+        foreach (var empiricCoefficient in _empiricCoefficients)
+        {
+            EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
+                empiricCoefficient.IdEc,
+                empiricCoefficient.Name,
+                empiricCoefficient.Unit ?? " ",
+                empiricCoefficient.Value));
+        }
     }
-}
+
+    private void SetUpColumns()
+    {
+        var column = new DataGridTextColumn
+        {
+            Header = "№",
+            Binding = new Binding("IdEc")
+        };
+        EmpiricCoefficientsDataGrid.Columns.Add(column);
+        column = new()
+        {
+            Header = "Name",
+            Binding = new Binding("Name")
+        };
+        EmpiricCoefficientsDataGrid.Columns.Add(column);
+        column = new DataGridTextColumn
+        {
+            Header = "Unit",
+            Binding = new Binding("Unit")
+        };
+        EmpiricCoefficientsDataGrid.Columns.Add(column);
+        column = new()
+        {
+            Header = "Value",
+            Binding = new Binding("Value")
+        };
+        EmpiricCoefficientsDataGrid.Columns.Add(column);
+
+    }
+            
+    }

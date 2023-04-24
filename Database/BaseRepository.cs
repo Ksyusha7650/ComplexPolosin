@@ -23,7 +23,7 @@ public abstract class BaseRepository : IDbRepository
         }
     }
 
-    public async Task<int[]> GetDataByPropertySet(int idPropertySet)
+    public async Task<double[]> GetDataByPropertySet(int idPropertySet)
     {
         const string sqlQuery = @"
 select Value
@@ -36,10 +36,10 @@ where ID_PropertySet = @IdPropertySet
         cmd.Parameters.AddWithValue("@IdPropertySet", idPropertySet);
         cmd.CommandText = sqlQuery;
         var reader = cmd.ExecuteReader();
-        List<int> result = new();
+        List<double> result = new();
         while (reader.Read())
         {
-            var value = reader.GetInt32(0);
+            var value = reader.GetDouble(0);
             result.Add(value);
         }
 
