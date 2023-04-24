@@ -67,11 +67,11 @@ public partial class MainWindow : Window
             _charts.TemperatureLength();
         }
 
-        TableWindow tableWindow = new(
+        DrawTable tableWindow = new(
             listOfChannelLength,
             listOfTemperatures,
-            listOfViscosity);
-        tableWindow.Show();
+            listOfViscosity,
+            CalculationsDataGrid);
     }
 
     private double GetTemperature()
@@ -91,23 +91,6 @@ public partial class MainWindow : Window
 
     private void Calculate()
     {
-        // if (MarkComboBox.SelectedItem.ToString() is null)
-        // {
-        //     MessageBox.Show("Mark isn't chosen");
-        //     return;
-        // }
-
-        //var mark = MarkComboBox.SelectedItem.ToString();
-        // var result = await _dataService.GetGeometricParameters(mark);
-        // var model = new GeometricParameters(
-        //     mark,
-        //     result.Height,
-        //     result.Width,
-        //     result.Length);
-        // MarkComboBox.SelectedItem = model.Mark;
-        // HeightTextBox.Text = model.Height.ToString();
-        // WidthTextBox.Text = model.Width.ToString();1
-        // LengthTextBox.Text = model.Length.ToString();
         try
         {
             _calculation = new Calculation(
@@ -176,10 +159,6 @@ public partial class MainWindow : Window
             _charts.ViscosityLength();
     }
 
-    private void Plot_Loaded(object sender, RoutedEventArgs e)
-    {
-    }
-
     private void GetDataFromDataBase()
     {
         _dataService = new DataService();
@@ -193,10 +172,6 @@ public partial class MainWindow : Window
         }
     }
 
-    // private void WpfPlot1_OnMouseMove(object sender, MouseEventArgs e)
-    // {
-    //     _charts.plot_MouseMove(sender, e);
-    // }
     private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var type = TypeComboBox.SelectedItem.ToString();
@@ -238,7 +213,6 @@ public partial class MainWindow : Window
             Binding = new Binding("Value")
         };
         EmpiricCoefficientsDataGrid.Columns.Add(column);
-
     }
     
      private void ExcelButton_Click(object sender, RoutedEventArgs e) {
@@ -276,8 +250,8 @@ public partial class MainWindow : Window
                 excelWork.SetData("B", 9, CoverTemperatureTextBox.Text);
                 
                 excelWork.SetData("D", 1, "Material");
-                excelWork.SetData("D", 2, "Mark:");
-                excelWork.SetData("E", 2, MarkComboBox.Text);
+                excelWork.SetData("D", 2, "Type:");
+                excelWork.SetData("E", 2, TypeComboBox.Text);
                 
                 excelWork.SetData("D", 3, "Density");
                 excelWork.SetData("E", 3, DensityTextBox.Text);
@@ -287,8 +261,16 @@ public partial class MainWindow : Window
                 excelWork.SetData("E", 5, MeltingPointTextBox.Text);
                 
                 excelWork.SetData("D", 6, "Empiric Coefficients:");
-
+                var numberRow = 7;
+                foreach(var emp in _empiricCoefficients)
+                {
+                    excelWork.SetData("D", numberRow, emp.Name);
+                    excelWork.SetData("E", numberRow, emp.Value.ToString());
+                    numberRow++;
+                }
                 
+
+      
                 var listOfChannelLength = _calculation.ListOfChannelLength();
                 var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
                 var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
@@ -297,13 +279,13 @@ public partial class MainWindow : Window
                 excelWork.SetData("I", 1, "Viscosity");
                 for (int i = 0; i < listOfChannelLength.Count; i++)
                 {
-                    excelWork.SetData("G", i + 1, Math.Round(listOfChannelLength[i]).ToString());
-                    excelWork.SetData("H", i + 1, Math.Round(listOfTemperatures[i]).ToString());
-                    excelWork.SetData("I", i + 1, Math.Round(listOfViscosity[i]).ToString());
+                    excelWork.SetData("G", i + 2, Math.Round(listOfChannelLength[i], 2).ToString());
+                    excelWork.SetData("H", i + 2, Math.Round(listOfTemperatures[i], 2).ToString());
+                    excelWork.SetData("I", i + 2, Math.Round(listOfViscosity[i], 2).ToString());
                     
                 }
                 //excelWork.DrawInExcel(witchOfAgnesi.pairs.Count);
-
+                
                 excelWork.Save();
             }
 
