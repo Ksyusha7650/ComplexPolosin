@@ -87,7 +87,7 @@
                  Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True" />
         <TextBox x:Name="MeltingPointTextBox" Text="120" HorizontalAlignment="Left" Margin="594,256,0,0"
                  TextWrapping="Wrap" VerticalAlignment="Top"
-                 Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
+                 Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True" />
         <Label Content="Melting point:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="484,260,692,0"
                VerticalAlignment="Top" />
         <Label Content="kg/m^3" Padding="5,0,5,0" UseLayoutRounding="False" Margin="694,202,517,0"
@@ -96,7 +96,8 @@
                VerticalAlignment="Top" />
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="694,260,523,0"
                VerticalAlignment="Top" />
-        <Expander Height="270" Header="Charts" Margin="829,27,14,0" VerticalAlignment="Top" Background="White" ExpandDirection="Left">
+        <Expander Height="270" Header="Charts" Margin="829,27,14,0" VerticalAlignment="Top" Background="White"
+                  ExpandDirection="Left">
             <Grid Margin="0,10,0,26">
                 <ComboBox x:Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Center" Margin="0,7,0,0"
                           VerticalAlignment="Top"
@@ -112,47 +113,47 @@
                                     VerticalAlignment="Top" Margin="32,50,31,0" />
             </Grid>
         </Expander>
-        <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="484,349,497,132" AutoGenerateColumns="False">
-
-        </DataGrid>
-        <Expander Height="242" Header="Table" Margin="933,251,14,0" VerticalAlignment="Top" Background="{x:Null}" ExpandDirection="Left">
+        <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="484,349,497,132" AutoGenerateColumns="False" />
+        <Expander Height="242" Header="Table" Margin="933,251,14,0" VerticalAlignment="Top" Background="{x:Null}"
+                  ExpandDirection="Left">
             <Grid Margin="0,10,0,-2">
                 <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
-                    VerticalAlignment="Top" FontSize="16" />
-                <DataGrid Margin="21,10,46,11" x:Name="CalculationsDataGrid"/>
+                       VerticalAlignment="Top" FontSize="16" />
+                <DataGrid Margin="21,10,46,11" x:Name="CalculationsDataGrid" />
                 <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
             </Grid>
         </Expander>
         <TextBox x:Name="HeightTextBox" Text="0.02" HorizontalAlignment="Left" Margin="142,205,0,0"
-                         TextWrapping="Wrap"
-                         VerticalAlignment="Top"
-                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True" />
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True" />
         <Label Content="Height:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="72,209,1143,0"
-                       VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <Label Content="Length:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="72,237,1143,0"
-                       VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <TextBox x:Name="LengthTextBox" Text="7.5" HorizontalAlignment="Left" Margin="142,234,0,0"
-                         TextWrapping="Wrap"
-                         VerticalAlignment="Top"
-                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True"/>
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True" />
         <TextBox x:Name="WidthTextBox" Text="0.12" HorizontalAlignment="Left" Margin="142,263,0,0"
-                         TextWrapping="Wrap"
-                         VerticalAlignment="Top"
-                         Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True" />
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" IsReadOnly="True" />
         <Label Content="Width:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="72,267,1143,0"
-                       VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="231,209,1022,0"
-                       VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="231,237,1022,0"
-                       VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="231,267,1022,0"
-                       VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <Button x:Name="CalculateButton_Copy" Content="Export to xls" HorizontalAlignment="Left" Margin="1122,528,0,0"
-            VerticalAlignment="Top" Width="110"
-            Height="24" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16"
-            Click="ExcelButton_Click" />
+                VerticalAlignment="Top" Width="110"
+                Height="24" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16"
+                Click="ExcelButton_Click" />
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="260,534,996,0" VerticalAlignment="Top" />
-        <Label Content="Pa*s" Padding="5,0,5,0" UseLayoutRounding="False" Margin="514,534,729,0" VerticalAlignment="Top" />
+        <Label Content="Pa*s" Padding="5,0,5,0" UseLayoutRounding="False" Margin="514,534,729,0"
+               VerticalAlignment="Top" />
 
     </Grid>
 </Window>

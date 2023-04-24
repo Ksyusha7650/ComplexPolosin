@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,7 +19,7 @@ namespace ModelPolosin;
 /// <summary>
 ///     Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow
 {
     private Calculation _calculation;
     private DrawCharts _charts;
@@ -38,8 +36,6 @@ public partial class MainWindow : Window
         Thread.CurrentThread.CurrentCulture = customCulture;
         GetDataFromDataBase();
         SetUpColumns();
-        //MarkComboBox.Items.Add("--default");
-        //TypeComboBox.Items.Add("--default");
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -57,17 +53,17 @@ public partial class MainWindow : Window
         var listOfChannelLength = _calculation.ListOfChannelLength();
         var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
         var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
+        _charts = new DrawCharts(
+            listOfChannelLength,
+            listOfTemperatures,
+            listOfViscosity,
+            Plot);
         if (ChartComboBox.SelectedIndex == 0)
-        {
-            _charts = new DrawCharts(
-                listOfChannelLength,
-                listOfTemperatures,
-                listOfViscosity,
-                Plot);
             _charts.TemperatureLength();
-        }
+        else
+            _charts.ViscosityLength();
 
-        DrawTable tableWindow = new(
+        DrawTable.DrawTableCalculations(
             listOfChannelLength,
             listOfTemperatures,
             listOfViscosity,
@@ -166,10 +162,7 @@ public partial class MainWindow : Window
         foreach (var mark in _marks)
             MarkComboBox.Items.Add(mark);
         _types = _dataService.MaterialDataBase.GetTypes();
-        foreach (var type in _types)
-        {
-            TypeComboBox.Items.Add(type);
-        }
+        foreach (var type in _types) TypeComboBox.Items.Add(type);
     }
 
     private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -178,13 +171,11 @@ public partial class MainWindow : Window
         var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
         _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
         foreach (var empiricCoefficient in _empiricCoefficients)
-        {
             EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
                 empiricCoefficient.IdEc,
                 empiricCoefficient.Name,
                 empiricCoefficient.Unit ?? " ",
                 empiricCoefficient.Value));
-        }
     }
 
     private void SetUpColumns()
@@ -195,7 +186,7 @@ public partial class MainWindow : Window
             Binding = new Binding("IdEc")
         };
         EmpiricCoefficientsDataGrid.Columns.Add(column);
-        column = new()
+        column = new DataGridTextColumn
         {
             Header = "Name",
             Binding = new Binding("Name")
@@ -207,34 +198,42 @@ public partial class MainWindow : Window
             Binding = new Binding("Unit")
         };
         EmpiricCoefficientsDataGrid.Columns.Add(column);
-        column = new()
+        column = new DataGridTextColumn
         {
             Header = "Value",
             Binding = new Binding("Value")
         };
         EmpiricCoefficientsDataGrid.Columns.Add(column);
     }
-    
-     private void ExcelButton_Click(object sender, RoutedEventArgs e) {
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.xlsx)|*.xlsx";
-        saveFileDialog.FilterIndex = 2;
-        saveFileDialog.RestoreDirectory = true;
-        string filePath;
-        if (saveFileDialog.ShowDialog() == true) {
-            filePath = saveFileDialog.FileName;
-            try {
+
+    private void ExcelButton_Click(object sender, RoutedEventArgs e)
+    {
+        var saveFileDialog = new SaveFileDialog
+        {
+            Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.xlsx)|*.xlsx",
+            FilterIndex = 2,
+            RestoreDirectory = true
+        };
+        if (saveFileDialog.ShowDialog() == true)
+        {
+            var filePath = saveFileDialog.FileName;
+            try
+            {
                 File.Delete(filePath);
-            } catch (IOException) {
+            }
+            catch (IOException)
+            {
                 MessageBox.Show("This file is opened!", "Warning!");
                 return;
             }
+
             WorkWithExcel excelWork = new();
-            if (excelWork.Open(filePath)) {
+            if (excelWork.Open(filePath))
+            {
                 excelWork.SetData("A", 1, "Channel");
                 excelWork.SetData("A", 2, "Mark:");
                 excelWork.SetData("B", 2, MarkComboBox.Text);
-                
+
                 excelWork.SetData("A", 3, "Geometric parameters:");
                 excelWork.SetData("A", 4, "Height");
                 excelWork.SetData("B", 4, HeightTextBox.Text);
@@ -242,57 +241,56 @@ public partial class MainWindow : Window
                 excelWork.SetData("B", 5, LengthTextBox.Text);
                 excelWork.SetData("A", 6, "Width");
                 excelWork.SetData("B", 6, WidthTextBox.Text);
-                
+
                 excelWork.SetData("A", 7, "Cover:");
                 excelWork.SetData("A", 8, "Velocity");
                 excelWork.SetData("B", 8, CoverVelocityTextBox.Text);
                 excelWork.SetData("A", 9, "Temperature");
                 excelWork.SetData("B", 9, CoverTemperatureTextBox.Text);
-                
+
                 excelWork.SetData("D", 1, "Material");
                 excelWork.SetData("D", 2, "Type:");
                 excelWork.SetData("E", 2, TypeComboBox.Text);
-                
+
                 excelWork.SetData("D", 3, "Density");
                 excelWork.SetData("E", 3, DensityTextBox.Text);
                 excelWork.SetData("D", 4, "Specific heat");
                 excelWork.SetData("E", 4, SpecificHeartTextBox.Text);
                 excelWork.SetData("D", 5, "Melting point");
                 excelWork.SetData("E", 5, MeltingPointTextBox.Text);
-                
+
                 excelWork.SetData("D", 6, "Empiric Coefficients:");
                 var numberRow = 7;
-                foreach(var emp in _empiricCoefficients)
+                foreach (var emp in _empiricCoefficients)
                 {
                     excelWork.SetData("D", numberRow, emp.Name);
                     excelWork.SetData("E", numberRow, emp.Value.ToString());
                     numberRow++;
                 }
-                
 
-      
+
                 var listOfChannelLength = _calculation.ListOfChannelLength();
                 var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
                 var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
                 excelWork.SetData("G", 1, "Coordinates");
                 excelWork.SetData("H", 1, "Temperature");
                 excelWork.SetData("I", 1, "Viscosity");
-                for (int i = 0; i < listOfChannelLength.Count; i++)
+                for (var i = 0; i < listOfChannelLength.Count; i++)
                 {
                     excelWork.SetData("G", i + 2, Math.Round(listOfChannelLength[i], 2).ToString());
                     excelWork.SetData("H", i + 2, Math.Round(listOfTemperatures[i], 2).ToString());
                     excelWork.SetData("I", i + 2, Math.Round(listOfViscosity[i], 2).ToString());
-                    
                 }
                 //excelWork.DrawInExcel(witchOfAgnesi.pairs.Count);
-                
+
                 excelWork.Save();
             }
 
             MessageBox.Show("Excel was successfully saved!", "Saving!");
-        } else {
+        }
+        else
+        {
             MessageBox.Show("File was not saved!", "Warning!");
         }
     }
-            
 }

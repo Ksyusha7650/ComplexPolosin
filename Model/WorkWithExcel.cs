@@ -1,57 +1,62 @@
-﻿using Microsoft.Office.Interop.Excel;
-using System;
+﻿using System;
 using System.IO;
-using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
 
 namespace ModelPolosin;
 
 public class WorkWithExcel
 {
-    private Application excel;
-    private Workbook workbook;
+    private readonly Application excel;
     private string filePath;
+    private Workbook workbook;
     private Worksheet worksheet;
 
-    public WorkWithExcel() {
-        excel = new Excel.Application();
-        
+    public WorkWithExcel()
+    {
+        excel = new Application();
     }
-    public bool Open(string fileName) {
-        try {
-            if (File.Exists(fileName)) {
-                workbook = excel.Workbooks.Open(fileName);
-            } else {
-                workbook = excel.Workbooks.Add();
 
-            }
+    public bool Open(string fileName)
+    {
+        try
+        {
+            if (File.Exists(fileName))
+                workbook = excel.Workbooks.Open(fileName);
+            else
+                workbook = excel.Workbooks.Add();
             filePath = fileName;
             return true;
-        } catch (Exception) {
+        }
+        catch (Exception)
+        {
             return false;
         }
     }
 
-    public void Save() {
+    public void Save()
+    {
         workbook.SaveAs(filePath);
         workbook.Close(true);
         excel.Quit();
     }
 
-    public void SetData(string column, int row, string data) {
-        ((Excel.Worksheet)excel.ActiveSheet).Cells[row, column] = data;
+    public void SetData(string column, int row, string data)
+    {
+        ((Worksheet)excel.ActiveSheet).Cells[row, column] = data;
     }
 
-    public void DrawInExcel(int number) {
-        worksheet = (Excel.Worksheet)workbook.Worksheets.get_Item(1);
-        Excel.ChartObjects chartObjects = (Excel.ChartObjects)worksheet.ChartObjects(Type.Missing);
-        Excel.ChartObject myChart = (Excel.ChartObject)chartObjects.Add(150, 80, 400, 250);
-        Excel.Chart chartPage = myChart.Chart;
+    public void DrawInExcel(int number)
+    {
+        worksheet = (Worksheet)workbook.Worksheets.get_Item(1);
+        var chartObjects = (ChartObjects)worksheet.ChartObjects(Type.Missing);
+        var myChart = (ChartObject)chartObjects.Add(150, 80, 400, 250);
+        var chartPage = myChart.Chart;
 
-        SeriesCollection seriesCollection = (SeriesCollection)chartPage.SeriesCollection(Type.Missing);
+        var seriesCollection = (SeriesCollection)chartPage.SeriesCollection(Type.Missing);
 
-        Series series = seriesCollection.NewSeries();
-        series.XValues = worksheet.get_Range("A7", "A" + (6 + number).ToString());
-        series.Values = worksheet.get_Range("B7", "B" + (6 + number).ToString());
+        var series = seriesCollection.NewSeries();
+        series.XValues = worksheet.get_Range("A7", "A" + (6 + number));
+        series.Values = worksheet.get_Range("B7", "B" + (6 + number));
         chartPage.ChartType = XlChartType.xlLine;
     }
 }

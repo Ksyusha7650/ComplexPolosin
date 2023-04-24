@@ -31,7 +31,7 @@ where ID_material = @IdMaterial
             var idEc = reader.GetInt32(1);
             var idUnit = -1;
             if (!reader.IsDBNull(2))
-            idUnit = reader.GetInt32(2);
+                idUnit = reader.GetInt32(2);
             var unit = await _baseRepository.GetNameUnit(idUnit);
             var idProperty = reader.GetInt32(3);
             var property = await _baseRepository.GetNameProperty(idProperty);
