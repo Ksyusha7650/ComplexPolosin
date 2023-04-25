@@ -23,7 +23,7 @@ public partial class MainWindow
 {
     private Calculation _calculation;
     private DrawCharts _charts;
-    private DataService _dataService;
+    // private DataService _dataService;
     private EmpiricCoefficientsModel[] _empiricCoefficients;
 
     private string[] _marks, _types;
@@ -31,16 +31,18 @@ public partial class MainWindow
     public MainWindow()
     {
         InitializeComponent();
-        var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
-        customCulture.NumberFormat.NumberDecimalSeparator = ".";
-        Thread.CurrentThread.CurrentCulture = customCulture;
-        GetDataFromDataBase();
+        // var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+        // customCulture.NumberFormat.NumberDecimalSeparator = ".";
+        // Thread.CurrentThread.CurrentCulture = customCulture;
+        // GetDataFromDataBase();
         SetUpColumns();
+        MarkComboBox.Items.Add("--default");
+        TypeComboBox.Items.Add("--default");
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
     {
-        var regex = new Regex("[^0-9.-]+");
+        var regex = new Regex("[^0-9.]+");
         e.Handled = regex.IsMatch(e.Text);
     }
 
@@ -62,6 +64,11 @@ public partial class MainWindow
             _charts.TemperatureLength();
         else
             _charts.ViscosityLength();
+
+        // TableWindow tableWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
+        // tableWindow.Show();
+        ChartsWindow chartsWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
+        chartsWindow.Show();
 
         DrawTable.DrawTableCalculations(
             listOfChannelLength,
@@ -89,6 +96,29 @@ public partial class MainWindow
     {
         try
         {
+            // _calculation = new Calculation(
+            //     new EmpiricCoefficients(
+            //         Convert.ToDouble(_empiricCoefficients[0].Value),
+            //         Convert.ToDouble(_empiricCoefficients[1].Value),
+            //         Convert.ToDouble(_empiricCoefficients[2].Value),
+            //         Convert.ToDouble(_empiricCoefficients[3].Value),
+            //         Convert.ToDouble(_empiricCoefficients[4].Value)),
+            //     new GeometricParameters(
+            //         MarkComboBox.SelectedItem.ToString(),
+            //         Convert.ToDouble(HeightTextBox.Text),
+            //         Convert.ToDouble(LengthTextBox.Text),
+            //         Convert.ToDouble(WidthTextBox.Text)),
+            //     new PropertiesOfMaterial(
+            //         TypeComboBox.SelectedItem.ToString(),
+            //         Convert.ToDouble(DensityTextBox.Text),
+            //         Convert.ToDouble(SpecificHeartTextBox.Text),
+            //         Convert.ToDouble(MeltingPointTextBox.Text)),
+            //     new VariableParameters(
+            //         Convert.ToDouble(CoverTemperatureTextBox.Text),
+            //         Convert.ToDouble(CoverVelocityTextBox.Text),
+            //         Convert.ToDouble(StepTextBox.Text)));
+            
+            
             _calculation = new Calculation(
                 new EmpiricCoefficients(
                     Convert.ToDouble(_empiricCoefficients[0].Value),
@@ -114,6 +144,7 @@ public partial class MainWindow
         catch (Exception)
         {
             MessageBox.Show("Check have all input fields!");
+            return;
         }
     }
 
@@ -126,16 +157,16 @@ public partial class MainWindow
             return;
         }
 
-        var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
-        var model = new GeometricParameters(
-            mark,
-            result.Height,
-            result.Width,
-            result.Length);
-        MarkComboBox.SelectedItem = model.Mark;
-        HeightTextBox.Text = model.Height.ToString();
-        WidthTextBox.Text = model.Width.ToString();
-        LengthTextBox.Text = model.Length.ToString();
+        //var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
+        // var model = new GeometricParameters(
+        //     mark,
+        //     result.Height,
+        //     result.Width,
+        //     result.Length);
+        // MarkComboBox.SelectedItem = model.Mark;
+        // HeightTextBox.Text = model.Height.ToString();
+        // WidthTextBox.Text = model.Width.ToString();
+        // LengthTextBox.Text = model.Length.ToString();
     }
 
     private void Clear()
@@ -157,25 +188,42 @@ public partial class MainWindow
 
     private void GetDataFromDataBase()
     {
-        _dataService = new DataService();
-        _marks = _dataService.ChannelDataBase.GetMarks();
-        foreach (var mark in _marks)
-            MarkComboBox.Items.Add(mark);
-        _types = _dataService.MaterialDataBase.GetTypes();
-        foreach (var type in _types) TypeComboBox.Items.Add(type);
+        // _dataService = new DataService();
+        // _marks = _dataService.ChannelDataBase.GetMarks();
+        // foreach (var mark in _marks)
+        //     MarkComboBox.Items.Add(mark);
+        // _types = _dataService.MaterialDataBase.GetTypes();
+        // foreach (var type in _types) TypeComboBox.Items.Add(type);
     }
 
     private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var type = TypeComboBox.SelectedItem.ToString();
-        var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
-        _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
-        foreach (var empiricCoefficient in _empiricCoefficients)
-            EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
-                empiricCoefficient.IdEc,
-                empiricCoefficient.Name,
-                empiricCoefficient.Unit ?? " ",
-                empiricCoefficient.Value));
+        // var type = TypeComboBox.SelectedItem.ToString();
+        // var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
+        // _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
+        // foreach (var empiricCoefficient in _empiricCoefficients)
+        //     EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
+        //         empiricCoefficient.IdEc,
+        //         empiricCoefficient.Name,
+        //         empiricCoefficient.Unit ?? " ",
+        //         empiricCoefficient.Value));
+
+        EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
+            1, "Коэффициент консистенции", "Pa * s", 29940));
+        
+        EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
+            2, "Энергия активации", "J/m", 20000));
+        
+        EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
+            3, "Температура приведения", "C", 190));
+        
+        EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
+            4, "Индекс течения материала", "-", 0.35));
+        
+        EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
+            5, "Коэффициент теплоотдачи ", "Vt", 425));
+        
+    
     }
 
     private void SetUpColumns()

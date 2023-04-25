@@ -4,14 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Table" Height="450" Width="800">
+        Title="Table" Height="750" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <DataGrid x:Name="tableWithCalc" d:ItemsSource="{d:SampleData ItemCount=5}" RenderTransformOrigin="0.493,0.771">
-            <!--<DataGrid.Columns>
-                <DataGridTextColumn Header="Координата по длине канала, м"/>
-                <DataGridTextColumn Header="Температура, С"/>
-                <DataGridTextColumn Header="Вязкость, Па * с"/>
-            </DataGrid.Columns>-->
+        <DataGrid x:Name="TableWithCalc" d:ItemsSource="{d:SampleData ItemCount=5}" RenderTransformOrigin="0.493,0.771" AutoGenerateColumns="False">
 
         </DataGrid>
         <Button Content="Button" HorizontalAlignment="Left" Margin="706,381,0,0" VerticalAlignment="Top"
