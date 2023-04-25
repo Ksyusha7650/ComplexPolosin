@@ -16,7 +16,7 @@ public class Calculation
     private double _F;
     private double _gammaPoint;
     private double _H;
-    public double _L;
+    private double _L;
     private double _m0;
     private double _n;
     private double _Q = 0;
@@ -99,7 +99,7 @@ public class Calculation
     // производительность канала
     public double Effiency()
     {
-        return Math.Round(_ro * _Qch, 2);
+        return Math.Round(_ro * _Qch * 3600, 2);
     }
 
     // список координат по длине канала для таблицы

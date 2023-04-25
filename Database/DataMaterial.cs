@@ -16,7 +16,7 @@ public class DataMaterial
     {
         const string sqlQuery = @"
 select Type
-  from material
+from material
 ";
         using var connection = _baseRepository.GetAndOpenConnection().Result;
         var cmd = new MySqlCommand();
@@ -31,7 +31,7 @@ select Type
     public int GetIdMaterial(string name)
     {
         const string sqlQuery = @"
-select ID_material
+select ID_ParameterSet
 from material
 where Type = @TypeName;
 ";
@@ -50,9 +50,9 @@ where Type = @TypeName;
     public async Task<GeometricParametersModel> GetGeometricParameters(string mark)
     {
         const string sqlQuery = @"
-select ID_PropertySet
-  from channel
- where Mark = @Mark
+select ID_ParameterSet
+from channel
+where Mark = @Mark
 ";
         await using var connection = await _baseRepository.GetAndOpenConnection();
         var cmd = new MySqlCommand();

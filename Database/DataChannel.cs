@@ -16,7 +16,7 @@ public class DataChannel
     {
         const string sqlQuery = @"
 select Mark
-  from channel
+from channel
 ";
         using var connection = _baseRepository.GetAndOpenConnection().Result;
         var cmd = new MySqlCommand();
@@ -31,9 +31,9 @@ select Mark
     public async Task<GeometricParametersModel> GetGeometricParameters(string mark)
     {
         const string sqlQuery = @"
-select ID_PropertySet
-  from channel
- where Mark = @Mark
+select ID_ParameterSet
+from channel
+where Mark = @Mark
 ";
         await using var connection = await _baseRepository.GetAndOpenConnection();
         var cmd = new MySqlCommand();
