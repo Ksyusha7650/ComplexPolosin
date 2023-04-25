@@ -46,7 +46,8 @@ public partial class MainWindow
 
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
-        Calculate();
+        if (!Calculate()) 
+            return;
         TemperatureProductTextBox.Text = GetTemperature().ToString();
         ViscosityProductTextBox.Text = GetViscosity().ToString();
         EfficiencyTextBox.Text = GetEfficiency().ToString();
@@ -85,7 +86,7 @@ public partial class MainWindow
         return _calculation.Effiency();
     }
 
-    private void Calculate()
+    private bool Calculate()
     {
         try
         {
@@ -114,7 +115,10 @@ public partial class MainWindow
         catch (Exception)
         {
             MessageBox.Show("Check have all input fields!");
+            return false;
         }
+
+        return true;
     }
 
     private void MarkComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
