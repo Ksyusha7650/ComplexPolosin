@@ -48,7 +48,8 @@ public partial class MainWindow
 
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
-        Calculate();
+        if (!Calculate()) 
+            return;
         TemperatureProductTextBox.Text = GetTemperature().ToString();
         ViscosityProductTextBox.Text = GetViscosity().ToString();
         EfficiencyTextBox.Text = GetEfficiency().ToString();
@@ -92,7 +93,7 @@ public partial class MainWindow
         return _calculation.Effiency();
     }
 
-    private void Calculate()
+    private bool Calculate()
     {
         try
         {
@@ -120,12 +121,7 @@ public partial class MainWindow
             
             
             _calculation = new Calculation(
-                new EmpiricCoefficients(
-                    Convert.ToDouble(_empiricCoefficients[0].Value),
-                    Convert.ToDouble(_empiricCoefficients[1].Value),
-                    Convert.ToDouble(_empiricCoefficients[2].Value),
-                    Convert.ToDouble(_empiricCoefficients[3].Value),
-                    Convert.ToDouble(_empiricCoefficients[4].Value)),
+                new EmpiricCoefficients(29940, 20000, 190, 0.35, 425),
                 new GeometricParameters(
                     MarkComboBox.SelectedItem.ToString(),
                     Convert.ToDouble(HeightTextBox.Text),
@@ -144,8 +140,10 @@ public partial class MainWindow
         catch (Exception)
         {
             MessageBox.Show("Check have all input fields!");
-            return;
+            return false;
         }
+
+        return true;
     }
 
     private void MarkComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

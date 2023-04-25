@@ -69,10 +69,10 @@
                  Height="22" IsReadOnly="True" />
         <Label Content="Viscosity product:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="302,532,0,0"
                VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
-        <TextBox x:Name="EfficiencyTextBox" HorizontalAlignment="Left" Margin="643,529,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="EfficiencyTextBox" HorizontalAlignment="Left" Margin="660,529,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="50"
                  Height="22" IsReadOnly="True" />
-        <Label Content="Efficiency:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="567,532,0,0"
+        <Label Content="Throughput:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="567,532,0,0"
                VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
         <TextBox x:Name="DensityTextBox" Text="950" HorizontalAlignment="Left" Margin="594,199,0,0"
                  TextWrapping="Wrap"
@@ -154,6 +154,12 @@
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="260,534,996,0" VerticalAlignment="Top" />
         <Label Content="Pa*s" Padding="5,0,5,0" UseLayoutRounding="False" Margin="514,534,729,0"
                VerticalAlignment="Top" />
+        <Label Content="" Padding="5,0,5,0" UseLayoutRounding="False" Margin="732,534,511,0"
+            VerticalAlignment="Top" />
+        <Label Content="kq/h" Padding="5,0,5,0" UseLayoutRounding="False" Margin="726,534,517,0"
+            VerticalAlignment="Top" />
+        <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="979,534,264,0"
+            VerticalAlignment="Top" />
 
     </Grid>
 </Window>
