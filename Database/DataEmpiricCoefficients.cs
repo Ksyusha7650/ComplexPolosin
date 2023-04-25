@@ -16,8 +16,9 @@ public class DataEmpiricCoefficients
     {
         const string sqlQuery = @"
 select *
-from empiriccoefficients
-where ID_material = @IdMaterial
+from parameter_in_set ps
+join parameter p on p.ID_Parameter = ps.ID_Parameter
+where ID_ParameterSet = @IdMaterial and p.ID_Type = 2
 ";
         await using var connection = await _baseRepository.GetAndOpenConnection();
         var cmd = new MySqlCommand();
@@ -26,22 +27,23 @@ where ID_material = @IdMaterial
         cmd.CommandText = sqlQuery;
         var reader = cmd.ExecuteReader();
         List<EmpiricCoefficientsModel> empiricCoefficients = new();
+        int numberEc = 1;
         while (reader.Read())
         {
-            var idEc = reader.GetInt32(1);
             var idUnit = -1;
             if (!reader.IsDBNull(2))
                 idUnit = reader.GetInt32(2);
             var unit = await _baseRepository.GetNameUnit(idUnit);
-            var idProperty = reader.GetInt32(3);
+            var idProperty = reader.GetInt32(4);
             var property = await _baseRepository.GetNameProperty(idProperty);
-            var value = reader.GetDouble(4);
+            var value = reader.GetDouble(3);
             empiricCoefficients.Add(new EmpiricCoefficientsModel(
                 idMaterial,
-                idEc,
+                numberEc,
                 property,
                 unit,
                 value));
+            numberEc++;
         }
 
         return empiricCoefficients.ToArray();
