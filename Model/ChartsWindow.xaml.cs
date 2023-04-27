@@ -40,8 +40,8 @@ public partial class ChartsWindow : Window
         // SeriesCollection.Clear();
         // PlotTemperature.AxisX.Clear();
         // PlotTemperature.AxisY.Clear();
-        PlotTemperature.AxisX.Add(new Axis{Title = "Length of the channel, m", FontSize = 15});
-        PlotTemperature.AxisY.Add(new Axis{Title = "Material temperature, C", FontSize = 15});
+        PlotTemperature.AxisX.Add(new Axis{Title = "Channel length coordinate, m", FontSize = 15});
+        PlotTemperature.AxisY.Add(new Axis{Title = "Material temperature, °С", FontSize = 15});
         var points = new ChartValues<ObservablePoint>();
         for (int i = 0; i < _listOfChannelLength.Count; i++)
         {
@@ -74,7 +74,7 @@ public partial class ChartsWindow : Window
         // SeriesCollection.Clear();
         // PlotViscosity.AxisX.Clear();
         // PlotViscosity.AxisY.Clear();
-        PlotViscosity.AxisX.Add(new Axis{Title = "Length of the channel, m", FontSize = 15});
+        PlotViscosity.AxisX.Add(new Axis{Title = "Channel length coordinate, m", FontSize = 15});
         PlotViscosity.AxisY.Add(new Axis{Title = "Material viscosity, Pa*s", FontSize = 15});
         var points = new ChartValues<ObservablePoint>();
         for (int i = 0; i < _listOfChannelLength.Count; i++)

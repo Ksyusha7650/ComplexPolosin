@@ -51,11 +51,13 @@ public partial class MainWindow
         if (!Calculate()) 
             return;
         TemperatureProductTextBox.Text = GetTemperature().ToString();
-        ViscosityProductTextBox.Text = GetViscosity().ToString();
+        ViscosityProductTextBox.Text = Math.Round(GetViscosity(), 0).ToString();
         EfficiencyTextBox.Text = GetEfficiency().ToString();
         var listOfChannelLength = _calculation.ListOfChannelLength();
         var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
         var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
+
+        ExcelButton.IsEnabled = true;
         _charts = new DrawCharts(
             listOfChannelLength,
             listOfTemperatures,
@@ -66,8 +68,9 @@ public partial class MainWindow
         else
             _charts.ViscosityLength();
 
-        // TableWindow tableWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
-        // tableWindow.Show();
+        TableWindow tableWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
+        tableWindow.Show();
+        
         ChartsWindow chartsWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
         chartsWindow.Show();
 
@@ -281,52 +284,62 @@ public partial class MainWindow
                 excelWork.SetData("B", 2, MarkComboBox.Text);
 
                 excelWork.SetData("A", 3, "Geometric parameters:");
-                excelWork.SetData("A", 4, "Height");
+                excelWork.SetData("A", 4, "Height, m:");
                 excelWork.SetData("B", 4, HeightTextBox.Text);
-                excelWork.SetData("A", 5, "Length");
+                excelWork.SetData("A", 5, "Length, m:");
                 excelWork.SetData("B", 5, LengthTextBox.Text);
-                excelWork.SetData("A", 6, "Width");
+                excelWork.SetData("A", 6, "Width, m:");
                 excelWork.SetData("B", 6, WidthTextBox.Text);
 
                 excelWork.SetData("A", 7, "Cover:");
-                excelWork.SetData("A", 8, "Velocity");
+                excelWork.SetData("A", 8, "Velocity, m/s:");
                 excelWork.SetData("B", 8, CoverVelocityTextBox.Text);
-                excelWork.SetData("A", 9, "Temperature");
+                excelWork.SetData("A", 9, "Temperature, °С");
                 excelWork.SetData("B", 9, CoverTemperatureTextBox.Text);
+                
+                excelWork.SetData("A", 11, "Step, m:");
+                excelWork.SetData("B", 11, StepTextBox.Text);
 
                 excelWork.SetData("D", 1, "Material");
                 excelWork.SetData("D", 2, "Type:");
                 excelWork.SetData("E", 2, TypeComboBox.Text);
 
-                excelWork.SetData("D", 3, "Density");
+                excelWork.SetData("D", 3, "Density, kg/m^3:");
                 excelWork.SetData("E", 3, DensityTextBox.Text);
-                excelWork.SetData("D", 4, "Specific heat");
+                excelWork.SetData("D", 4, "Specific heat, J/(kg*°С):");
                 excelWork.SetData("E", 4, SpecificHeartTextBox.Text);
-                excelWork.SetData("D", 5, "Melting point");
+                excelWork.SetData("D", 5, "Melting point, °С");
                 excelWork.SetData("E", 5, MeltingPointTextBox.Text);
 
                 excelWork.SetData("D", 6, "Empiric Coefficients:");
                 var numberRow = 7;
-                foreach (var emp in _empiricCoefficients)
-                {
-                    excelWork.SetData("D", numberRow, emp.Name);
-                    excelWork.SetData("E", numberRow, emp.Value.ToString());
-                    numberRow++;
-                }
-
+                // foreach (var emp in _empiricCoefficients)
+                // {
+                //     excelWork.SetData("D", numberRow, emp.Name);
+                //     excelWork.SetData("E", numberRow, emp.Value.ToString());
+                //     numberRow++;
+                // }
 
                 var listOfChannelLength = _calculation.ListOfChannelLength();
                 var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
                 var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
-                excelWork.SetData("G", 1, "Coordinates");
-                excelWork.SetData("H", 1, "Temperature");
-                excelWork.SetData("I", 1, "Viscosity");
+                excelWork.SetData("G", 1, "Coordinates, m");
+                excelWork.SetData("H", 1, "Temperature, °С");
+                excelWork.SetData("I", 1, "Viscosity, Pa*s");
                 for (var i = 0; i < listOfChannelLength.Count; i++)
                 {
                     excelWork.SetData("G", i + 2, Math.Round(listOfChannelLength[i], 2).ToString());
                     excelWork.SetData("H", i + 2, Math.Round(listOfTemperatures[i], 2).ToString());
-                    excelWork.SetData("I", i + 2, Math.Round(listOfViscosity[i], 2).ToString());
+                    excelWork.SetData("I", i + 2, Math.Round(listOfViscosity[i], 0).ToString());
                 }
+                
+                excelWork.SetData("K", 1, "Criteria indicators of the process:");
+                excelWork.SetData("K", 2, "Product temperature, °С:");
+                excelWork.SetData("L", 2, TemperatureProductTextBox.Text);
+                excelWork.SetData("K", 3, "Product viscosity, Pa*s");
+                excelWork.SetData("L", 3, ViscosityProductTextBox.Text);
+                excelWork.SetData("K", 4, "Throughput, kg/h");
+                excelWork.SetData("L", 4, EfficiencyTextBox.Text);
                 //excelWork.DrawInExcel(witchOfAgnesi.pairs.Count);
 
                 excelWork.Save();

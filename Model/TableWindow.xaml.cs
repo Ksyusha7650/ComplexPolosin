@@ -23,15 +23,6 @@ public partial class TableWindow : Window
         _listOfViscosity = listOfViscosity;
         InitializeComponent();
         SetUpColumns();
-        // List<DataForTable> data = new();
-        // for (var i = 0; i < _listOfChannelLength.Count; i++)
-        //     data.Add(new DataForTable
-        //     {
-        //         Coordinate = _listOfChannelLength[i], Temperature = _listOfTemperatures[i],
-        //         Viscosity = _listOfViscosity[i]
-        //     });
-        // tableWithCalc.ItemsSource = data;
-        // List<DataForTable> data = new();
         for (int i = 0; i < _listOfViscosity.Count; i++)
         {
             TableWithCalc.Items.Add(new DataForTable(
@@ -63,7 +54,7 @@ public partial class TableWindow : Window
         TableWithCalc.Columns.Add(column);
         column = new DataGridTextColumn
         {
-            Header = "Temperature, C",
+            Header = "Temperature, °С",
             Binding = new Binding("Temperature")
         };
         TableWithCalc.Columns.Add(column);

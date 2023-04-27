@@ -62,12 +62,12 @@
         <TextBox x:Name="TemperatureProductTextBox" HorizontalAlignment="Left" Margin="188,529,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="62"
                  Height="22" IsReadOnly="True" />
-        <Label Content="Temperature product:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="40,532,0,0"
+        <Label Content="Product temperature:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="40,532,0,0"
                VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
         <TextBox x:Name="ViscosityProductTextBox" HorizontalAlignment="Left" Margin="426,529,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="72"
                  Height="22" IsReadOnly="True" />
-        <Label Content="Viscosity product:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="302,532,0,0"
+        <Label Content="Product viscosity:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="302,532,0,0"
                VerticalAlignment="Top" FontSize="14" HorizontalAlignment="Left" />
         <TextBox x:Name="EfficiencyTextBox" HorizontalAlignment="Left" Margin="660,529,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="50"
@@ -147,8 +147,8 @@
                VerticalAlignment="Top" />
         <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="231,267,1022,0"
                VerticalAlignment="Top" />
-        <Button x:Name="CalculateButton_Copy" Content="Export to xls" HorizontalAlignment="Left" Margin="1122,528,0,0"
-                VerticalAlignment="Top" Width="110"
+        <Button x:Name="ExcelButton" Content="Export to xls" HorizontalAlignment="Left" Margin="1122,528,0,0"
+                VerticalAlignment="Top" Width="110" IsEnabled="False"
                 Height="24" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16"
                 Click="ExcelButton_Click" />
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="260,534,996,0" VerticalAlignment="Top" />

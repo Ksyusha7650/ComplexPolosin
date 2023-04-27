@@ -61,7 +61,6 @@
         <PackageReference Include="LiveCharts" Version="0.9.7" />
         <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
         <PackageReference Include="Microsoft.Office.Excel" Version="14.0.4760.1000" />
-        <PackageReference Include="ScottPlot.WPF" Version="4.1.63" />
     </ItemGroup>
 
     <ItemGroup>
@@ -73,10 +72,6 @@
         <Resource Include="Style\Style.xaml">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Resource>
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="ScottPlot.WPF" Version="5.0.4-beta" />
     </ItemGroup>
 
     <!--<ItemGroup>

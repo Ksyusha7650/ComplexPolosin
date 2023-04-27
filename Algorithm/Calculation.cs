@@ -115,7 +115,7 @@ public class Calculation
     {
         List<double> listOfTemperatures = new();
         foreach (var coordinate in coordinates)
-            listOfTemperatures.Add(Math.Round(Temperature(coordinate), 5));
+            listOfTemperatures.Add(Math.Round(Temperature(coordinate), 2));
         return listOfTemperatures;
     }
 
