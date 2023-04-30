@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using Algorithm;
 using Algorithm.Models;
 using Database;
@@ -46,39 +47,144 @@ public partial class MainWindow
         e.Handled = regex.IsMatch(e.Text);
     }
 
+    // аахахаха пока в лоб решила подсвечивание textBox, не смогла найти нормальное решение
+    private bool CheckTextBox()
+    {
+        int countIncorrect = 0;
+        if (LengthTextBox.Text == "0")
+        {
+            LengthTextBox.BorderBrush = Brushes.Red;
+            countIncorrect++;
+        }
+        else
+        {
+            LengthTextBox.BorderBrush = Brushes.Black;
+        }
+        
+        if (WidthTextBox.Text == "0")
+        {
+            WidthTextBox.BorderBrush = Brushes.Red;
+            countIncorrect++;
+        } 
+        else
+        {
+            WidthTextBox.BorderBrush = Brushes.Black;
+        }
+        
+        if (HeightTextBox.Text == "0")
+        {
+            HeightTextBox.BorderBrush = Brushes.Red;
+            countIncorrect++;
+        }
+        else
+        {
+            HeightTextBox.BorderBrush = Brushes.Black;
+        } 
+        
+        if (DensityTextBox.Text == "0")
+        {
+            DensityTextBox.BorderBrush = Brushes.Red;
+            countIncorrect++;
+        }
+        else
+        {
+            DensityTextBox.BorderBrush = Brushes.Black;
+        } 
+        
+        if (MeltingPointTextBox.Text == "0")
+        {
+            MeltingPointTextBox.BorderBrush = Brushes.Red;
+            countIncorrect++;
+        }
+        else
+        {
+            MeltingPointTextBox.BorderBrush = Brushes.Black;
+        } 
+        
+        if (SpecificHeartTextBox.Text == "0")
+        {
+            SpecificHeartTextBox.BorderBrush = Brushes.Red;
+            countIncorrect++;
+        }
+        else
+        {
+            SpecificHeartTextBox.BorderBrush = Brushes.Black;
+        } 
+        
+        if (StepTextBox.Text == "0")
+        {
+            StepTextBox.BorderBrush = Brushes.Red;
+            countIncorrect++;
+        }
+        else
+        {
+            StepTextBox.BorderBrush = Brushes.Black;
+        } 
+        
+        if (CoverVelocityTextBox.Text == "0")
+        {
+            CoverVelocityTextBox.BorderBrush = Brushes.Red;
+            countIncorrect++;
+        }
+        else
+        {
+            CoverVelocityTextBox.BorderBrush = Brushes.Black;
+        } 
+        
+        if (CoverTemperatureTextBox.Text == "0")
+        {
+            CoverTemperatureTextBox.BorderBrush = Brushes.Red;
+            countIncorrect++;
+        }
+        else
+        {
+            CoverTemperatureTextBox.BorderBrush = Brushes.Black;
+        } 
+
+        if (countIncorrect == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
-        if (!Calculate()) 
+        if (!Calculate())
             return;
         TemperatureProductTextBox.Text = GetTemperature().ToString();
         ViscosityProductTextBox.Text = Math.Round(GetViscosity(), 0).ToString();
         EfficiencyTextBox.Text = GetEfficiency().ToString();
-        var listOfChannelLength = _calculation.ListOfChannelLength();
-        var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
-        var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
+        // var listOfChannelLength = _calculation.ListOfChannelLength();
+        // var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
+        // var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
 
         ExcelButton.IsEnabled = true;
-        _charts = new DrawCharts(
-            listOfChannelLength,
-            listOfTemperatures,
-            listOfViscosity,
-            Plot);
-        if (ChartComboBox.SelectedIndex == 0)
-            _charts.TemperatureLength();
-        else
-            _charts.ViscosityLength();
+        ButtonShowResult.IsEnabled = true;
+        // _charts = new DrawCharts(
+        //     listOfChannelLength,
+        //     listOfTemperatures,
+        //     listOfViscosity,
+        //     Plot);
+        // if (ChartComboBox.SelectedIndex == 0)
+        //     _charts.TemperatureLength();
+        // else
+        //     _charts.ViscosityLength();
 
-        TableWindow tableWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
-        tableWindow.Show();
-        
-        ChartsWindow chartsWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
-        chartsWindow.Show();
+        // TableWindow tableWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
+        // tableWindow.Show();
+        //
+        // ChartsWindow chartsWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
+        // chartsWindow.Show();
 
-        DrawTable.DrawTableCalculations(
-            listOfChannelLength,
-            listOfTemperatures,
-            listOfViscosity,
-            CalculationsDataGrid);
+        // DrawTable.DrawTableCalculations(
+        //     listOfChannelLength,
+        //     listOfTemperatures,
+        //     listOfViscosity,
+        //     CalculationsDataGrid);
     }
 
     private double GetTemperature()
@@ -146,6 +252,11 @@ public partial class MainWindow
             return false;
         }
 
+        if (!CheckTextBox())
+        {
+            return false;
+        }
+
         return true;
     }
 
@@ -180,11 +291,11 @@ public partial class MainWindow
 
     private void ChartComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (_charts is null) return;
-        if (ChartComboBox.SelectedIndex == 0)
-            _charts.TemperatureLength();
-        else
-            _charts.ViscosityLength();
+        // if (_charts is null) return;
+        // if (ChartComboBox.SelectedIndex == 0)
+        //     _charts.TemperatureLength();
+        // else
+        //     _charts.ViscosityLength();
     }
 
     private void GetDataFromDataBase()
@@ -253,6 +364,18 @@ public partial class MainWindow
             Binding = new Binding("Value")
         };
         EmpiricCoefficientsDataGrid.Columns.Add(column);
+    }
+
+    private void ButtonShowResult_Click(object sender, RoutedEventArgs e) {
+        var listOfChannelLength = _calculation.ListOfChannelLength();
+        var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
+        var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
+        
+        TableWindow tableWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
+        tableWindow.Show();
+        
+        ChartsWindow chartsWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
+        chartsWindow.Show();
     }
 
     private void ExcelButton_Click(object sender, RoutedEventArgs e)

@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="Charts" Height="450" Width="1100" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Title="Charts" Height="450" Width="1300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
         FontFamily="{StaticResource Inter}">
     <Grid>
         <wpf:CartesianChart Name="PlotTemperature" Series="{Binding SeriesCollectionTemp}" LegendLocation="None" Height="336"
-                            VerticalAlignment="Top" Margin="30,75,565,0" />
+                            VerticalAlignment="Top" Margin="30,75,670,0" />
         <wpf:CartesianChart x:Name="PlotViscosity" Series="{Binding SeriesCollectionVisc}" LegendLocation="None" Height="336"
-            VerticalAlignment="Top" Margin="565,75,31,0" />
-        <Label Content="Dependense of the material temperature on the channel length" FontSize="15" HorizontalAlignment="Left" Margin="80,28,0,0" VerticalAlignment="Top"/>
-        <Label Content="Dependense of the material viscosity on the channel length" FontSize="15" HorizontalAlignment="Left" Margin="615,28,0,0" VerticalAlignment="Top"/>
+            VerticalAlignment="Top" Margin="668,75,31,0" />
+        <Label Content="Dependense of the material temperature on the channel length" FontSize="15" HorizontalAlignment="Left" Margin="126,28,0,0" VerticalAlignment="Top"/>
+        <Label Content="Dependense of the material viscosity on the channel length" FontSize="15" HorizontalAlignment="Left" Margin="777,28,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

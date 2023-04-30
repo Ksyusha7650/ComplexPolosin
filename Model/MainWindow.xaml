@@ -50,14 +50,14 @@
         <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="456,302,523,0"
                VerticalAlignment="Top" FontSize="20" />
 
-        <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Margin="1000,528,0,0"
+        <Button x:Name="CalculateButton" Content="Calculate" HorizontalAlignment="Left" Margin="818,528,0,0"
                 VerticalAlignment="Top" Width="78"
-                Height="24" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16"
+                Height="24" Cursor="Hand" Background="{x:Null}" FontSize="16"
                 Click="CalculateButton_Click" />
-        <TextBox x:Name="StepTextBox" Text="0.1" HorizontalAlignment="Left" Margin="908,530,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="StepTextBox" Text="0.1" HorizontalAlignment="Left" Margin="125,468,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="70"
                  Height="22" PreviewTextInput="NumberValidationTextBox" />
-        <Label Content="Step:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="843,533,393,0"
+        <Label Content="Step:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="61,471,1175,0"
                VerticalAlignment="Top" FontSize="14" HorizontalContentAlignment="Right" />
         <TextBox x:Name="TemperatureProductTextBox" HorizontalAlignment="Left" Margin="188,529,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="62"
@@ -96,7 +96,7 @@
                VerticalAlignment="Top" />
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="694,260,523,0"
                VerticalAlignment="Top" />
-        <Expander Height="270" Header="Charts" Margin="829,27,14,0" VerticalAlignment="Top" Background="White"
+        <!--<Expander Height="270" Header="Charts" Margin="829,27,14,0" VerticalAlignment="Top" Background="White"
                   ExpandDirection="Left">
             <Grid Margin="0,10,0,26">
                 <ComboBox x:Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Center" Margin="0,7,0,0"
@@ -108,21 +108,25 @@
                 </ComboBox>
                 <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
                        VerticalAlignment="Top" FontSize="16" />
-                <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
+                -->
+        <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
+        <!--
                 <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"
                                     VerticalAlignment="Top" Margin="32,50,31,0" />
             </Grid>
-        </Expander>
+        </Expander>-->
         <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="484,349,497,132" AutoGenerateColumns="False" />
-        <Expander Height="242" Header="Table" Margin="933,251,14,0" VerticalAlignment="Top" Background="{x:Null}"
+        <!--<Expander Height="242" Header="Table" Margin="933,251,14,0" VerticalAlignment="Top" Background="{x:Null}"
                   ExpandDirection="Left">
             <Grid Margin="0,10,0,-2">
                 <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
                        VerticalAlignment="Top" FontSize="16" />
                 <DataGrid Margin="21,10,46,11" x:Name="CalculationsDataGrid" />
-                <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
+                -->
+        <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
+        <!--
             </Grid>
-        </Expander>
+        </Expander>-->
         <TextBox x:Name="HeightTextBox" Text="0.02" HorizontalAlignment="Left" Margin="142,205,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
@@ -147,9 +151,9 @@
                VerticalAlignment="Top" />
         <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="231,267,1022,0"
                VerticalAlignment="Top" />
-        <Button x:Name="ExcelButton" Content="Export to xls" HorizontalAlignment="Left" Margin="1122,528,0,0"
+        <Button x:Name="ExcelButton" Content="Export to xls" HorizontalAlignment="Left" Margin="1092,528,0,0"
                 VerticalAlignment="Top" Width="110" IsEnabled="False"
-                Height="24" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}" FontSize="16"
+                Height="24" Cursor="Hand" Background="{x:Null}"  FontSize="16"
                 Click="ExcelButton_Click" />
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="260,534,996,0" VerticalAlignment="Top" />
         <Label Content="Pa*s" Padding="5,0,5,0" UseLayoutRounding="False" Margin="514,534,729,0"
@@ -158,8 +162,12 @@
             VerticalAlignment="Top" />
         <Label Content="kq/h" Padding="5,0,5,0" UseLayoutRounding="False" Margin="726,534,517,0"
             VerticalAlignment="Top" />
-        <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="979,534,264,0"
+        <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="197,472,1046,0"
             VerticalAlignment="Top" />
+        <Button x:Name="ButtonShowResult" Content="Show result" HorizontalAlignment="Left" Margin="944,528,0,0"
+            VerticalAlignment="Top" Width="110" IsEnabled="False"
+            Height="24" Cursor="Hand" Background="{x:Null}" FontSize="16"
+            Click="ButtonShowResult_Click" />
 
     </Grid>
 </Window>

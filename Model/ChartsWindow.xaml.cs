@@ -22,6 +22,8 @@ public partial class ChartsWindow : Window
     private readonly List<double> _listOfChannelLength;
     private readonly List<double> _listOfTemperatures;
     private readonly List<double> _listOfViscosity;
+    public Axis[] XAxes { get; set; }
+    public Axis[] YAxes { get; set; }
     public SeriesCollection SeriesCollectionTemp { get; set; }
     public SeriesCollection SeriesCollectionVisc { get; set; }
     
@@ -53,7 +55,8 @@ public partial class ChartsWindow : Window
                 Y = _listOfTemperatures[i]
             });
         }
-        PointLabel = chartPoint => "hahahhahahahahhahahhaha";
+        PointLabel = chartPoint => $"{"Coordinate"}: {chartPoint.X}, {"Temperature"}: {chartPoint.Y}";
+        
         
         SeriesCollectionTemp = new SeriesCollection
         {
@@ -62,7 +65,8 @@ public partial class ChartsWindow : Window
                 Values = new ChartValues<ObservablePoint> (points),
                 PointGeometrySize = 10,
                 Fill = Brushes.Transparent,
-                LabelPoint = PointLabel
+                LabelPoint = PointLabel,
+                Title = ""
             }
             
         };
@@ -73,11 +77,11 @@ public partial class ChartsWindow : Window
         // serie.ToolTip = "ldkf";
         // serie.TooltipLabelFormatter = (chartPoint) => $"{YAxes[0].Name}: {chartPoint.PrimaryValue}, {XAxes[0].Name}: {chartPoint.SecondaryValue}";
         // SeriesCollectionTemp.Add(serie);
-        PointLabel = (chartPoint) =>
-        {
-            
-            return "hahahahahahhaha";
-        };
+        // PointLabel = (chartPoint) =>
+        // {
+        //     
+        //     return "hahahahahahhaha";
+        // };
     }
 
     private void ViscosityLength()
@@ -93,16 +97,19 @@ public partial class ChartsWindow : Window
             points.Add(new ObservablePoint
             {
                 X = _listOfChannelLength[i],
-                Y = _listOfViscosity[i]
+                Y = Math.Round(_listOfViscosity[i], 0)
             });
         }
+        PointLabel = chartPoint => $"{"Coordinate"}: {chartPoint.X}, {"Viscosity"}: {chartPoint.Y}";
         SeriesCollectionVisc = new SeriesCollection
         {
             new LineSeries
             {
                 Values = new ChartValues<ObservablePoint> (points),
                 PointGeometrySize = 10,
-                Fill = Brushes.Transparent
+                Fill = Brushes.Transparent,
+                LabelPoint = PointLabel,
+                Title = ""
             }
         };
         PlotViscosity.DataContext = this;
