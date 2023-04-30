@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using Algorithm;
 using Algorithm.Models;
 using Database;
@@ -26,8 +31,11 @@ public partial class MainWindow
     private DrawCharts _charts;
     // private DataService _dataService;
     private EmpiricCoefficientsModel[] _empiricCoefficients;
-
     private string[] _marks, _types;
+    private List<string> _incorrectValues = new List<string>();
+    public PerformanceCounter myCounter =
+            new PerformanceCounter("Processor", "% Processor Time", "_Total"); // фиг знает, что мы должны отображать
+    DispatcherTimer Timer99 = new DispatcherTimer();
 
     public MainWindow()
     {
@@ -39,6 +47,14 @@ public partial class MainWindow
         SetUpColumns();
         MarkComboBox.Items.Add("--default");
         TypeComboBox.Items.Add("--default");
+        Timer99.Tick += SetRamAndTime; // don't freeze the ui
+        Timer99.Interval = new TimeSpan(0, 0, 0, 0, 1024);
+        Timer99.IsEnabled = true;
+    }
+
+    private void SetRamAndTime(object sender, EventArgs e)
+    {
+        TimeTextBox.Text = (myCounter.NextValue()).ToString();
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -47,109 +63,40 @@ public partial class MainWindow
         e.Handled = regex.IsMatch(e.Text);
     }
 
-    // аахахаха пока в лоб решила подсвечивание textBox, не смогла найти нормальное решение
-    private bool CheckTextBox()
+    public System.Windows.Media.Color borderColor = new System.Windows.Media.Color
     {
-        int countIncorrect = 0;
-        if (LengthTextBox.Text == "0")
-        {
-            LengthTextBox.BorderBrush = Brushes.Red;
-            countIncorrect++;
-        }
-        else
-        {
-            LengthTextBox.BorderBrush = Brushes.Black;
-        }
-        
-        if (WidthTextBox.Text == "0")
-        {
-            WidthTextBox.BorderBrush = Brushes.Red;
-            countIncorrect++;
-        } 
-        else
-        {
-            WidthTextBox.BorderBrush = Brushes.Black;
-        }
-        
-        if (HeightTextBox.Text == "0")
-        {
-            HeightTextBox.BorderBrush = Brushes.Red;
-            countIncorrect++;
-        }
-        else
-        {
-            HeightTextBox.BorderBrush = Brushes.Black;
-        } 
-        
-        if (DensityTextBox.Text == "0")
-        {
-            DensityTextBox.BorderBrush = Brushes.Red;
-            countIncorrect++;
-        }
-        else
-        {
-            DensityTextBox.BorderBrush = Brushes.Black;
-        } 
-        
-        if (MeltingPointTextBox.Text == "0")
-        {
-            MeltingPointTextBox.BorderBrush = Brushes.Red;
-            countIncorrect++;
-        }
-        else
-        {
-            MeltingPointTextBox.BorderBrush = Brushes.Black;
-        } 
-        
-        if (SpecificHeartTextBox.Text == "0")
-        {
-            SpecificHeartTextBox.BorderBrush = Brushes.Red;
-            countIncorrect++;
-        }
-        else
-        {
-            SpecificHeartTextBox.BorderBrush = Brushes.Black;
-        } 
-        
-        if (StepTextBox.Text == "0")
-        {
-            StepTextBox.BorderBrush = Brushes.Red;
-            countIncorrect++;
-        }
-        else
-        {
-            StepTextBox.BorderBrush = Brushes.Black;
-        } 
-        
-        if (CoverVelocityTextBox.Text == "0")
-        {
-            CoverVelocityTextBox.BorderBrush = Brushes.Red;
-            countIncorrect++;
-        }
-        else
-        {
-            CoverVelocityTextBox.BorderBrush = Brushes.Black;
-        } 
-        
-        if (CoverTemperatureTextBox.Text == "0")
-        {
-            CoverTemperatureTextBox.BorderBrush = Brushes.Red;
-            countIncorrect++;
-        }
-        else
-        {
-            CoverTemperatureTextBox.BorderBrush = Brushes.Black;
-        } 
+        A = 100
+    };
 
-        if (countIncorrect == 0)
+    private void ZeroValidationTextBox(object sender, TextChangedEventArgs e)
+    {
+        var textBox = sender as TextBox;
+        var exist = false;
+        foreach (var incorrectTextBox in _incorrectValues)
         {
-            return true;
+            if (incorrectTextBox == textBox.Text)
+            {
+                exist = true;
+                break;
+            }
+        }
+        if (textBox.Text is "0" or "")
+        {
+            textBox.BorderBrush = System.Windows.Media.Brushes.Red;
+            if (!exist)
+                _incorrectValues.Add(textBox.Text);
         }
         else
         {
-            return false;
+            textBox.BorderBrush = new SolidColorBrush(borderColor);
+            if (!exist)
+                _incorrectValues.Remove(textBox.Text);
         }
+            
     }
+
+    // чуть сократила 👉👈
+    private bool CheckTextBox => _incorrectValues.Count == 0;
 
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
@@ -162,8 +109,8 @@ public partial class MainWindow
         // var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
         // var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
 
-        ExcelButton.IsEnabled = true;
-        ButtonShowResult.IsEnabled = true;
+        ExportButton.IsEnabled = true;
+        ShowResultsButton.IsEnabled = true;
         // _charts = new DrawCharts(
         //     listOfChannelLength,
         //     listOfTemperatures,
@@ -204,6 +151,9 @@ public partial class MainWindow
 
     private bool Calculate()
     {
+        if (!CheckTextBox)
+            return false;
+
         try
         {
              /*_calculation = new Calculation(
@@ -248,12 +198,7 @@ public partial class MainWindow
         }
         catch (Exception)
         {
-            MessageBox.Show("Check have all input fields!");
-            return false;
-        }
-
-        if (!CheckTextBox())
-        {
+            MessageBox.Show("Something goes wrong!");
             return false;
         }
 
@@ -367,6 +312,11 @@ public partial class MainWindow
     }
 
     private void ButtonShowResult_Click(object sender, RoutedEventArgs e) {
+        if (!CheckTextBox || _calculation is null)
+        {
+            MessageBox.Show("Make calculation first!");
+            return;
+        } 
         var listOfChannelLength = _calculation.ListOfChannelLength();
         var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
         var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
@@ -380,6 +330,11 @@ public partial class MainWindow
 
     private void ExcelButton_Click(object sender, RoutedEventArgs e)
     {
+        if (!CheckTextBox || _calculation is null)
+        {
+            MessageBox.Show("Make calculation first!");
+            return;
+        }
         var saveFileDialog = new SaveFileDialog
         {
             Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.xlsx)|*.xlsx",
