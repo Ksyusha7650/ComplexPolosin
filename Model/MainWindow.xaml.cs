@@ -31,9 +31,9 @@ public partial class MainWindow
     public MainWindow()
     {
         InitializeComponent();
-        // var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
-        // customCulture.NumberFormat.NumberDecimalSeparator = ".";
-        // Thread.CurrentThread.CurrentCulture = customCulture;
+         var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+         customCulture.NumberFormat.NumberDecimalSeparator = ".";
+         Thread.CurrentThread.CurrentCulture = customCulture;
         // GetDataFromDataBase();
         SetUpColumns();
         MarkComboBox.Items.Add("--default");
@@ -100,27 +100,27 @@ public partial class MainWindow
     {
         try
         {
-            // _calculation = new Calculation(
-            //     new EmpiricCoefficients(
-            //         Convert.ToDouble(_empiricCoefficients[0].Value),
-            //         Convert.ToDouble(_empiricCoefficients[1].Value),
-            //         Convert.ToDouble(_empiricCoefficients[2].Value),
-            //         Convert.ToDouble(_empiricCoefficients[3].Value),
-            //         Convert.ToDouble(_empiricCoefficients[4].Value)),
-            //     new GeometricParameters(
-            //         MarkComboBox.SelectedItem.ToString(),
-            //         Convert.ToDouble(HeightTextBox.Text),
-            //         Convert.ToDouble(LengthTextBox.Text),
-            //         Convert.ToDouble(WidthTextBox.Text)),
-            //     new PropertiesOfMaterial(
-            //         TypeComboBox.SelectedItem.ToString(),
-            //         Convert.ToDouble(DensityTextBox.Text),
-            //         Convert.ToDouble(SpecificHeartTextBox.Text),
-            //         Convert.ToDouble(MeltingPointTextBox.Text)),
-            //     new VariableParameters(
-            //         Convert.ToDouble(CoverTemperatureTextBox.Text),
-            //         Convert.ToDouble(CoverVelocityTextBox.Text),
-            //         Convert.ToDouble(StepTextBox.Text)));
+             /*_calculation = new Calculation(
+                 new EmpiricCoefficients(
+                     Convert.ToDouble(_empiricCoefficients[0].Value),
+                     Convert.ToDouble(_empiricCoefficients[1].Value),
+                     Convert.ToDouble(_empiricCoefficients[2].Value),
+                     Convert.ToDouble(_empiricCoefficients[3].Value),
+                     Convert.ToDouble(_empiricCoefficients[4].Value)),
+                 new GeometricParameters(
+                     MarkComboBox.SelectedItem.ToString(),
+                     Convert.ToDouble(HeightTextBox.Text),
+                     Convert.ToDouble(LengthTextBox.Text),
+                     Convert.ToDouble(WidthTextBox.Text)),
+                 new PropertiesOfMaterial(
+                     TypeComboBox.SelectedItem.ToString(),
+                     Convert.ToDouble(DensityTextBox.Text),
+                     Convert.ToDouble(SpecificHeartTextBox.Text),
+                     Convert.ToDouble(MeltingPointTextBox.Text)),
+                 new VariableParameters(
+                     Convert.ToDouble(CoverTemperatureTextBox.Text),
+                     Convert.ToDouble(CoverVelocityTextBox.Text),
+                     Convert.ToDouble(StepTextBox.Text)));*/
             
             
             _calculation = new Calculation(

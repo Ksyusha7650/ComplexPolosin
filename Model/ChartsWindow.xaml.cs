@@ -25,6 +25,8 @@ public partial class ChartsWindow : Window
     public SeriesCollection SeriesCollectionTemp { get; set; }
     public SeriesCollection SeriesCollectionVisc { get; set; }
     
+    public Func<ChartPoint, string> PointLabel { get; set; }
+    
     public ChartsWindow(List<double> listOfChannelLength, List<double> listOfTemperatures, List<double> listOfViscosity)
     {
         _listOfChannelLength = listOfChannelLength;
@@ -51,22 +53,31 @@ public partial class ChartsWindow : Window
                 Y = _listOfTemperatures[i]
             });
         }
+        PointLabel = chartPoint => "hahahhahahahahhahahhaha";
+        
         SeriesCollectionTemp = new SeriesCollection
         {
             new LineSeries
             {
                 Values = new ChartValues<ObservablePoint> (points),
                 PointGeometrySize = 10,
-                Fill = Brushes.Transparent
+                Fill = Brushes.Transparent,
+                LabelPoint = PointLabel
             }
+            
         };
+        
         PlotTemperature.DataContext = this;
         // LineSeries serie = new();
         // serie.Values = points;
         // serie.ToolTip = "ldkf";
         // serie.TooltipLabelFormatter = (chartPoint) => $"{YAxes[0].Name}: {chartPoint.PrimaryValue}, {XAxes[0].Name}: {chartPoint.SecondaryValue}";
         // SeriesCollectionTemp.Add(serie);
-        //PointLabel = (chartPoint) => $"{YAxes[0].Name}: {chartPoint.X}, {XAxes[0].Name}: {chartPoint.Y}";
+        PointLabel = (chartPoint) =>
+        {
+            
+            return "hahahahahahhaha";
+        };
     }
 
     private void ViscosityLength()
