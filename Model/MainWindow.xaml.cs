@@ -74,23 +74,23 @@ public partial class MainWindow
         var exist = false;
         foreach (var incorrectTextBox in _incorrectValues)
         {
-            if (incorrectTextBox == textBox.Text)
+            if (incorrectTextBox == textBox?.Name)
             {
                 exist = true;
                 break;
             }
         }
-        if (textBox.Text is "0" or "")
+        if (textBox?.Text is "0" or "")
         {
             textBox.BorderBrush = System.Windows.Media.Brushes.Red;
             if (!exist)
-                _incorrectValues.Add(textBox.Text);
+                _incorrectValues.Add(textBox.Name);
         }
         else
         {
             textBox.BorderBrush = new SolidColorBrush(borderColor);
-            if (!exist)
-                _incorrectValues.Remove(textBox.Text);
+            if (exist)
+                _incorrectValues.Remove(textBox.Name);
         }
             
     }
