@@ -8,11 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="Fonts\Inter-V.ttf" />
+        <None Remove="Fonts\Inter-V.ttf"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Page Remove="Style\Style.xaml" />
+        <Page Remove="Style\Style.xaml"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -58,14 +58,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="LiveCharts" Version="0.9.7" />
-        <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
-        <PackageReference Include="Microsoft.Office.Excel" Version="14.0.4760.1000" />
+        <PackageReference Include="LiveCharts" Version="0.9.7"/>
+        <PackageReference Include="LiveCharts.Wpf" Version="0.9.7"/>
+        <PackageReference Include="Microsoft.Office.Excel" Version="14.0.4760.1000"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Algorithm\Algorithm.csproj" />
-        <ProjectReference Include="..\Database\Database.csproj" />
+        <ProjectReference Include="..\Algorithm\Algorithm.csproj"/>
+        <ProjectReference Include="..\Database\Database.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -49,7 +49,7 @@ public class WorkWithExcel
     {
         worksheet = (Worksheet)workbook.Worksheets.get_Item(1);
         var chartObjects = (ChartObjects)worksheet.ChartObjects(Type.Missing);
-        var myChart = (ChartObject)chartObjects.Add(150, 80, 400, 250);
+        var myChart = chartObjects.Add(150, 80, 400, 250);
         var chartPage = myChart.Chart;
 
         var seriesCollection = (SeriesCollection)chartPage.SeriesCollection(Type.Missing);

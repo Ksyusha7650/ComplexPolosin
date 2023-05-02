@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Algorithm;
 using Algorithm.Models;
-using Database;
 using Database.Models;
 using Microsoft.Win32;
 using ModelPolosin.Models;
@@ -28,21 +25,30 @@ namespace ModelPolosin;
 public partial class MainWindow
 {
     private Calculation _calculation;
+
     private DrawCharts _charts;
+
     // private DataService _dataService;
     private EmpiricCoefficientsModel[] _empiricCoefficients;
+    private readonly List<string> _incorrectValues = new();
     private string[] _marks, _types;
-    private List<string> _incorrectValues = new List<string>();
-    public PerformanceCounter myCounter =
-            new PerformanceCounter("Processor", "% Processor Time", "_Total"); // фиг знает, что мы должны отображать
-    DispatcherTimer Timer99 = new DispatcherTimer();
+
+    public Color borderColor = new()
+    {
+        A = 100
+    };
+
+    public PerformanceCounter
+        myCounter = new("Processor", "% Processor Time", "_Total"); // фиг знает, что мы должны отображать
+
+    private readonly DispatcherTimer Timer99 = new();
 
     public MainWindow()
     {
         InitializeComponent();
-         var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
-         customCulture.NumberFormat.NumberDecimalSeparator = ".";
-         Thread.CurrentThread.CurrentCulture = customCulture;
+        var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
+        customCulture.NumberFormat.NumberDecimalSeparator = ".";
+        Thread.CurrentThread.CurrentCulture = customCulture;
         // GetDataFromDataBase();
         SetUpColumns();
         MarkComboBox.Items.Add("--default");
@@ -52,9 +58,12 @@ public partial class MainWindow
         Timer99.IsEnabled = true;
     }
 
+    // чуть сократила 👉👈
+    private bool CheckTextBox => _incorrectValues.Count == 0;
+
     private void SetRamAndTime(object sender, EventArgs e)
     {
-        TimeTextBox.Text = (myCounter.NextValue()).ToString();
+        TimeTextBox.Text = myCounter.NextValue().ToString();
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -63,26 +72,20 @@ public partial class MainWindow
         e.Handled = regex.IsMatch(e.Text);
     }
 
-    public System.Windows.Media.Color borderColor = new System.Windows.Media.Color
-    {
-        A = 100
-    };
-
     private void ZeroValidationTextBox(object sender, TextChangedEventArgs e)
     {
         var textBox = sender as TextBox;
         var exist = false;
         foreach (var incorrectTextBox in _incorrectValues)
-        {
             if (incorrectTextBox == textBox?.Name)
             {
                 exist = true;
                 break;
             }
-        }
+
         if (textBox?.Text is "0" or "")
         {
-            textBox.BorderBrush = System.Windows.Media.Brushes.Red;
+            textBox.BorderBrush = Brushes.Red;
             if (!exist)
                 _incorrectValues.Add(textBox.Name);
         }
@@ -92,16 +95,16 @@ public partial class MainWindow
             if (exist)
                 _incorrectValues.Remove(textBox.Name);
         }
-            
     }
-
-    // чуть сократила 👉👈
-    private bool CheckTextBox => _incorrectValues.Count == 0;
 
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
         if (!Calculate())
+        {
+            MessageBox.Show("Fix highlighted red fields!");
             return;
+        }
+
         TemperatureProductTextBox.Text = GetTemperature().ToString();
         ViscosityProductTextBox.Text = Math.Round(GetViscosity(), 0).ToString();
         EfficiencyTextBox.Text = GetEfficiency().ToString();
@@ -156,29 +159,29 @@ public partial class MainWindow
 
         try
         {
-             /*_calculation = new Calculation(
-                 new EmpiricCoefficients(
-                     Convert.ToDouble(_empiricCoefficients[0].Value),
-                     Convert.ToDouble(_empiricCoefficients[1].Value),
-                     Convert.ToDouble(_empiricCoefficients[2].Value),
-                     Convert.ToDouble(_empiricCoefficients[3].Value),
-                     Convert.ToDouble(_empiricCoefficients[4].Value)),
-                 new GeometricParameters(
-                     MarkComboBox.SelectedItem.ToString(),
-                     Convert.ToDouble(HeightTextBox.Text),
-                     Convert.ToDouble(LengthTextBox.Text),
-                     Convert.ToDouble(WidthTextBox.Text)),
-                 new PropertiesOfMaterial(
-                     TypeComboBox.SelectedItem.ToString(),
-                     Convert.ToDouble(DensityTextBox.Text),
-                     Convert.ToDouble(SpecificHeartTextBox.Text),
-                     Convert.ToDouble(MeltingPointTextBox.Text)),
-                 new VariableParameters(
-                     Convert.ToDouble(CoverTemperatureTextBox.Text),
-                     Convert.ToDouble(CoverVelocityTextBox.Text),
-                     Convert.ToDouble(StepTextBox.Text)));*/
-            
-            
+            /*_calculation = new Calculation(
+                new EmpiricCoefficients(
+                    Convert.ToDouble(_empiricCoefficients[0].Value),
+                    Convert.ToDouble(_empiricCoefficients[1].Value),
+                    Convert.ToDouble(_empiricCoefficients[2].Value),
+                    Convert.ToDouble(_empiricCoefficients[3].Value),
+                    Convert.ToDouble(_empiricCoefficients[4].Value)),
+                new GeometricParameters(
+                    MarkComboBox.SelectedItem.ToString(),
+                    Convert.ToDouble(HeightTextBox.Text),
+                    Convert.ToDouble(LengthTextBox.Text),
+                    Convert.ToDouble(WidthTextBox.Text)),
+                new PropertiesOfMaterial(
+                    TypeComboBox.SelectedItem.ToString(),
+                    Convert.ToDouble(DensityTextBox.Text),
+                    Convert.ToDouble(SpecificHeartTextBox.Text),
+                    Convert.ToDouble(MeltingPointTextBox.Text)),
+                new VariableParameters(
+                    Convert.ToDouble(CoverTemperatureTextBox.Text),
+                    Convert.ToDouble(CoverVelocityTextBox.Text),
+                    Convert.ToDouble(StepTextBox.Text)));*/
+
+
             _calculation = new Calculation(
                 new EmpiricCoefficients(29940, 20000, 190, 0.35, 425),
                 new GeometricParameters(
@@ -211,7 +214,6 @@ public partial class MainWindow
         if (mark == "--default")
         {
             Clear();
-            return;
         }
 
         //var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
@@ -267,20 +269,18 @@ public partial class MainWindow
 
         EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
             1, "Коэффициент консистенции", "Pa * s", 29940));
-        
+
         EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
             2, "Энергия активации", "J/m", 20000));
-        
+
         EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
             3, "Температура приведения", "C", 190));
-        
+
         EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
             4, "Индекс течения материала", "-", 0.35));
-        
+
         EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
             5, "Коэффициент теплоотдачи ", "Vt", 425));
-        
-    
     }
 
     private void SetUpColumns()
@@ -311,19 +311,21 @@ public partial class MainWindow
         EmpiricCoefficientsDataGrid.Columns.Add(column);
     }
 
-    private void ButtonShowResult_Click(object sender, RoutedEventArgs e) {
+    private void ButtonShowResult_Click(object sender, RoutedEventArgs e)
+    {
         if (!CheckTextBox || _calculation is null)
         {
             MessageBox.Show("Make calculation first!");
             return;
-        } 
+        }
+
         var listOfChannelLength = _calculation.ListOfChannelLength();
         var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
         var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
-        
+
         TableWindow tableWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
         tableWindow.Show();
-        
+
         ChartsWindow chartsWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
         chartsWindow.Show();
     }
@@ -335,6 +337,7 @@ public partial class MainWindow
             MessageBox.Show("Make calculation first!");
             return;
         }
+
         var saveFileDialog = new SaveFileDialog
         {
             Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.xlsx)|*.xlsx",
@@ -374,7 +377,7 @@ public partial class MainWindow
                 excelWork.SetData("B", 8, CoverVelocityTextBox.Text);
                 excelWork.SetData("A", 9, "Temperature, °С");
                 excelWork.SetData("B", 9, CoverTemperatureTextBox.Text);
-                
+
                 excelWork.SetData("A", 11, "Step, m:");
                 excelWork.SetData("B", 11, StepTextBox.Text);
 
@@ -410,7 +413,7 @@ public partial class MainWindow
                     excelWork.SetData("H", i + 2, Math.Round(listOfTemperatures[i], 2).ToString());
                     excelWork.SetData("I", i + 2, Math.Round(listOfViscosity[i], 0).ToString());
                 }
-                
+
                 excelWork.SetData("K", 1, "Criteria indicators of the process:");
                 excelWork.SetData("K", 2, "Product temperature, °С:");
                 excelWork.SetData("L", 2, TemperatureProductTextBox.Text);

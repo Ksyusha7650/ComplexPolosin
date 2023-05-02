@@ -1,4 +1,3 @@
-using System.Configuration;
 using Database.Interfaces;
 using MySql.Data.MySqlClient;
 

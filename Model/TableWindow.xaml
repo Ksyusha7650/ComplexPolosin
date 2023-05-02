@@ -6,9 +6,8 @@
         mc:Ignorable="d"
         Title="Table" Height="750" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <DataGrid x:Name="TableWithCalc" d:ItemsSource="{d:SampleData ItemCount=5}" RenderTransformOrigin="0.493,0.771" AutoGenerateColumns="False">
-
-        </DataGrid>
+        <DataGrid x:Name="TableWithCalc" d:ItemsSource="{d:SampleData ItemCount=5}" RenderTransformOrigin="0.493,0.771"
+                  AutoGenerateColumns="False" />
         <Button Content="Button" HorizontalAlignment="Left" Margin="706,381,0,0" VerticalAlignment="Top"
                 Click="Button_Click" />
 

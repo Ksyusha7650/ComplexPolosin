@@ -23,13 +23,11 @@ public partial class TableWindow : Window
         _listOfViscosity = listOfViscosity;
         InitializeComponent();
         SetUpColumns();
-        for (int i = 0; i < _listOfViscosity.Count; i++)
-        {
+        for (var i = 0; i < _listOfViscosity.Count; i++)
             TableWithCalc.Items.Add(new DataForTable(
                 _listOfChannelLength[i],
                 Math.Round(_listOfTemperatures[i], 2),
                 Math.Round(_listOfViscosity[i], 0)));
-        }
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)

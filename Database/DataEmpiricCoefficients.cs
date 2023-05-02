@@ -27,7 +27,7 @@ where ID_ParameterSet = @IdMaterial and p.ID_Type = 2
         cmd.CommandText = sqlQuery;
         var reader = cmd.ExecuteReader();
         List<EmpiricCoefficientsModel> empiricCoefficients = new();
-        int numberEc = 1;
+        var numberEc = 1;
         while (reader.Read())
         {
             var idUnit = -1;
