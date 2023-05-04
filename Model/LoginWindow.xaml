@@ -1,0 +1,87 @@
+﻿<Window x:Class="ModelPolosin.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+
+        Title="Login" Height="299" Width="396" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        FontFamily="{StaticResource Inter}">
+    <Grid HorizontalAlignment="Center" Width="396" Height="289" VerticalAlignment="Top">
+        <Label Content="Login" Padding="5,0,5,0" UseLayoutRounding="False" Margin="0,42,0,0"
+            VerticalAlignment="Top" FontSize="30" FontWeight="Bold"
+            Height="37" VerticalContentAlignment="Center" HorizontalAlignment="Center" Width="386" HorizontalContentAlignment="Center" />
+        <!--
+            </Grid>
+        </Expander>-->
+        <TextBox x:Name="LoginTextBox" Text="admin" HorizontalAlignment="Left" Margin="104,107,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="81" Height="22" />
+        <Label Content="Login:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="34,111,287,0"
+            VerticalAlignment="Top" />
+        <Label Content="Password:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="34,146,287,0"
+            VerticalAlignment="Top" />
+        <TextBox x:Name="PasswordTextBox" Text="123" HorizontalAlignment="Left" Margin="104,142,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="81" Height="22" />
+        <Button x:Name="EnterAsExplorerButton" Background="White" BorderBrush="{x:Null}" Cursor="Hand"
+            Content="Enter as explorer" FontFamily="Inter" Click="EnterAsExplorerButton_Click" Margin="238,202,38,58" />
+        <Button x:Name="EnterAsAdminButton" Content="Enter as administrator" BorderBrush="{x:Null}" Cursor="Hand"
+            FontFamily="Inter" Background="White" Click="EnterAsAdminButton_Click" Margin="38,202,211,58" />
+        <!--
+            </Grid>
+        </Expander>-->
+        <!--
+            </Grid>
+        </Expander>-->
+        <!--
+                <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"
+                                    VerticalAlignment="Top" Margin="32,50,31,0" />
+            </Grid>
+        </Expander>-->
+        <!--
+            </Grid>
+        </Expander>-->
+        <!--
+                <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"
+                                    VerticalAlignment="Top" Margin="32,50,31,0" />
+            </Grid>
+        </Expander>-->
+        <!--
+            </Grid>
+        </Expander>-->
+        <!--<Expander Height="270" Header="Charts" Margin="829,27,14,0" VerticalAlignment="Top" Background="White"
+                  ExpandDirection="Left">
+            <Grid Margin="0,10,0,26">
+                <ComboBox x:Name="ChartComboBox" SelectedIndex="0" HorizontalAlignment="Center" Margin="0,7,0,0"
+                          VerticalAlignment="Top"
+                          Width="233"
+                          BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="ChartComboBox_SelectionChanged">
+                    <ComboBoxItem Content="material temperature - channel length" />
+                    <ComboBoxItem Content="material viscosity - channel length" />
+                </ComboBox>
+                <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
+                       VerticalAlignment="Top" FontSize="16" />
+                -->
+        <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
+        <!--
+                <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"
+                                    VerticalAlignment="Top" Margin="32,50,31,0" />
+            </Grid>
+        </Expander>-->
+        <!--<Expander Height="242" Header="Table" Margin="933,251,14,0" VerticalAlignment="Top" Background="{x:Null}"
+                  ExpandDirection="Left">
+            <Grid Margin="0,10,0,-2">
+                <Label Content="Dependency" Padding="5,0,5,0" UseLayoutRounding="False" Margin="21,11,480,0"
+                       VerticalAlignment="Top" FontSize="16" />
+                <DataGrid Margin="21,10,46,11" x:Name="CalculationsDataGrid" />
+                -->
+        <!-- <WpfPlot x:Name="WpfPlot1" Margin="10,53,27,26" MouseMove="WpfPlot1_OnMouseMove" /> -->
+        <!--
+            </Grid>
+        </Expander>-->
+
+    </Grid>
+</Window>

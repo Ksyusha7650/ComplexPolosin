@@ -330,6 +330,13 @@ public partial class MainWindow
         chartsWindow.Show();
     }
 
+    private void ExitButton_Click(object sender, RoutedEventArgs e)
+    {
+        Hide();
+        new LoginWindow().Show();
+        Close();
+    }
+
     private void ExcelButton_Click(object sender, RoutedEventArgs e)
     {
         if (!CheckTextBox || _calculation is null)
