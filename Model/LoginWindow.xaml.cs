@@ -1,22 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
+﻿using System.Configuration;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Threading;
-using Algorithm;
-using Algorithm.Models;
-using Database.Models;
-using Microsoft.Win32;
-using ModelPolosin.Models;
 
 namespace ModelPolosin;
 
@@ -25,7 +8,9 @@ namespace ModelPolosin;
 /// </summary>
 public partial class LoginWindow
 {
-    string _login, _password;
+    private readonly string _login;
+    private readonly string _password;
+
     public LoginWindow()
     {
         InitializeComponent();
@@ -46,11 +31,13 @@ public partial class LoginWindow
         var password = PasswordTextBox.Text;
         if (login == _login && password == _password)
         {
-           Hide();
-           new AdminWindow().Show();
-           Close();
+            Hide();
+            new AdminWindow().Show();
+            Close();
         }
-        else 
+        else
+        {
             MessageBox.Show("There is no such account! :c");
+        }
     }
 }

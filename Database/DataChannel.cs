@@ -52,19 +52,34 @@ where Mark = @Mark
         string mark,
         GeometricParametersModel geometricParametersModel)
     {
+        var idParameterSet = await _baseRepository.AddNewParameterSet();
+        var idUnit = await _baseRepository.GetIdUnit("m");
+        _baseRepository.AddParameterInParameterSet(
+            idParameterSet,
+            await _baseRepository.GetIdParameter("Height"),
+            idUnit,
+            geometricParametersModel.Height);
+        _baseRepository.AddParameterInParameterSet(
+            idParameterSet,
+            await _baseRepository.GetIdParameter("Width"),
+            idUnit,
+            geometricParametersModel.Width);
+        _baseRepository.AddParameterInParameterSet(
+            idParameterSet,
+            await _baseRepository.GetIdParameter("Length"),
+            idUnit,
+            geometricParametersModel.Length);
+        
         const string sqlQuery = @"
-insert into table channel
-set Mark = @Mark, ID_PropertySet = @IdProSet
+insert into channel (ID_ParameterSet, Mark)
+VALUES (@IdParameterSet, @Mark);
 ";
         await using var connection = await _baseRepository.GetAndOpenConnection();
         var cmd = new MySqlCommand();
         cmd.Connection = connection;
+        cmd.Parameters.AddWithValue("@IdParameterSet", idParameterSet);
         cmd.Parameters.AddWithValue("@Mark", mark);
         cmd.CommandText = sqlQuery;
-        var reader = cmd.ExecuteReader();
-        var idProSet = 0;
-        while (reader.Read()) idProSet = reader.GetInt32(0);
-
-        var values = await _baseRepository.GetDataByPropertySet(idProSet);
+        cmd.ExecuteNonQuery();
     }
 }

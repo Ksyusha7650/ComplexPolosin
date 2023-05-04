@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using Algorithm;
-using Algorithm.Models;
+using Database;
 using Database.Models;
-using Microsoft.Win32;
-using ModelPolosin.Models;
 
 namespace ModelPolosin;
 
@@ -24,26 +19,22 @@ namespace ModelPolosin;
 /// </summary>
 public partial class AdminWindow
 {
-    // private DataService _dataService;
+    private DataService _dataService;
     private readonly List<string> _incorrectValues = new();
+    private string[] _marks, _types;
 
-    public Color borderColor = new()
+    public Color BorderColor = new()
     {
         A = 100
     };
-
-    public PerformanceCounter
-        myCounter = new("Processor", "% Processor Time", "_Total"); // фиг знает, что мы должны отображать
-
-    private readonly DispatcherTimer Timer99 = new();
-
+    
     public AdminWindow()
     {
         InitializeComponent();
         var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
         Thread.CurrentThread.CurrentCulture = customCulture;
-        // GetDataFromDataBase();
+        GetDataFromDataBase();
     }
 
     // чуть сократила 👉👈
@@ -74,15 +65,29 @@ public partial class AdminWindow
         }
         else
         {
-            textBox.BorderBrush = new SolidColorBrush(borderColor);
+            textBox.BorderBrush = new SolidColorBrush(BorderColor);
             if (exist)
                 _incorrectValues.Remove(textBox.Name);
         }
     }
+    
+    private void GetDataFromDataBase()
+    {
+        _dataService = new DataService();
+        _marks = _dataService.ChannelDataBase.GetMarks();
+       // foreach (var mark in _marks)
+       //     MarkComboBox.Items.Add(mark);
+        _types = _dataService.MaterialDataBase.GetTypes();
+       // foreach (var type in _types)
+       // TypeComboBox.Items.Add(type);
+    }
 
     private void SaveButton_Click(object sender, RoutedEventArgs e)
     {
-
+        if (CheckTextBox)
+        {
+            
+        }
     }
 
     private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -90,5 +95,25 @@ public partial class AdminWindow
         Hide();
         new LoginWindow().Show();
         Close();
+    }
+
+    private void CreateMarkButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (!CheckTextBox)
+        {
+            MessageBox.Show("Fix fields!");
+            return;
+        }
+        var height = Convert.ToDouble(HeightTextBox.Text);
+        var width = Convert.ToDouble(WidthTextBox.Text);
+        var length = Convert.ToDouble(LengthTextBox.Text);
+        var mark = MarkTextBox.Text;
+        _dataService.ChannelDataBase.SetGeometricParameters(
+            mark,
+            new GeometricParametersModel(
+                height,
+                length,
+                width)
+            );
     }
 }

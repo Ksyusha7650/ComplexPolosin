@@ -9,27 +9,29 @@
         FontFamily="{StaticResource Inter}">
     <Grid HorizontalAlignment="Center" Width="396" Height="289" VerticalAlignment="Top">
         <Label Content="Login" Padding="5,0,5,0" UseLayoutRounding="False" Margin="0,42,0,0"
-            VerticalAlignment="Top" FontSize="30" FontWeight="Bold"
-            Height="37" VerticalContentAlignment="Center" HorizontalAlignment="Center" Width="386" HorizontalContentAlignment="Center" />
+               VerticalAlignment="Top" FontSize="30" FontWeight="Bold"
+               Height="37" VerticalContentAlignment="Center" HorizontalAlignment="Center" Width="386"
+               HorizontalContentAlignment="Center" />
         <!--
             </Grid>
         </Expander>-->
         <TextBox x:Name="LoginTextBox" Text="admin" HorizontalAlignment="Left" Margin="104,107,0,0"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Width="81" Height="22" />
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="81" Height="22" />
         <Label Content="Login:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="34,111,287,0"
-            VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <Label Content="Password:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="34,146,287,0"
-            VerticalAlignment="Top" />
+               VerticalAlignment="Top" />
         <TextBox x:Name="PasswordTextBox" Text="123" HorizontalAlignment="Left" Margin="104,142,0,0"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Width="81" Height="22" />
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="81" Height="22" />
         <Button x:Name="EnterAsExplorerButton" Background="White" BorderBrush="{x:Null}" Cursor="Hand"
-            Content="Enter as explorer" FontFamily="Inter" Click="EnterAsExplorerButton_Click" Margin="238,202,38,58" />
+                Content="Enter as explorer" FontFamily="Inter" Click="EnterAsExplorerButton_Click"
+                Margin="238,202,38,58" />
         <Button x:Name="EnterAsAdminButton" Content="Enter as administrator" BorderBrush="{x:Null}" Cursor="Hand"
-            FontFamily="Inter" Background="White" Click="EnterAsAdminButton_Click" Margin="38,202,211,58" />
+                FontFamily="Inter" Background="White" Click="EnterAsAdminButton_Click" Margin="38,202,211,58" />
         <!--
             </Grid>
         </Expander>-->

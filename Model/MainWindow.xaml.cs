@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Algorithm;
 using Algorithm.Models;
+using Database;
 using Database.Models;
 using Microsoft.Win32;
 using ModelPolosin.Models;
@@ -24,13 +25,18 @@ namespace ModelPolosin;
 /// </summary>
 public partial class MainWindow
 {
+    private readonly List<string> _incorrectValues = new();
+
+    public readonly PerformanceCounter
+        MyCounter = new("Processor", "% Processor Time", "_Total"); // фиг знает, что мы должны отображать
+
+    private readonly DispatcherTimer Timer99 = new();
     private Calculation _calculation;
 
     private DrawCharts _charts;
 
-    // private DataService _dataService;
+    private DataService _dataService;
     private EmpiricCoefficientsModel[] _empiricCoefficients;
-    private readonly List<string> _incorrectValues = new();
     private string[] _marks, _types;
 
     public Color borderColor = new()
@@ -38,21 +44,16 @@ public partial class MainWindow
         A = 100
     };
 
-    public PerformanceCounter
-        myCounter = new("Processor", "% Processor Time", "_Total"); // фиг знает, что мы должны отображать
-
-    private readonly DispatcherTimer Timer99 = new();
-
     public MainWindow()
     {
         InitializeComponent();
         var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
         Thread.CurrentThread.CurrentCulture = customCulture;
-        // GetDataFromDataBase();
+        GetDataFromDataBase();
         SetUpColumns();
-        MarkComboBox.Items.Add("--default");
-        TypeComboBox.Items.Add("--default");
+        //MarkComboBox.Items.Add("--default");
+        //TypeComboBox.Items.Add("--default");
         Timer99.Tick += SetRamAndTime; // don't freeze the ui
         Timer99.Interval = new TimeSpan(0, 0, 0, 0, 1024);
         Timer99.IsEnabled = true;
@@ -63,7 +64,7 @@ public partial class MainWindow
 
     private void SetRamAndTime(object sender, EventArgs e)
     {
-        TimeTextBox.Text = myCounter.NextValue().ToString();
+        TimeTextBox.Text = MyCounter.NextValue().ToString();
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -108,33 +109,8 @@ public partial class MainWindow
         TemperatureProductTextBox.Text = GetTemperature().ToString();
         ViscosityProductTextBox.Text = Math.Round(GetViscosity(), 0).ToString();
         EfficiencyTextBox.Text = GetEfficiency().ToString();
-        // var listOfChannelLength = _calculation.ListOfChannelLength();
-        // var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
-        // var listOfViscosity = _calculation.ListOfViscosity(listOfTemperatures);
-
         ExportButton.IsEnabled = true;
         ShowResultsButton.IsEnabled = true;
-        // _charts = new DrawCharts(
-        //     listOfChannelLength,
-        //     listOfTemperatures,
-        //     listOfViscosity,
-        //     Plot);
-        // if (ChartComboBox.SelectedIndex == 0)
-        //     _charts.TemperatureLength();
-        // else
-        //     _charts.ViscosityLength();
-
-        // TableWindow tableWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
-        // tableWindow.Show();
-        //
-        // ChartsWindow chartsWindow = new(listOfChannelLength, listOfTemperatures, listOfViscosity);
-        // chartsWindow.Show();
-
-        // DrawTable.DrawTableCalculations(
-        //     listOfChannelLength,
-        //     listOfTemperatures,
-        //     listOfViscosity,
-        //     CalculationsDataGrid);
     }
 
     private double GetTemperature()
@@ -159,7 +135,7 @@ public partial class MainWindow
 
         try
         {
-            /*_calculation = new Calculation(
+            _calculation = new Calculation(
                 new EmpiricCoefficients(
                     Convert.ToDouble(_empiricCoefficients[0].Value),
                     Convert.ToDouble(_empiricCoefficients[1].Value),
@@ -179,10 +155,10 @@ public partial class MainWindow
                 new VariableParameters(
                     Convert.ToDouble(CoverTemperatureTextBox.Text),
                     Convert.ToDouble(CoverVelocityTextBox.Text),
-                    Convert.ToDouble(StepTextBox.Text)));*/
+                    Convert.ToDouble(StepTextBox.Text)));
 
 
-            _calculation = new Calculation(
+            /*_calculation = new Calculation(
                 new EmpiricCoefficients(29940, 20000, 190, 0.35, 425),
                 new GeometricParameters(
                     MarkComboBox.SelectedItem.ToString(),
@@ -197,7 +173,7 @@ public partial class MainWindow
                 new VariableParameters(
                     Convert.ToDouble(CoverTemperatureTextBox.Text),
                     Convert.ToDouble(CoverVelocityTextBox.Text),
-                    Convert.ToDouble(StepTextBox.Text)));
+                    Convert.ToDouble(StepTextBox.Text)));*/
         }
         catch (Exception)
         {
@@ -211,21 +187,18 @@ public partial class MainWindow
     private void MarkComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var mark = MarkComboBox.SelectedItem.ToString();
-        if (mark == "--default")
-        {
-            Clear();
-        }
+        if (mark == "--default") Clear();
 
-        //var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
-        // var model = new GeometricParameters(
-        //     mark,
-        //     result.Height,
-        //     result.Width,
-        //     result.Length);
-        // MarkComboBox.SelectedItem = model.Mark;
-        // HeightTextBox.Text = model.Height.ToString();
-        // WidthTextBox.Text = model.Width.ToString();
-        // LengthTextBox.Text = model.Length.ToString();
+        var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
+        var model = new GeometricParameters(
+            mark,
+            result.Height,
+            result.Width,
+            result.Length);
+        MarkComboBox.SelectedItem = model.Mark;
+        HeightTextBox.Text = model.Height.ToString();
+        WidthTextBox.Text = model.Width.ToString();
+        LengthTextBox.Text = model.Length.ToString();
     }
 
     private void Clear()
@@ -247,27 +220,27 @@ public partial class MainWindow
 
     private void GetDataFromDataBase()
     {
-        // _dataService = new DataService();
-        // _marks = _dataService.ChannelDataBase.GetMarks();
-        // foreach (var mark in _marks)
-        //     MarkComboBox.Items.Add(mark);
-        // _types = _dataService.MaterialDataBase.GetTypes();
-        // foreach (var type in _types) TypeComboBox.Items.Add(type);
+        _dataService = new DataService();
+        _marks = _dataService.ChannelDataBase.GetMarks();
+        foreach (var mark in _marks)
+            MarkComboBox.Items.Add(mark);
+        _types = _dataService.MaterialDataBase.GetTypes();
+        foreach (var type in _types) TypeComboBox.Items.Add(type);
     }
 
     private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        // var type = TypeComboBox.SelectedItem.ToString();
-        // var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
-        // _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
-        // foreach (var empiricCoefficient in _empiricCoefficients)
-        //     EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
-        //         empiricCoefficient.IdEc,
-        //         empiricCoefficient.Name,
-        //         empiricCoefficient.Unit ?? " ",
-        //         empiricCoefficient.Value));
+        var type = TypeComboBox.SelectedItem.ToString();
+        var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
+        _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
+        foreach (var empiricCoefficient in _empiricCoefficients)
+            EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
+                empiricCoefficient.IdEc,
+                empiricCoefficient.Name,
+                empiricCoefficient.Unit ?? " ",
+                empiricCoefficient.Value));
 
-        EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
+        /*EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
             1, "Коэффициент консистенции", "Pa * s", 29940));
 
         EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
@@ -280,7 +253,7 @@ public partial class MainWindow
             4, "Индекс течения материала", "-", 0.35));
 
         EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
-            5, "Коэффициент теплоотдачи ", "Vt", 425));
+            5, "Коэффициент теплоотдачи ", "Vt", 425));*/
     }
 
     private void SetUpColumns()
