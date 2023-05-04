@@ -8,40 +8,40 @@
         Title="Input Data Window" Height="518" Width="991" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         FontFamily="{StaticResource Inter}">
     <Grid HorizontalAlignment="Center" Width="991" Height="598" VerticalAlignment="Top">
-        <Label Content="Mark:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="55,158,866,0"
+        <Label Content="Mark:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="554,154,366,0"
                VerticalAlignment="Top" FontWeight="Bold" FontSize="14" Height="19" />
-        <Label Content="Channel" Padding="5,0,5,0" UseLayoutRounding="False" Margin="37,106,833,0"
+        <Label Content="Channel" Padding="5,0,5,0" UseLayoutRounding="False" Margin="522,102,348,0"
                VerticalAlignment="Top" FontSize="20" />
         <Label Content="Input data" Padding="5,0,5,0" UseLayoutRounding="False" Margin="37,44,0,0"
                VerticalAlignment="Top" FontSize="30" HorizontalAlignment="Left" Width="945" FontWeight="Bold"
                Height="37" VerticalContentAlignment="Center" />
-        <Label Content="Material" Padding="5,0,5,0" UseLayoutRounding="False" Margin="456,106,422,0"
+        <Label Content="Material" Padding="5,0,5,0" UseLayoutRounding="False" Margin="48,101,830,0"
                VerticalAlignment="Top" FontSize="20" />
-        <Label Content="Type:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="475,158,441,0"
+        <Label Content="Type:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="66,153,850,0"
                VerticalAlignment="Top" FontWeight="Bold" FontSize="14" />
-        <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="465,299,204,0"
+        <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="56,294,612,0"
                VerticalAlignment="Top" FontSize="20" />
-        <TextBox x:Name="DensityTextBox" Text="950" HorizontalAlignment="Left" Margin="594,199,0,0"
+        <TextBox x:Name="DensityTextBox" Text="0.00" HorizontalAlignment="Left" Margin="186,194,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
                  Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox" />
-        <Label Content="Density:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="484,202,403,0"
+        <Label Content="Density:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="76,197,812,0"
                VerticalAlignment="Top" />
-        <Label Content="Specific heat:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="484,232,403,0"
+        <Label Content="Specific heat:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="76,227,812,0"
                VerticalAlignment="Top" />
-        <TextBox x:Name="SpecificHeartTextBox" Text="2250" HorizontalAlignment="Left" Margin="594,230,0,0"
+        <TextBox x:Name="SpecificHeartTextBox" Text="0.00" HorizontalAlignment="Left" Margin="186,225,0,0"
                  TextWrapping="Wrap" VerticalAlignment="Top"
                  Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox" />
-        <TextBox x:Name="MeltingPointTextBox" Text="120" HorizontalAlignment="Left" Margin="594,256,0,0"
+        <TextBox x:Name="MeltingPointTextBox" Text="0.00" HorizontalAlignment="Left" Margin="186,251,0,0"
                  TextWrapping="Wrap" VerticalAlignment="Top"
                  Width="82" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox" />
-        <Label Content="Melting point:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="484,260,402,0"
+        <Label Content="Melting point:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="76,255,810,0"
                VerticalAlignment="Top" />
-        <Label Content="kg/m^3" Padding="5,0,5,0" UseLayoutRounding="False" Margin="694,202,207,0"
+        <Label Content="kg/m^3" Padding="5,0,5,0" UseLayoutRounding="False" Margin="286,197,616,0"
                VerticalAlignment="Top" />
-        <Label Content="J/(kg*°С)" Padding="5,0,5,0" UseLayoutRounding="False" Margin="694,232,207,0"
+        <Label Content="J/(kg*°С)" Padding="5,0,5,0" UseLayoutRounding="False" Margin="286,227,616,0"
                VerticalAlignment="Top" />
-        <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="694,260,213,0"
+        <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="286,255,622,0"
                VerticalAlignment="Top" />
         <!--
                 <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"
@@ -51,29 +51,29 @@
         <!--
             </Grid>
         </Expander>-->
-        <TextBox x:Name="HeightTextBox" Text="0.00" HorizontalAlignment="Left" Margin="142,205,0,0"
+        <TextBox x:Name="HeightTextBox" Text="0.00" HorizontalAlignment="Left" Margin="638,194,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
                  Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox" />
-        <Label Content="Height:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="72,209,854,0"
+        <Label Content="Height:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="568,198,358,0"
                VerticalAlignment="Top" />
-        <Label Content="Length:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="72,237,854,0"
+        <Label Content="Length:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="568,226,358,0"
                VerticalAlignment="Top" />
-        <TextBox x:Name="LengthTextBox" Text="0.00" HorizontalAlignment="Left" Margin="142,234,0,0"
+        <TextBox x:Name="LengthTextBox" Text="0.00" HorizontalAlignment="Left" Margin="638,221,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="81" Height="23" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox" />
+        <TextBox x:Name="WidthTextBox" Text="0.00" HorizontalAlignment="Left" Margin="638,252,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
                  Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox" />
-        <TextBox x:Name="WidthTextBox" Text="0.00" HorizontalAlignment="Left" Margin="142,263,0,0"
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Top"
-                 Width="81" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox" />
-        <Label Content="Width:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="72,267,854,0"
+        <Label Content="Width:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="568,256,358,0"
                VerticalAlignment="Top" />
-        <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="231,209,712,0"
+        <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="727,198,216,0"
                VerticalAlignment="Top" />
-        <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="231,237,712,0"
+        <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="727,226,216,0"
                VerticalAlignment="Top" />
-        <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="231,267,712,0"
+        <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="727,256,216,0"
                VerticalAlignment="Top" />
         <Menu Margin="22,10,0,562" Background="White">
             <Button x:Name="SaveButton" Content="Save" BorderBrush="{x:Null}" Cursor="Hand"
@@ -82,29 +82,49 @@
                     FontFamily="Inter" Background="White" Click="ExitButton_Click" />
         </Menu>
         <Button x:Name="CreateMarkButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
-                FontFamily="Inter" Background="White" Margin="277,158,657,421" Click="CreateMarkButton_OnClick" />
+                FontFamily="Inter" Background="White" Margin="894,153,40,425" Click="CreateMarkButton_OnClick" />
         <Button x:Name="CreateTypeButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
-                FontFamily="Inter" Background="White" Margin="747,158,187,421" />
-        <TextBox x:Name="TypeTextBox" HorizontalAlignment="Left" Margin="546,156,0,0"
+                FontFamily="Inter" Background="White" Margin="438,154,495,425" />
+        <TextBox x:Name="TypeTextBox" HorizontalAlignment="Left" Margin="292,152,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
-                 Width="190" Height="22" />
-        <TextBox x:Name="MarkTextBox" HorizontalAlignment="Left" Margin="115,156,0,0"
+                 Width="134" Height="22" />
+        <TextBox x:Name="MarkTextBox" HorizontalAlignment="Left" Margin="775,150,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
-                 Width="157" Height="22" />
-        <Label Content="Name:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="493,356,441,0"
+                 Width="105" Height="22" />
+        <Label Content="Name:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="462,347,472,0"
                VerticalAlignment="Top" />
-        <Label Content="Symbol:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="493,386,441,0"
+        <Label Content="Symbol:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="462,377,472,0"
                VerticalAlignment="Top" />
-        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="546,352,0,0"
+        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="516,343,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
                  Width="150" Height="22" />
-        <TextBox x:Name="SymbolTextBox" HorizontalAlignment="Left" Margin="546,382,0,0"
+        <TextBox x:Name="SymbolTextBox" HorizontalAlignment="Left" Margin="518,373,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
                  Width="42" Height="22" />
+        <Button x:Name="CreateTypeButton_Copy" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
+            FontFamily="Inter" Background="White" Margin="682,346,253,233" />
+        <ComboBox HorizontalAlignment="Left" Margin="128,153,0,0" VerticalAlignment="Top" Width="142"/>
+        <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="104,338,567,144" AutoGenerateColumns="False" />
+        <Label Content="Unit:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="464,404,470,0"
+            VerticalAlignment="Top" />
+        <TextBox x:Name="UnitTextBox" HorizontalAlignment="Left" Margin="518,400,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="42" Height="22" />
+        <Label Content="Value:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="464,431,470,0"
+            VerticalAlignment="Top" />
+        <TextBox x:Name="ValueTextBox" HorizontalAlignment="Left" Margin="518,427,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="63" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox"  />
+        <ComboBox x:Name="MarkComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="624,149,0,0"
+            VerticalAlignment="Top"
+            Width="128"
+            BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="MarkComboBox_OnSelectionChanged" />
         <!--
                 <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"
                                     VerticalAlignment="Top" Margin="32,50,31,0" />
