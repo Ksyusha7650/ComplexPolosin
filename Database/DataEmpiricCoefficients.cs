@@ -34,18 +34,33 @@ where ID_ParameterSet = @IdMaterial and p.ID_Type = 2
             if (!reader.IsDBNull(2))
                 idUnit = reader.GetInt32(2);
             var unit = await _baseRepository.GetNameUnit(idUnit);
-            var idProperty = reader.GetInt32(4);
-            var property = await _baseRepository.GetNameProperty(idProperty);
+            var name = reader.GetString(5);
+            var symbol = reader.GetString(6);
             var value = reader.GetDouble(3);
             empiricCoefficients.Add(new EmpiricCoefficientsModel(
                 idMaterial,
                 numberEc,
-                property,
+                name,
                 unit,
-                value));
+                value,
+                symbol));
             numberEc++;
         }
-
         return empiricCoefficients.ToArray();
+    }
+    
+    public async void AddEmpiricCoefficients(int parameterSet, EmpiricCoefficientsModel empiricCoefficient)
+    {
+        var idParameter = await _baseRepository.AddNewParameter(
+                empiricCoefficient.Name,
+                empiricCoefficient.Symbol,
+                2);
+            if (empiricCoefficient.Unit != null)
+                _baseRepository.AddParameterInParameterSet(
+                    parameterSet,
+                    idParameter,
+                    await _baseRepository.GetIdUnit(empiricCoefficient.Unit),
+                    empiricCoefficient.Value
+                );
     }
 }

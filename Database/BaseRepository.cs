@@ -45,6 +45,29 @@ where ID_ParameterSet = @IdPropertySet
 
         return result.ToArray();
     }
+    
+    public async Task<int> AddNewParameter(string name, string symbol, int type)
+    {
+        const string sqlQuery = @"
+insert into parameter (Name, Symbol, ID_Type)
+values (@Name, @Symbol, @Type);
+select last_insert_id();
+";
+        await using var connection = await GetAndOpenConnection();
+        var cmd = new MySqlCommand();
+        cmd.Connection = connection;
+        cmd.Parameters.AddWithValue("@Name", name);
+        cmd.Parameters.AddWithValue("@Symbol", symbol);
+        cmd.Parameters.AddWithValue("@Type", type);
+        cmd.CommandText = sqlQuery;
+        var reader = cmd.ExecuteReader();
+        var lastId = 0;
+        while (reader.Read())
+        {
+            lastId = reader.GetInt32(0);
+        }
+        return lastId;
+    }
 
     public async Task<int> AddNewParameterSet()
     {
@@ -121,7 +144,7 @@ where Name = @Name
         return result;
     }
 
-    public async Task<string> GetNameProperty(int idProperty)
+    public async Task<string> GetNameParameter(int idProperty)
     {
         const string sqlQuery = @"
 select Name

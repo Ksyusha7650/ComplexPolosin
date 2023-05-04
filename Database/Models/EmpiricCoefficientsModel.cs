@@ -5,4 +5,5 @@ public record EmpiricCoefficientsModel(
     int IdEc,
     string Name,
     string? Unit,
-    double Value);
+    double Value,
+    string Symbol);

@@ -84,7 +84,7 @@
         <Button x:Name="CreateMarkButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
                 FontFamily="Inter" Background="White" Margin="894,153,40,425" Click="CreateMarkButton_OnClick" />
         <Button x:Name="CreateTypeButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
-                FontFamily="Inter" Background="White" Margin="438,154,495,425" />
+                FontFamily="Inter" Background="White" Margin="438,154,495,425" Click="CreateTypeButton_OnClick" />
         <TextBox x:Name="TypeTextBox" HorizontalAlignment="Left" Margin="292,152,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
@@ -105,9 +105,10 @@
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
                  Width="42" Height="22" />
-        <Button x:Name="CreateTypeButton_Copy" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
-            FontFamily="Inter" Background="White" Margin="682,346,253,233" />
-        <ComboBox HorizontalAlignment="Left" Margin="128,153,0,0" VerticalAlignment="Top" Width="142"/>
+        <Button x:Name="CreateEcButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
+            FontFamily="Inter" Background="White" Margin="682,346,253,233" Click="CreateECButton_OnClick"/>
+        <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Left" Margin="128,153,0,0" VerticalAlignment="Top" Width="142"
+                  SelectionChanged="TypeComboBox_OnSelectionChanged"/>
         <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="104,338,567,144" AutoGenerateColumns="False" />
         <Label Content="Unit:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="464,404,470,0"
             VerticalAlignment="Top" />

@@ -27,10 +27,12 @@ public partial class MainWindow
 {
     private readonly List<string> _incorrectValues = new();
 
+    /*
     public readonly PerformanceCounter
         MyCounter = new("Processor", "% Processor Time", "_Total"); // фиг знает, что мы должны отображать
+        */
 
-    private readonly DispatcherTimer Timer99 = new();
+   // private readonly DispatcherTimer Timer99 = new();
     private Calculation _calculation;
 
     private DrawCharts _charts;
@@ -54,18 +56,18 @@ public partial class MainWindow
         SetUpColumns();
         //MarkComboBox.Items.Add("--default");
         //TypeComboBox.Items.Add("--default");
-        Timer99.Tick += SetRamAndTime; // don't freeze the ui
+        /*Timer99.Tick += SetRamAndTime; // don't freeze the ui
         Timer99.Interval = new TimeSpan(0, 0, 0, 0, 1024);
-        Timer99.IsEnabled = true;
+        Timer99.IsEnabled = true;*/
     }
 
     // чуть сократила 👉👈
     private bool CheckTextBox => _incorrectValues.Count == 0;
 
-    private void SetRamAndTime(object sender, EventArgs e)
+    /*private void SetRamAndTime(object sender, EventArgs e)
     {
         TimeTextBox.Text = MyCounter.NextValue().ToString();
-    }
+    }*/
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
     {
@@ -231,12 +233,13 @@ public partial class MainWindow
     private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var type = TypeComboBox.SelectedItem.ToString();
-        var idType = _dataService.MaterialDataBase.GetIdMaterial(type);
+        var idType = _dataService.MaterialDataBase.GetIdParameterSet(type);
         _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
         foreach (var empiricCoefficient in _empiricCoefficients)
             EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
                 empiricCoefficient.IdEc,
                 empiricCoefficient.Name,
+                empiricCoefficient.Symbol,
                 empiricCoefficient.Unit ?? " ",
                 empiricCoefficient.Value));
 
@@ -268,6 +271,12 @@ public partial class MainWindow
         {
             Header = "Name",
             Binding = new Binding("Name")
+        };
+        EmpiricCoefficientsDataGrid.Columns.Add(column);
+        column = new DataGridTextColumn
+        {
+            Header = "Symbol",
+            Binding = new Binding("Symbol")
         };
         EmpiricCoefficientsDataGrid.Columns.Add(column);
         column = new DataGridTextColumn
