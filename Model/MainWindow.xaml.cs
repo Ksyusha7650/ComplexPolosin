@@ -234,6 +234,7 @@ public partial class MainWindow
     {
         var type = TypeComboBox.SelectedItem.ToString();
         var idType = _dataService.MaterialDataBase.GetIdParameterSet(type);
+        EmpiricCoefficientsDataGrid.Items.Clear();
         _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
         foreach (var empiricCoefficient in _empiricCoefficients)
             EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(

@@ -55,7 +55,7 @@ where ID_ParameterSet = @IdMaterial and p.ID_Type = 2
                 empiricCoefficient.Name,
                 empiricCoefficient.Symbol,
                 2);
-            if (empiricCoefficient.Unit != null)
+        if (empiricCoefficient.Unit != null)
                 _baseRepository.AddParameterInParameterSet(
                     parameterSet,
                     idParameter,

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -116,6 +117,7 @@ public partial class AdminWindow
             return;
         var type = TypeComboBox.SelectedItem.ToString();
         var idType = _dataService.MaterialDataBase.GetIdParameterSet(type);
+        EmpiricCoefficientsDataGrid.Items.Clear();
         _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
         foreach (var empiricCoefficient in _empiricCoefficients)
             EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
@@ -208,9 +210,9 @@ public partial class AdminWindow
         GetDataFromDataBase();
     }
 
-    private void CreateECButton_OnClick(object sender, RoutedEventArgs e)
+    private async void CreateECButton_OnClick(object sender, RoutedEventArgs e)
     {
-        var id = _dataService.MaterialDataBase.GetIdParameterSet(TypeComboBox.Text);
+        var id = _dataService.MaterialDataBase.GetIdParameterSet(TypeComboBox.Text); 
         _dataService.EmpiricCoefficientsDataBase.AddEmpiricCoefficients(
              id,
              new EmpiricCoefficientsModel(
