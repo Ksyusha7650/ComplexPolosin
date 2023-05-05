@@ -210,6 +210,11 @@ public partial class AdminWindow
         GetDataFromDataBase();
     }
 
+    private void NameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
+
     private async void CreateECButton_OnClick(object sender, RoutedEventArgs e)
     {
         var id = _dataService.MaterialDataBase.GetIdParameterSet(TypeComboBox.Text); 
