@@ -114,10 +114,14 @@ public partial class AdminWindow
 
     private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (TypeComboBox.Items.Count == 0)
+        if (TypeComboBox.Items.Count == 0 || TypeComboBox.SelectedIndex == -1)
+        {
+            AddEmpiricCoefficientGrid.Visibility = Visibility.Hidden;
             return;
-        var type = TypeComboBox.SelectedItem.ToString();
-        var idType = _dataService.MaterialDataBase.GetIdParameterSet(type);
+        }
+            
+        _TypeMaterial = TypeComboBox.SelectedItem.ToString();
+        var idType = _dataService.MaterialDataBase.GetIdParameterSet(_TypeMaterial);
         EmpiricCoefficientsDataGrid.Items.Clear();
         _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
         foreach (var empiricCoefficient in _empiricCoefficients)
@@ -127,6 +131,7 @@ public partial class AdminWindow
                 empiricCoefficient.Symbol,
                 empiricCoefficient.Unit ?? " ",
                 empiricCoefficient.Value));
+        AddEmpiricCoefficientGrid.Visibility = Visibility.Visible;
         
         //TODO: добавить из бд 3 свойства материала
     }
@@ -138,21 +143,21 @@ public partial class AdminWindow
         _marks = _dataService.ChannelDataBase.GetMarks();
         foreach (var mark in _marks)
             MarkComboBox.Items.Add(mark);
-        MarkComboBox.SelectedItem = "";
+        MarkComboBox.SelectedIndex = -1;
         _types = _dataService.MaterialDataBase.GetTypes();
         foreach (var type in _types)
             TypeComboBox.Items.Add(type);
-        TypeComboBox.SelectedItem = "";
+        TypeComboBox.SelectedItem = (_TypeMaterial is null) ? "" : _TypeMaterial;
         _empiricCoefficientsNames = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients();
         foreach (var ec in _empiricCoefficientsNames)
             NameComboBox.Items.Add(ec);
-        NameComboBox.SelectedItem = "";
+        NameComboBox.SelectedIndex = -1;
         _units = _dataService.EmpiricCoefficientsDataBase.GetUnits();
         foreach (var unit in _units)
         {
             UnitComboBox.Items.Add(unit);
         }
-        UnitComboBox.SelectedItem = "-";
+        UnitComboBox.SelectedIndex = -1;
     }
 
     private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -193,7 +198,8 @@ public partial class AdminWindow
     
     private void MarkComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (MarkComboBox.Items.Count == 0) return;
+        if (MarkComboBox.SelectedIndex == -1) 
+            return;
         var mark = MarkComboBox.SelectedItem.ToString();
         var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
         var model = new GeometricParameters(
@@ -213,6 +219,28 @@ public partial class AdminWindow
         TypeComboBox.Items.Clear();
     }
 
+    private void SetParameters (bool isReadOnly)
+    {
+        SymbolTextBox.IsEnabled = !isReadOnly;
+        UnitComboBox.IsEnabled = !isReadOnly;
+        ValueTextBox.IsEnabled = !isReadOnly;
+
+    }
+
+    private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (NameTextBox.Text.Length > 0)
+        {
+            SetParameters(isReadOnly: false);
+            CreateEcButton.IsEnabled = true;
+        }
+        else
+        {
+            SetParameters(isReadOnly: true);
+            CreateEcButton.IsEnabled = false;
+        }
+    }
+
     private void CreateTypeButton_OnClick(object sender, RoutedEventArgs e)
     {
         _dataService.MaterialDataBase.AddMaterial(
@@ -224,21 +252,34 @@ public partial class AdminWindow
         GetDataFromDataBase();
     }
 
+    private void TypeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (TypeTextBox.Text.Length > 0)
+            CreateTypeButton.IsEnabled = true;
+        else CreateTypeButton.IsEnabled = false;
+    }
+
     private void NameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var name = NameComboBox.SelectedItem.ToString();
-        if (name is "") return;
+        if (NameComboBox.SelectedIndex is -1 || TypeComboBox.SelectedIndex == -1)
+        {
+            AddEcButton.IsEnabled = false;
+            return;
+        } 
         var idMaterial = _dataService.MaterialDataBase.GetIdParameterSet(TypeComboBox.SelectedItem.ToString());
         var ec =
-            _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficient(idMaterial, name).Result;
+            _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficient(idMaterial, NameComboBox.SelectedItem.ToString()).Result;
         SymbolTextBox.Text = ec.Symbol;
         UnitComboBox.SelectedItem = ec.Unit;
         ValueTextBox.Text = ec.Value.ToString(CultureInfo.InvariantCulture);
+        SetParameters(isReadOnly: true);
+        AddEcButton.IsEnabled = true;
+
     }
 
     private void CreateECButton_OnClick(object sender, RoutedEventArgs e)
     {
-        var name = NameTextBox.Text is "" ? NameComboBox.SelectedItem.ToString() : NameTextBox.Text;
+        var name = NameTextBox.Text;
         var unit = UnitTextBox.Text is "" ? UnitComboBox.SelectedItem.ToString() : UnitTextBox.Text;
         var id = _dataService.MaterialDataBase.GetIdParameterSet(TypeComboBox.SelectedItem.ToString()); 
         _dataService.EmpiricCoefficientsDataBase.AddEmpiricCoefficients(
@@ -252,6 +293,24 @@ public partial class AdminWindow
                  SymbolTextBox.Text
                  )
         );
-            //GetDataFromDataBase();
+        GetDataFromDataBase();
     }
+
+
+    private async void AddEcButton_Click(object sender, RoutedEventArgs e)
+    {
+        var name = NameComboBox.SelectedItem.ToString();
+        var unit = UnitComboBox.SelectedItem.ToString();
+        var idUnit = await _dataService.GetIdUnit(unit);
+        var idParameterSet = _dataService.MaterialDataBase.GetIdParameterSet(_TypeMaterial);
+        var idParameter = await _dataService.GetIdParameter(name);
+        _dataService.AddParameterInParameterSet(
+            idParameterSet,
+            idParameter,
+            idUnit,
+            Convert.ToDouble(ValueTextBox.Text)
+         );
+        GetDataFromDataBase();
+    }
+
 }

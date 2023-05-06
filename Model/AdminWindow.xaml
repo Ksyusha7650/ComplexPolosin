@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
 
-        Title="Input Data Window" Height="518" Width="991" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Title="Input Data Window" Height="546" Width="991" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         FontFamily="{StaticResource Inter}">
     <Grid HorizontalAlignment="Center" Width="991" Height="598" VerticalAlignment="Top">
         <Label Content="Mark:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="554,154,366,0"
@@ -44,11 +44,6 @@
         <Label Content="°С" Padding="5,0,5,0" UseLayoutRounding="False" Margin="286,255,622,0"
                VerticalAlignment="Top" />
         <!--
-                <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"
-                                    VerticalAlignment="Top" Margin="32,50,31,0" />
-            </Grid>
-        </Expander>-->
-        <!--
             </Grid>
         </Expander>-->
         <TextBox x:Name="HeightTextBox" Text="0.00" HorizontalAlignment="Left" Margin="638,194,0,0"
@@ -76,66 +71,68 @@
         <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="727,256,216,0"
                VerticalAlignment="Top" />
         <Menu Margin="22,10,0,562" Background="White">
-            <Button x:Name="SaveButton" Content="Save" BorderBrush="{x:Null}" Cursor="Hand"
-                    FontFamily="Inter" Background="White" Click="SaveButton_Click" />
             <Button x:Name="ExitButton" Content="Exit" BorderBrush="{x:Null}" Cursor="Hand"
                     FontFamily="Inter" Background="White" Click="ExitButton_Click" />
         </Menu>
-        <Button x:Name="CreateMarkButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
-                FontFamily="Inter" Background="White" Margin="894,153,40,425" Click="CreateMarkButton_OnClick" />
-        <Button x:Name="CreateTypeButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
+        <Button x:Name="CreateMarkButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="False"
+                FontFamily="Inter" Background="White" Margin="894,151,40,427" Click="CreateMarkButton_OnClick" />
+        <Button x:Name="CreateTypeButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="False"
                 FontFamily="Inter" Background="White" Margin="438,154,495,425" Click="CreateTypeButton_OnClick" />
-        <TextBox x:Name="TypeTextBox" HorizontalAlignment="Left" Margin="292,152,0,0"
+        <TextBox x:Name="TypeTextBox" HorizontalAlignment="Left" Margin="298,152,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
-                 Width="134" Height="22" />
+                 Width="134" Height="22" TextChanged="TypeTextBox_TextChanged" />
         <TextBox x:Name="MarkTextBox" HorizontalAlignment="Left" Margin="775,150,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
                  Width="105" Height="22" />
-        <Label Content="Name:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="462,347,472,0"
-               VerticalAlignment="Top" />
-        <Label Content="Symbol:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="462,377,472,0"
-               VerticalAlignment="Top" />
-        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="688,343,0,0"
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Top"
-                 Width="150" Height="22" />
-        <TextBox x:Name="SymbolTextBox" HorizontalAlignment="Left" Margin="519,372,0,0"
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Top"
-                 Width="42" Height="22" MaxLength="5" />
-        <Button x:Name="CreateEcButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
-            FontFamily="Inter" Background="White" Margin="866,344,69,235" Click="CreateECButton_OnClick"/>
-        <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Left" Margin="128,153,0,0" VerticalAlignment="Top" Width="142"
+        <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Left" Margin="124,153,0,0" VerticalAlignment="Top" Width="158"
                   SelectionChanged="TypeComboBox_OnSelectionChanged"/>
-        <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="104,338,567,144" AutoGenerateColumns="False" />
-        <Label Content="Unit:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="464,404,470,0"
-            VerticalAlignment="Top" />
-        <TextBox x:Name="UnitTextBox" HorizontalAlignment="Left" Margin="601,401,0,0"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Width="42" Height="22" />
-        <Label Content="Value:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="464,431,470,0"
-            VerticalAlignment="Top" />
-        <TextBox x:Name="ValueTextBox" HorizontalAlignment="Left" Margin="518,427,0,0"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Width="63" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox"  />
+        <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="76,338,567,144" AutoGenerateColumns="False" />
         <ComboBox x:Name="MarkComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="624,149,0,0"
             VerticalAlignment="Top"
             Width="128"
             BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="MarkComboBox_OnSelectionChanged" />
-        <ComboBox x:Name="UnitComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="519,401,0,0"
+        <Grid x:Name="AddEmpiricCoefficientGrid" Margin="467,324,24,110" Visibility="Visible">
+            <Label Content="Name:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="22,26,421,0"
+            VerticalAlignment="Top" />
+            <Label Content="Symbol:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="22,56,421,0"
+            VerticalAlignment="Top" />
+            <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="240,22,0,0"
+            TextWrapping="Wrap"
             VerticalAlignment="Top"
-            Width="65"
+            Width="150" Height="22" TextChanged="NameTextBox_TextChanged" />
+            <TextBox x:Name="SymbolTextBox" HorizontalAlignment="Left" Margin="78,51,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="48" Height="22" MaxLength="5" />
+            <Button x:Name="CreateEcButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
+            FontFamily="Inter" Background="White" Margin="436,139,8,6" Click="CreateECButton_OnClick" IsEnabled="False"/>
+            <Label Content="Unit:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="24,83,419,0"
+            VerticalAlignment="Top" />
+            <TextBox x:Name="UnitTextBox" HorizontalAlignment="Left" Margin="183,80,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="88" Height="22" />
+            <Label Content="Value:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="24,110,419,0"
+            VerticalAlignment="Top" />
+            <TextBox x:Name="ValueTextBox" HorizontalAlignment="Left" Margin="78,106,0,0"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="74" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox"  />
+            <ComboBox x:Name="UnitComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="78,80,0,0"
+            VerticalAlignment="Top"
+            Width="96"
             BorderBrush="{x:Null}" Cursor="Hand" />
-        <Button x:Name="CreateEcButton_Copy1" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
-            FontFamily="Inter" Background="White" Margin="660,402,275,178" Click="CreateECButton_OnClick"/>
-        <ComboBox x:Name="NameComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="518,344,0,0"
+            <Button x:Name="CreateEcButton_Copy1" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
+            FontFamily="Inter" Background="White" Margin="279,81,165,65" IsEnabled="False"/>
+            <ComboBox x:Name="NameComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="78,23,0,0"
             VerticalAlignment="Top"
             Width="148"
             BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="NameComboBox_SelectionChanged"/>
+            <Button x:Name="AddEcButton" Content="Add" BorderBrush="{x:Null}" Cursor="Hand"
+            FontFamily="Inter" Background="White" Margin="375,139,69,6" Click="AddEcButton_Click" IsEnabled="False"/>
+        </Grid>
         <!--
                 <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"
                                     VerticalAlignment="Top" Margin="32,50,31,0" />
