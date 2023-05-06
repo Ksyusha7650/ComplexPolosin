@@ -25,8 +25,9 @@ public partial class AdminWindow
 {
     private DataService _dataService;
     private readonly List<string> _incorrectValues = new();
-    private string[] _marks, _types;
+    private string[] _marks, _types, _empiricCoefficientsNames, _units;
     private EmpiricCoefficientsModel[] _empiricCoefficients;
+    private string _TypeMaterial = "";
 
     public Color BorderColor = new()
     {
@@ -126,7 +127,8 @@ public partial class AdminWindow
                 empiricCoefficient.Symbol,
                 empiricCoefficient.Unit ?? " ",
                 empiricCoefficient.Value));
-        // добавить из бд 3 свойства материала
+        
+        //TODO: добавить из бд 3 свойства материала
     }
 
     private void GetDataFromDataBase()
@@ -136,9 +138,21 @@ public partial class AdminWindow
         _marks = _dataService.ChannelDataBase.GetMarks();
         foreach (var mark in _marks)
             MarkComboBox.Items.Add(mark);
+        MarkComboBox.SelectedItem = "";
         _types = _dataService.MaterialDataBase.GetTypes();
         foreach (var type in _types)
             TypeComboBox.Items.Add(type);
+        TypeComboBox.SelectedItem = "";
+        _empiricCoefficientsNames = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients();
+        foreach (var ec in _empiricCoefficientsNames)
+            NameComboBox.Items.Add(ec);
+        NameComboBox.SelectedItem = "";
+        _units = _dataService.EmpiricCoefficientsDataBase.GetUnits();
+        foreach (var unit in _units)
+        {
+            UnitComboBox.Items.Add(unit);
+        }
+        UnitComboBox.SelectedItem = "-";
     }
 
     private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -212,23 +226,32 @@ public partial class AdminWindow
 
     private void NameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-
+        var name = NameComboBox.SelectedItem.ToString();
+        if (name is "") return;
+        var idMaterial = _dataService.MaterialDataBase.GetIdParameterSet(TypeComboBox.SelectedItem.ToString());
+        var ec =
+            _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficient(idMaterial, name).Result;
+        SymbolTextBox.Text = ec.Symbol;
+        UnitComboBox.SelectedItem = ec.Unit;
+        ValueTextBox.Text = ec.Value.ToString(CultureInfo.InvariantCulture);
     }
 
-    private async void CreateECButton_OnClick(object sender, RoutedEventArgs e)
+    private void CreateECButton_OnClick(object sender, RoutedEventArgs e)
     {
-        var id = _dataService.MaterialDataBase.GetIdParameterSet(TypeComboBox.Text); 
+        var name = NameTextBox.Text is "" ? NameComboBox.SelectedItem.ToString() : NameTextBox.Text;
+        var unit = UnitTextBox.Text is "" ? UnitComboBox.SelectedItem.ToString() : UnitTextBox.Text;
+        var id = _dataService.MaterialDataBase.GetIdParameterSet(TypeComboBox.SelectedItem.ToString()); 
         _dataService.EmpiricCoefficientsDataBase.AddEmpiricCoefficients(
              id,
              new EmpiricCoefficientsModel(
                  id,
                  _empiricCoefficients.Length,
-                 NameTextBox.Text,
-                 UnitTextBox.Text,
+                 name,
+                 unit,
                  Convert.ToDouble(ValueTextBox.Text),
                  SymbolTextBox.Text
                  )
         );
-        GetDataFromDataBase();
+            //GetDataFromDataBase();
     }
 }
