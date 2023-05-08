@@ -7,7 +7,7 @@ public class Calculation
     private readonly EmpiricCoefficients _empiricCoefficients;
     private readonly GeometricParameters _geometricParameters;
     private readonly PropertiesOfMaterial _propertiesOfMaterial;
-    private readonly double _R = 8.314;
+    private const double R = 8.314;
     private readonly VariableParameters _variableParameters;
     private double _alphaU;
     private double _beta;
@@ -64,14 +64,14 @@ public class Calculation
         _T0 = _propertiesOfMaterial.MeltingPoint;
     }
 
-    public void InitializingVariables()
+    private void InitializingVariables()
     {
         // скорость деформации сдвига
         _gammaPoint = _Vu / _H;
 
         // удельные тепловые потоки
         _qGamma = _H * _W * _m0 * Math.Pow(_gammaPoint, _n + 1);
-        _beta = _Ea / (_R * (_T0 + 20 + 273) * (_Tr + 273));
+        _beta = _Ea / (R * (_T0 + 20 + 273) * (_Tr + 273));
         _qAlpha = _W * _alphaU * (Math.Pow(_beta, -1) - _Tu + _Tr);
 
         // коэффициент геометрической формы канала 
@@ -97,7 +97,7 @@ public class Calculation
     }
 
     // производительность канала
-    public double Effiency()
+    public double GetThroughout()
     {
         return Math.Round(_ro * _Qch * 3600, 2);
     }
@@ -111,16 +111,13 @@ public class Calculation
     }
 
     // список температур для таблицы
-    public List<double> ListOfTemperatures(List<double> coordinates)
+    public List<double> ListOfTemperatures(IEnumerable<double> coordinates)
     {
-        List<double> listOfTemperatures = new();
-        foreach (var coordinate in coordinates)
-            listOfTemperatures.Add(Math.Round(Temperature(coordinate), 2));
-        return listOfTemperatures;
+        return coordinates.Select(coordinate => Math.Round(Temperature(coordinate), 2)).ToList();
     }
 
     // список вязкости для таблицы
-    public List<double> ListOfViscosity(List<double> listOfTemperatures)
+    public List<double> ListOfViscosity(IEnumerable<double> listOfTemperatures)
     {
         return listOfTemperatures.Select(Viscosity).ToList();
     }

@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 using Algorithm.Models;
 using Database;
 using Database.Models;
@@ -23,9 +21,8 @@ namespace ModelPolosin;
 /// </summary>
 public partial class AdminWindow
 {
-    private DataService _dataService;
     private readonly List<string> _incorrectValues = new();
-    private string[] _marks, _types, _empiricCoefficientsNames, _units;
+    private DataService _dataService;
     private EmpiricCoefficientsModel[] _empiricCoefficients;
     private string _TypeMaterial = "";
 
@@ -33,13 +30,14 @@ public partial class AdminWindow
     {
         A = 100
     };
-    
+
     public AdminWindow()
     {
         InitializeComponent();
         var customCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
         customCulture.NumberFormat.NumberDecimalSeparator = ".";
         Thread.CurrentThread.CurrentCulture = customCulture;
+        _dataService = new DataService();
         GetDataFromDataBase();
         SetUpColumns();
     }
@@ -56,14 +54,7 @@ public partial class AdminWindow
     private void ZeroValidationTextBox(object sender, TextChangedEventArgs e)
     {
         var textBox = sender as TextBox;
-        var exist = false;
-        foreach (var incorrectTextBox in _incorrectValues)
-            if (incorrectTextBox == textBox?.Name)
-            {
-                exist = true;
-                break;
-            }
-
+        var exist = _incorrectValues.Any(incorrectTextBox => incorrectTextBox == textBox?.Name);
         if (textBox?.Text is "0" or "")
         {
             textBox.BorderBrush = Brushes.Red;
@@ -72,12 +63,12 @@ public partial class AdminWindow
         }
         else
         {
-            textBox.BorderBrush = new SolidColorBrush(BorderColor);
+            textBox!.BorderBrush = new SolidColorBrush(BorderColor);
             if (exist)
                 _incorrectValues.Remove(textBox.Name);
         }
     }
-    
+
     private void SetUpColumns()
     {
         var column = new DataGridTextColumn
@@ -112,15 +103,14 @@ public partial class AdminWindow
         EmpiricCoefficientsDataGrid.Columns.Add(column);
     }
 
-    private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (TypeComboBox.Items.Count == 0 || TypeComboBox.SelectedIndex == -1)
         {
             AddEmpiricCoefficientGrid.Visibility = Visibility.Hidden;
             return;
         }
-            
-        _TypeMaterial = TypeComboBox.SelectedItem.ToString();
+        _TypeMaterial = TypeComboBox.SelectedItem.ToString()!;
         var idType = _dataService.MaterialDataBase.GetIdParameterSet(_TypeMaterial);
         EmpiricCoefficientsDataGrid.Items.Clear();
         _empiricCoefficients = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients(idType).Result;
@@ -132,40 +122,31 @@ public partial class AdminWindow
                 empiricCoefficient.Unit ?? " ",
                 empiricCoefficient.Value));
         AddEmpiricCoefficientGrid.Visibility = Visibility.Visible;
-        
-        //TODO: добавить из бд 3 свойства материала
+        var (_, density, specificHeat, meltingPoint) = await _dataService.MaterialDataBase.GetMaterialProperties(idType);
+        DensityTextBox.Text = density.ToString(CultureInfo.InvariantCulture);
+        SpecificHeartTextBox.Text = specificHeat.ToString(CultureInfo.InvariantCulture);
+        MeltingPointTextBox.Text = meltingPoint.ToString(CultureInfo.InvariantCulture);
     }
 
     private void GetDataFromDataBase()
     {
         Clear();
-        _dataService = new DataService();
-        _marks = _dataService.ChannelDataBase.GetMarks();
-        foreach (var mark in _marks)
-            MarkComboBox.Items.Add(mark);
+        _dataService.ChannelDataBase.GetMarks()
+            .ToList()
+            .ForEach(mark => MarkComboBox.Items.Add(mark));
         MarkComboBox.SelectedIndex = -1;
-        _types = _dataService.MaterialDataBase.GetTypes();
-        foreach (var type in _types)
-            TypeComboBox.Items.Add(type);
-        TypeComboBox.SelectedItem = (_TypeMaterial is null) ? "" : _TypeMaterial;
-        _empiricCoefficientsNames = _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficients();
-        foreach (var ec in _empiricCoefficientsNames)
-            NameComboBox.Items.Add(ec);
+        _dataService.MaterialDataBase.GetTypes()
+            .ToList()
+            .ForEach(type => TypeComboBox.Items.Add(type));
+        TypeComboBox.SelectedItem = _TypeMaterial ?? "";
+        _dataService.EmpiricCoefficientsDataBase.GetNamesOfEmpiricCoefficients()
+            .ToList()
+            .ForEach(empiricCoefficient => NameComboBox.Items.Add(empiricCoefficient));
         NameComboBox.SelectedIndex = -1;
-        _units = _dataService.EmpiricCoefficientsDataBase.GetUnits();
-        foreach (var unit in _units)
-        {
-            UnitComboBox.Items.Add(unit);
-        }
+        _dataService.EmpiricCoefficientsDataBase.GetUnits()
+            .ToList()
+            .ForEach(unit => UnitComboBox.Items.Add(unit));
         UnitComboBox.SelectedIndex = -1;
-    }
-
-    private void SaveButton_Click(object sender, RoutedEventArgs e)
-    {
-        if (CheckTextBox)
-        {
-            
-        }
     }
 
     private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -192,13 +173,15 @@ public partial class AdminWindow
                 height,
                 length,
                 width)
-            );
+        );
         GetDataFromDataBase();
+        MarkTextBox.Text = "";
+        MarkComboBox.SelectedItem = mark;
     }
-    
+
     private void MarkComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (MarkComboBox.SelectedIndex == -1) 
+        if (MarkComboBox.SelectedIndex == -1)
             return;
         var mark = MarkComboBox.SelectedItem.ToString();
         var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
@@ -217,32 +200,34 @@ public partial class AdminWindow
     {
         MarkComboBox.Items.Clear();
         TypeComboBox.Items.Clear();
+        NameComboBox.Items.Clear();
+        UnitComboBox.Items.Clear();
     }
 
-    private void SetParameters (bool isReadOnly)
+    private void SetParameters(bool isReadOnly)
     {
         SymbolTextBox.IsEnabled = !isReadOnly;
         UnitComboBox.IsEnabled = !isReadOnly;
         ValueTextBox.IsEnabled = !isReadOnly;
-
     }
 
     private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (NameTextBox.Text.Length > 0)
         {
-            SetParameters(isReadOnly: false);
+            SetParameters(false);
             CreateEcButton.IsEnabled = true;
         }
         else
         {
-            SetParameters(isReadOnly: true);
+            SetParameters(true);
             CreateEcButton.IsEnabled = false;
         }
     }
 
     private void CreateTypeButton_OnClick(object sender, RoutedEventArgs e)
     {
+        //TODO: сделать проверку на поля
         _dataService.MaterialDataBase.AddMaterial(
             new PropertiesOfMaterialModel(
                 TypeTextBox.Text,
@@ -250,13 +235,28 @@ public partial class AdminWindow
                 Convert.ToDouble(SpecificHeartTextBox.Text),
                 Convert.ToDouble(MeltingPointTextBox.Text)));
         GetDataFromDataBase();
+        TypeTextBox.Text = "";
     }
 
-    private void TypeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if (TypeTextBox.Text.Length > 0)
-            CreateTypeButton.IsEnabled = true;
-        else CreateTypeButton.IsEnabled = false;
+        var textBox = sender as TextBox ?? new TextBox();
+        Button button = new();
+        switch (textBox.Name)
+        {
+            case "TypeTextBox":
+            {
+                button = CreateTypeButton;
+                break;
+            }
+            case "MarkTextBox":
+            {
+                button = CreateMarkButton;
+                break;
+            }
+        }
+
+        button.IsEnabled = textBox.Text.Length > 0;
     }
 
     private void NameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -265,37 +265,37 @@ public partial class AdminWindow
         {
             AddEcButton.IsEnabled = false;
             return;
-        } 
+        }
+
         var idMaterial = _dataService.MaterialDataBase.GetIdParameterSet(TypeComboBox.SelectedItem.ToString());
         var ec =
-            _dataService.EmpiricCoefficientsDataBase.GetEmpiricCoefficient(idMaterial, NameComboBox.SelectedItem.ToString()).Result;
+            _dataService.EmpiricCoefficientsDataBase
+                .GetEmpiricCoefficient(idMaterial, NameComboBox.SelectedItem.ToString()).Result;
         SymbolTextBox.Text = ec.Symbol;
         UnitComboBox.SelectedItem = ec.Unit;
         ValueTextBox.Text = ec.Value.ToString(CultureInfo.InvariantCulture);
-        SetParameters(isReadOnly: true);
+        SetParameters(true);
         AddEcButton.IsEnabled = true;
-
     }
 
     private void CreateECButton_OnClick(object sender, RoutedEventArgs e)
     {
         var name = NameTextBox.Text;
         var unit = UnitTextBox.Text is "" ? UnitComboBox.SelectedItem.ToString() : UnitTextBox.Text;
-        var id = _dataService.MaterialDataBase.GetIdParameterSet(TypeComboBox.SelectedItem.ToString()); 
+        var id = _dataService.MaterialDataBase.GetIdParameterSet(TypeComboBox.SelectedItem.ToString());
         _dataService.EmpiricCoefficientsDataBase.AddEmpiricCoefficients(
-             id,
-             new EmpiricCoefficientsModel(
-                 id,
-                 _empiricCoefficients.Length,
-                 name,
-                 unit,
-                 Convert.ToDouble(ValueTextBox.Text),
-                 SymbolTextBox.Text
-                 )
+            id,
+            new EmpiricCoefficientsModel(
+                id,
+                _empiricCoefficients.Length,
+                name,
+                unit,
+                Convert.ToDouble(ValueTextBox.Text),
+                SymbolTextBox.Text
+            )
         );
         GetDataFromDataBase();
     }
-
 
     private async void AddEcButton_Click(object sender, RoutedEventArgs e)
     {
@@ -309,8 +309,7 @@ public partial class AdminWindow
             idParameter,
             idUnit,
             Convert.ToDouble(ValueTextBox.Text)
-         );
+        );
         GetDataFromDataBase();
     }
-
 }

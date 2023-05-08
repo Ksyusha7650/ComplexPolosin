@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -10,7 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 using Algorithm;
 using Algorithm.Models;
 using Database;
@@ -32,7 +30,7 @@ public partial class MainWindow
         MyCounter = new("Processor", "% Processor Time", "_Total"); // фиг знает, что мы должны отображать
         */
 
-   // private readonly DispatcherTimer Timer99 = new();
+    // private readonly DispatcherTimer Timer99 = new();
     private Calculation _calculation;
 
     private DrawCharts _charts;
@@ -127,7 +125,7 @@ public partial class MainWindow
 
     private double GetEfficiency()
     {
-        return _calculation.Effiency();
+        return _calculation.GetThroughout();
     }
 
     private bool Calculate()

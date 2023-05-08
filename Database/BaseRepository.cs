@@ -45,7 +45,7 @@ where ID_ParameterSet = @IdPropertySet
 
         return result.ToArray();
     }
-    
+
     public async Task<int> AddNewParameter(string name, string symbol, int type)
     {
         const string sqlQuery = @"
@@ -62,10 +62,7 @@ select last_insert_id();
         cmd.CommandText = sqlQuery;
         var reader = cmd.ExecuteReader();
         var lastId = 0;
-        while (reader.Read())
-        {
-            lastId = reader.GetInt32(0);
-        }
+        while (reader.Read()) lastId = reader.GetInt32(0);
         return lastId;
     }
 
@@ -82,14 +79,11 @@ select last_insert_id();
         cmd.CommandText = sqlQuery;
         var reader = cmd.ExecuteReader();
         var lastId = 0;
-        while (reader.Read())
-        {
-            lastId = reader.GetInt32(0);
-        }
+        while (reader.Read()) lastId = reader.GetInt32(0);
         return lastId;
     }
 
-    public async void AddParameterInParameterSet (int idParameterSet, int idParameter, int? idUnit, double value)
+    public async void AddParameterInParameterSet(int idParameterSet, int idParameter, int? idUnit, double value)
     {
         const string sqlQuery = @"
 insert into parameter_in_set (ID_ParameterSet, ID_Parameter, ID_Unit, Value)
@@ -120,11 +114,11 @@ where ID_Unit = @IdUnit
         cmd.CommandText = sqlQuery;
         var reader = cmd.ExecuteReader();
         string result = null;
-        while (reader.Read()) 
+        while (reader.Read())
             result = reader.GetString(0);
         return result;
     }
-    
+
     public async Task<int> GetIdUnit(string name)
     {
         const string sqlQuery = @"
@@ -138,8 +132,8 @@ where Name = @Name
         cmd.Parameters.AddWithValue("@Name", name);
         cmd.CommandText = sqlQuery;
         var reader = cmd.ExecuteReader();
-        int result = 0;
-        while (reader.Read()) 
+        var result = 0;
+        while (reader.Read())
             result = reader.GetInt32(0);
         return result;
     }
@@ -161,7 +155,7 @@ where ID_Parameter = @IdProperty
         while (reader.Read()) result = reader.GetString(0);
         return result;
     }
-    
+
     public async Task<int> GetIdParameter(string name)
     {
         const string sqlQuery = @"
@@ -175,11 +169,9 @@ where Name = @Name
         cmd.Parameters.AddWithValue("@Name", name);
         cmd.CommandText = sqlQuery;
         var reader = cmd.ExecuteReader();
-        int result = 0;
-        while (reader.Read()) 
+        var result = 0;
+        while (reader.Read())
             result = reader.GetInt32(0);
         return result;
     }
-    
 }
-
