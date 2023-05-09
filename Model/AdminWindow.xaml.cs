@@ -21,12 +21,12 @@ namespace ModelPolosin;
 /// </summary>
 public partial class AdminWindow
 {
-    private readonly List<string> _incorrectValues = new();
-    private DataService _dataService;
+    private readonly DataService _dataService;
+    private readonly List<string> _incorrectValues = new() { "HeightTextBox", "WidthTextBox", "LengthTextBox" };
     private EmpiricCoefficientsModel[] _empiricCoefficients;
     private string _TypeMaterial = "";
 
-    public Color BorderColor = new()
+    private readonly Color BorderColor = new()
     {
         A = 100
     };
@@ -42,8 +42,15 @@ public partial class AdminWindow
         SetUpColumns();
     }
 
-    // чуть сократила 👉👈
-    private bool CheckTextBox => _incorrectValues.Count == 0;
+    private bool CheckChannelTextBox => !_incorrectValues.Any(value => 
+            value is "HeightTextBox"
+                  or "LengthTextBox"
+                  or "WidthTextBox");
+
+    private bool CheckMaterialTextBox => !_incorrectValues.Any(value =>
+            value is "DensityTextBox"
+                  or "SpecificHeartTextBox"
+                  or "MeltingPointTextBox");
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
     {
@@ -55,7 +62,8 @@ public partial class AdminWindow
     {
         var textBox = sender as TextBox;
         var exist = _incorrectValues.Any(incorrectTextBox => incorrectTextBox == textBox?.Name);
-        if (textBox?.Text is "0" or "")
+        decimal.TryParse(textBox.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out var number);
+        if (number == 0 || textBox.Text is "")
         {
             textBox.BorderBrush = Brushes.Red;
             if (!exist)
@@ -110,6 +118,7 @@ public partial class AdminWindow
             AddEmpiricCoefficientGrid.Visibility = Visibility.Hidden;
             return;
         }
+
         _TypeMaterial = TypeComboBox.SelectedItem.ToString()!;
         var idType = _dataService.MaterialDataBase.GetIdParameterSet(_TypeMaterial);
         EmpiricCoefficientsDataGrid.Items.Clear();
@@ -122,7 +131,8 @@ public partial class AdminWindow
                 empiricCoefficient.Unit ?? " ",
                 empiricCoefficient.Value));
         AddEmpiricCoefficientGrid.Visibility = Visibility.Visible;
-        var (_, density, specificHeat, meltingPoint) = await _dataService.MaterialDataBase.GetMaterialProperties(idType);
+        var (_, density, specificHeat, meltingPoint) =
+            await _dataService.MaterialDataBase.GetMaterialProperties(idType);
         DensityTextBox.Text = density.ToString(CultureInfo.InvariantCulture);
         SpecificHeartTextBox.Text = specificHeat.ToString(CultureInfo.InvariantCulture);
         MeltingPointTextBox.Text = meltingPoint.ToString(CultureInfo.InvariantCulture);
@@ -158,11 +168,12 @@ public partial class AdminWindow
 
     private void CreateMarkButton_OnClick(object sender, RoutedEventArgs e)
     {
-        if (!CheckTextBox)
+        if (!CheckChannelTextBox)
         {
             MessageBox.Show("Fix fields!");
             return;
         }
+
         var height = Convert.ToDouble(HeightTextBox.Text);
         var width = Convert.ToDouble(WidthTextBox.Text);
         var length = Convert.ToDouble(LengthTextBox.Text);
@@ -227,7 +238,12 @@ public partial class AdminWindow
 
     private void CreateTypeButton_OnClick(object sender, RoutedEventArgs e)
     {
-        //TODO: сделать проверку на поля
+        if (!CheckMaterialTextBox)
+        {
+            MessageBox.Show("Fix fields!");
+            return;
+        }
+
         _dataService.MaterialDataBase.AddMaterial(
             new PropertiesOfMaterialModel(
                 TypeTextBox.Text,
@@ -252,6 +268,11 @@ public partial class AdminWindow
             case "MarkTextBox":
             {
                 button = CreateMarkButton;
+                break;
+            }
+            case "UnitTextBox":
+            {
+                button = CreateUnitButton;
                 break;
             }
         }
@@ -311,5 +332,11 @@ public partial class AdminWindow
             Convert.ToDouble(ValueTextBox.Text)
         );
         GetDataFromDataBase();
+    }
+
+    private void CreateUnitButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        var unit = UnitTextBox.Text;
+        
     }
 }

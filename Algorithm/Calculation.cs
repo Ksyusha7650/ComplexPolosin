@@ -4,10 +4,10 @@ namespace Algorithm;
 
 public class Calculation
 {
+    private const double R = 8.314;
     private readonly EmpiricCoefficients _empiricCoefficients;
     private readonly GeometricParameters _geometricParameters;
     private readonly PropertiesOfMaterial _propertiesOfMaterial;
-    private const double R = 8.314;
     private readonly VariableParameters _variableParameters;
     private double _alphaU;
     private double _beta;

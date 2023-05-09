@@ -90,7 +90,7 @@
                   Width="158"
                   SelectionChanged="TypeComboBox_OnSelectionChanged" />
         <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="76,338,567,144" AutoGenerateColumns="False" />
-        <ComboBox x:Name="MarkComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="624,149,0,0"
+        <ComboBox x:Name="MarkComboBox" SelectedIndex="-1" HorizontalAlignment="Left" Margin="624,149,0,0"
                   VerticalAlignment="Top"
                   Width="128"
                   BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="MarkComboBox_OnSelectionChanged" />
@@ -115,20 +115,20 @@
             <TextBox x:Name="UnitTextBox" HorizontalAlignment="Left" Margin="183,80,0,0"
                      TextWrapping="Wrap"
                      VerticalAlignment="Top"
-                     Width="88" Height="22" />
+                     Width="88" Height="22" TextChanged="TextBox_TextChanged"/>
             <Label Content="Value:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="24,110,419,0"
                    VerticalAlignment="Top" />
             <TextBox x:Name="ValueTextBox" HorizontalAlignment="Left" Margin="78,106,0,0"
                      TextWrapping="Wrap"
                      VerticalAlignment="Top"
                      Width="74" Height="22" PreviewTextInput="NumberValidationTextBox"
-                     TextChanged="ZeroValidationTextBox" />
+                     TextChanged="ZeroValidationTextBox" Text="0.00" />
             <ComboBox x:Name="UnitComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="78,80,0,0"
                       VerticalAlignment="Top"
                       Width="96"
                       BorderBrush="{x:Null}" Cursor="Hand" />
-            <Button x:Name="CreateEcButton_Copy1" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
-                    FontFamily="Inter" Background="White" Margin="279,81,165,65" IsEnabled="False" />
+            <Button x:Name="CreateUnitButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
+                    FontFamily="Inter" Background="White" Margin="279,81,165,65" IsEnabled="False" Click="CreateUnitButton_OnClick" />
             <ComboBox x:Name="NameComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="78,23,0,0"
                       VerticalAlignment="Top"
                       Width="148"
