@@ -1,0 +1,59 @@
+﻿<Window x:Class="ModelPolosin.AddParameterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModelPolosin"
+        mc:Ignorable="d"
+        Title="Add parameter" Height="220" Width="481" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        FontFamily="{StaticResource Inter}">
+    <Grid>
+        <Grid x:Name="AddEmpiricCoefficientGrid" Margin="16,30,-37,10" Visibility="Visible">
+            <Label Content="Name:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="22,26,421,0"
+                VerticalAlignment="Top" />
+            <Label Content="Symbol:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="22,56,421,0"
+                VerticalAlignment="Top" />
+            <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="78,22,0,0"
+                TextWrapping="Wrap"
+                VerticalAlignment="Top"
+                Width="150" Height="22" TextChanged="NameTextBox_TextChanged" />
+            <TextBox x:Name="SymbolTextBox" HorizontalAlignment="Left" Margin="78,51,0,0"
+                TextWrapping="Wrap"
+                VerticalAlignment="Top"
+                Width="48" Height="22" MaxLength="5" />
+            <Button x:Name="CreateEcButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
+                FontFamily="Inter" Background="White" Margin="341,141,103,4" Click="CreateECButton_OnClick" IsEnabled="False"/>
+            <Label Content="Unit:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="24,83,419,0"
+                VerticalAlignment="Top" />
+            <TextBox x:Name="UnitTextBox" HorizontalAlignment="Left" Margin="183,80,0,0"
+                TextWrapping="Wrap"
+                VerticalAlignment="Top"
+                Width="88" Height="22" />
+            <Label Content="Value:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="24,110,419,0"
+                VerticalAlignment="Top" />
+            <TextBox x:Name="ValueTextBox" HorizontalAlignment="Left" Margin="78,106,0,0"
+                TextWrapping="Wrap"
+                VerticalAlignment="Top"
+                Width="74" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox"  />
+            <ComboBox x:Name="UnitComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="78,80,0,0"
+                VerticalAlignment="Top"
+                Width="96"
+                BorderBrush="{x:Null}" Cursor="Hand" />
+            <Button x:Name="CreateEcButton_Copy1" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
+                FontFamily="Inter" Background="White" Margin="279,81,165,65" IsEnabled="False"/>
+            <Label Content="Type of parameter:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="24,143,363,0"
+                VerticalAlignment="Top" />
+            <ComboBox x:Name="UnitComboBox_Copy" HorizontalAlignment="Left" Margin="142,139,0,0"
+                VerticalAlignment="Top"
+                Width="172"
+                BorderBrush="{x:Null}" Cursor="Hand" >
+                <ComboBoxItem Content="Channel parameter"/>
+                <ComboBoxItem Content="Property of material"/>
+                <ComboBoxItem Content="Empiric coefficient"/>
+            </ComboBox>
+        </Grid>
+        <Label Content="Create parameter" Padding="5,0,5,0" UseLayoutRounding="False" Margin="29,17,318,0"
+            VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
+
+    </Grid>
+</Window>
