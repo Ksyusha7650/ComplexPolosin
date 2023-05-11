@@ -46,7 +46,7 @@ where Type = @TypeName;
             idMaterial = reader.GetInt32(0);
         return idMaterial;
     }
-    
+
     public async void AddMaterial(PropertiesOfMaterialModel materialModel)
     {
         var idParameterSet = await _baseRepository.AddNewParameterSet();
@@ -65,7 +65,7 @@ where Type = @TypeName;
             await _baseRepository.GetIdParameter("Melting point"),
             await _baseRepository.GetIdUnit("℃"),
             materialModel.MeltingPoint);
-        
+
         const string sqlQuery = @"
 insert into material (ID_ParameterSet, Type)
 VALUES (@IdParameterSet, @Type);
@@ -78,5 +78,32 @@ VALUES (@IdParameterSet, @Type);
         cmd.CommandText = sqlQuery;
         cmd.ExecuteNonQuery();
     }
-    
+
+    public async Task<PropertiesOfMaterialModel> GetMaterialProperties(int idMaterial)
+    {
+        const string sqlQuery = @"
+select Value
+from parameter_in_set ps
+join parameter p on p.ID_Parameter = ps.ID_Parameter
+where ID_ParameterSet = @IdMaterial and p.ID_Type = 3
+";
+        await using var connection = await _baseRepository.GetAndOpenConnection();
+        var cmd = new MySqlCommand();
+        cmd.Connection = connection;
+        cmd.Parameters.AddWithValue("@IdMaterial", idMaterial);
+        cmd.CommandText = sqlQuery;
+        var reader = cmd.ExecuteReader();
+        List<double> values = new();
+        while (reader.Read())
+        {
+            var value = reader.GetDouble(0);
+            values.Add(value);
+        }
+
+        return new PropertiesOfMaterialModel(
+            null,
+            values[0],
+            MeltingPoint: values[1],
+            SpecificHeat: values[2]);
+    }
 }

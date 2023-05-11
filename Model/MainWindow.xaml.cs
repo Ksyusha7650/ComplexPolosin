@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -10,7 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 using Algorithm;
 using Algorithm.Models;
 using Database;
@@ -32,7 +30,7 @@ public partial class MainWindow
         MyCounter = new("Processor", "% Processor Time", "_Total"); // фиг знает, что мы должны отображать
         */
 
-   // private readonly DispatcherTimer Timer99 = new();
+    // private readonly DispatcherTimer Timer99 = new();
     private Calculation _calculation;
 
     private DrawCharts _charts;
@@ -60,8 +58,6 @@ public partial class MainWindow
         Timer99.Interval = new TimeSpan(0, 0, 0, 0, 1024);
         Timer99.IsEnabled = true;*/
     }
-
-    // чуть сократила 👉👈
     private bool CheckTextBox => _incorrectValues.Count == 0;
 
     /*private void SetRamAndTime(object sender, EventArgs e)
@@ -127,7 +123,7 @@ public partial class MainWindow
 
     private double GetEfficiency()
     {
-        return _calculation.Effiency();
+        return _calculation.GetThroughout();
     }
 
     private bool Calculate()
@@ -230,7 +226,7 @@ public partial class MainWindow
         foreach (var type in _types) TypeComboBox.Items.Add(type);
     }
 
-    private void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void TypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var type = TypeComboBox.SelectedItem.ToString();
         var idType = _dataService.MaterialDataBase.GetIdParameterSet(type);
@@ -243,21 +239,11 @@ public partial class MainWindow
                 empiricCoefficient.Symbol,
                 empiricCoefficient.Unit ?? " ",
                 empiricCoefficient.Value));
-
-        /*EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
-            1, "Коэффициент консистенции", "Pa * s", 29940));
-
-        EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
-            2, "Энергия активации", "J/m", 20000));
-
-        EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
-            3, "Температура приведения", "C", 190));
-
-        EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
-            4, "Индекс течения материала", "-", 0.35));
-
-        EmpiricCoefficientsDataGrid.Items.Add(new EmpiricCoefficientsToDataGrid(
-            5, "Коэффициент теплоотдачи ", "Vt", 425));*/
+        var (_, density, specificHeat, meltingPoint) =
+            await _dataService.MaterialDataBase.GetMaterialProperties(idType);
+        DensityTextBox.Text = density.ToString(CultureInfo.InvariantCulture);
+        SpecificHeartTextBox.Text = specificHeat.ToString(CultureInfo.InvariantCulture);
+        MeltingPointTextBox.Text = meltingPoint.ToString(CultureInfo.InvariantCulture);
     }
 
     private void SetUpColumns()

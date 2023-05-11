@@ -19,7 +19,7 @@
                VerticalAlignment="Top" FontSize="20" />
         <Label Content="Type:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="66,153,850,0"
                VerticalAlignment="Top" FontWeight="Bold" FontSize="14" />
-        <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="40,316,628,0"
+        <Label Content="Empiric Coefficients" Padding="5,0,5,0" UseLayoutRounding="False" Margin="56,294,612,0"
                VerticalAlignment="Top" FontSize="20" />
         <TextBox x:Name="DensityTextBox" Text="0.00" HorizontalAlignment="Left" Margin="186,194,0,0"
                  TextWrapping="Wrap"
@@ -71,17 +71,6 @@
         <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="727,256,216,0"
                VerticalAlignment="Top" />
         <Menu Margin="22,10,0,562" Background="White">
-            <Button x:Name="CreateEcButton_Copy" Content="Create parameter" BorderBrush="{x:Null}" Cursor="Hand"
-                FontFamily="Inter" Background="White" Click="CreateECButton_OnClick" Height="19" Width="114" RenderTransformOrigin="0.5,0.5">
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-0.677"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-            </Button>
             <Button x:Name="ExitButton" Content="Exit" BorderBrush="{x:Null}" Cursor="Hand"
                     FontFamily="Inter" Background="White" Click="ExitButton_Click" />
         </Menu>
@@ -92,57 +81,61 @@
         <TextBox x:Name="TypeTextBox" HorizontalAlignment="Left" Margin="298,152,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
-                 Width="134" Height="22" TextChanged="TypeTextBox_TextChanged" />
+                 Width="134" Height="22" TextChanged="TextBox_TextChanged" />
         <TextBox x:Name="MarkTextBox" HorizontalAlignment="Left" Margin="775,150,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
-                 Width="105" Height="22" />
-        <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Left" Margin="124,153,0,0" VerticalAlignment="Top" Width="158"
-                  SelectionChanged="TypeComboBox_OnSelectionChanged"/>
-        <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="60,360,583,122" AutoGenerateColumns="False" />
-        <ComboBox x:Name="MarkComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="624,149,0,0"
-            VerticalAlignment="Top"
-            Width="128"
-            BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="MarkComboBox_OnSelectionChanged" />
-        <Grid x:Name="AddEmpiricCoefficientGrid" Margin="451,346,40,88" Visibility="Visible">
+                 Width="105" Height="22" TextChanged="TextBox_TextChanged" />
+        <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Left" Margin="124,153,0,0" VerticalAlignment="Top"
+                  Width="158"
+                  SelectionChanged="TypeComboBox_OnSelectionChanged" />
+        <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="76,338,567,144" AutoGenerateColumns="False" />
+        <ComboBox x:Name="MarkComboBox" SelectedIndex="-1" HorizontalAlignment="Left" Margin="624,149,0,0"
+                  VerticalAlignment="Top"
+                  Width="128"
+                  BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="MarkComboBox_OnSelectionChanged" />
+        <Grid x:Name="AddEmpiricCoefficientGrid" Margin="467,324,24,110" Visibility="Visible">
             <Label Content="Name:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="22,26,421,0"
-            VerticalAlignment="Top" />
+                   VerticalAlignment="Top" />
             <Label Content="Symbol:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="22,56,421,0"
-            VerticalAlignment="Top" />
+                   VerticalAlignment="Top" />
             <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="240,22,0,0"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Width="150" Height="22" TextChanged="NameTextBox_TextChanged" />
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="150" Height="22" TextChanged="NameTextBox_TextChanged" />
             <TextBox x:Name="SymbolTextBox" HorizontalAlignment="Left" Margin="78,51,0,0"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Width="48" Height="22" MaxLength="5" />
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="48" Height="22" MaxLength="5" />
             <Button x:Name="CreateEcButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
-            FontFamily="Inter" Background="White" Margin="436,139,8,6" Click="CreateECButton_OnClick" IsEnabled="False"/>
+                    FontFamily="Inter" Background="White" Margin="436,139,8,6" Click="CreateECButton_OnClick"
+                    IsEnabled="False" />
             <Label Content="Unit:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="24,83,419,0"
-            VerticalAlignment="Top" />
+                   VerticalAlignment="Top" />
             <TextBox x:Name="UnitTextBox" HorizontalAlignment="Left" Margin="183,80,0,0"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Width="88" Height="22" />
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="88" Height="22" TextChanged="TextBox_TextChanged"/>
             <Label Content="Value:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="24,110,419,0"
-            VerticalAlignment="Top" />
+                   VerticalAlignment="Top" />
             <TextBox x:Name="ValueTextBox" HorizontalAlignment="Left" Margin="78,106,0,0"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Width="74" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox"  />
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Top"
+                     Width="74" Height="22" PreviewTextInput="NumberValidationTextBox"
+                     TextChanged="ZeroValidationTextBox" Text="0.00" />
             <ComboBox x:Name="UnitComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="78,80,0,0"
-            VerticalAlignment="Top"
-            Width="96"
-            BorderBrush="{x:Null}" Cursor="Hand" />
-            <Button x:Name="CreateEcButton_Copy1" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
-            FontFamily="Inter" Background="White" Margin="279,81,165,65" IsEnabled="False"/>
+                      VerticalAlignment="Top"
+                      Width="96"
+                      BorderBrush="{x:Null}" Cursor="Hand" />
+            <Button x:Name="CreateUnitButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand"
+                    FontFamily="Inter" Background="White" Margin="279,81,165,65" IsEnabled="False" Click="CreateUnitButton_OnClick" />
             <ComboBox x:Name="NameComboBox" SelectedIndex="0" HorizontalAlignment="Left" Margin="78,23,0,0"
-            VerticalAlignment="Top"
-            Width="148"
-            BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="NameComboBox_SelectionChanged"/>
+                      VerticalAlignment="Top"
+                      Width="148"
+                      BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="NameComboBox_SelectionChanged" />
             <Button x:Name="AddEcButton" Content="Add" BorderBrush="{x:Null}" Cursor="Hand"
-            FontFamily="Inter" Background="White" Margin="375,139,69,6" Click="AddEcButton_Click" IsEnabled="False"/>
+                    FontFamily="Inter" Background="White" Margin="375,139,69,6" Click="AddEcButton_Click"
+                    IsEnabled="False" />
         </Grid>
         <!--
                 <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"

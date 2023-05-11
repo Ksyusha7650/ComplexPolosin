@@ -46,9 +46,10 @@ where ID_ParameterSet = @IdMaterial and p.ID_Type = 2
                 symbol));
             numberEc++;
         }
+
         return empiricCoefficients.ToArray();
     }
-    
+
     public async Task<EmpiricCoefficientsModel> GetEmpiricCoefficient(
         int idMaterial,
         string nameEmpiricCoefficient)
@@ -85,25 +86,25 @@ where Name = @Name and p.ID_Type = 2
                 symbol));
             numberEc++;
         }
+
         return empiricCoefficients[0];
     }
-    
+
     public async void AddEmpiricCoefficients(int parameterSet, EmpiricCoefficientsModel empiricCoefficient)
     {
         var idParameter = await _baseRepository.AddNewParameter(
-                empiricCoefficient.Name,
-                empiricCoefficient.Symbol,
-                2);
-        var idUnit = empiricCoefficient.Unit is "" ? 8 :
-            await _baseRepository.GetIdUnit(empiricCoefficient.Unit);
+            empiricCoefficient.Name,
+            empiricCoefficient.Symbol,
+            2);
+        var idUnit = empiricCoefficient.Unit is "" ? 8 : await _baseRepository.GetIdUnit(empiricCoefficient.Unit);
         _baseRepository.AddParameterInParameterSet(
-                    parameterSet,
-                    idParameter,
-                    idUnit,
-                    empiricCoefficient.Value);
+            parameterSet,
+            idParameter,
+            idUnit,
+            empiricCoefficient.Value);
     }
-    
-    public string[] GetEmpiricCoefficients()
+
+    public string[] GetNamesOfEmpiricCoefficients()
     {
         const string sqlQuery = @"
 select Name
@@ -119,7 +120,7 @@ where ID_Type = 2
         while (reader.Read()) empiricCoefficients.Add(reader.GetString(0));
         return empiricCoefficients.ToArray();
     }
-    
+
     public string[] GetUnits()
     {
         const string sqlQuery = @"

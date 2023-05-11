@@ -69,7 +69,7 @@ where Mark = @Mark
             await _baseRepository.GetIdParameter("Length"),
             idUnit,
             geometricParametersModel.Length);
-        
+
         const string sqlQuery = @"
 insert into channel (ID_ParameterSet, Mark)
 VALUES (@IdParameterSet, @Mark);
