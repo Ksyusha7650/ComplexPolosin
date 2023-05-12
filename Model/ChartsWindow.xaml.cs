@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.Defaults;
@@ -10,7 +11,7 @@ namespace ModelPolosin;
 /// <summary>
 ///     Interaction logic for ChartsWindow.xaml
 /// </summary>
-public partial class ChartsWindow
+public partial class ChartsWindow : Window
 {
     private readonly List<double> _listOfChannelLength;
     private readonly List<double> _listOfTemperatures;
@@ -26,7 +27,12 @@ public partial class ChartsWindow
         ViscosityLength();
     }
 
-    private Func<ChartPoint, string>? PointLabel { get; set; }
+    public Axis[] XAxes { get; set; }
+    public Axis[] YAxes { get; set; }
+    public SeriesCollection SeriesCollectionTemp { get; set; }
+    public SeriesCollection SeriesCollectionVisc { get; set; }
+
+    public Func<ChartPoint, string> PointLabel { get; set; }
 
     private void TemperatureLength()
     {
@@ -42,10 +48,10 @@ public partial class ChartsWindow
                 X = _listOfChannelLength[i],
                 Y = _listOfTemperatures[i]
             });
-        PointLabel = chartPoint => $"Coordinate: {chartPoint.X}, Temperature: {chartPoint.Y}";
+        PointLabel = chartPoint => $"{"Coordinate"}: {chartPoint.X}, {"Temperature"}: {chartPoint.Y}";
 
 
-        new SeriesCollection
+        SeriesCollectionTemp = new SeriesCollection
         {
             new LineSeries
             {
@@ -58,15 +64,15 @@ public partial class ChartsWindow
         };
 
         PlotTemperature.DataContext = this;
-        // LineSeries series = new();
-        // series.Values = points;
-        // series.ToolTip = "tool";
-        // series.TooltipLabelFormatter = (chartPoint) => $"{YAxes[0].Name}: {chartPoint.PrimaryValue}, {XAxes[0].Name}: {chartPoint.SecondaryValue}";
-        // SeriesCollectionTemp.Add(series);
+        // LineSeries serie = new();
+        // serie.Values = points;
+        // serie.ToolTip = "ldkf";
+        // serie.TooltipLabelFormatter = (chartPoint) => $"{YAxes[0].Name}: {chartPoint.PrimaryValue}, {XAxes[0].Name}: {chartPoint.SecondaryValue}";
+        // SeriesCollectionTemp.Add(serie);
         // PointLabel = (chartPoint) =>
         // {
         //     
-        //     return "pointLabel";
+        //     return "hahahahahahhaha";
         // };
     }
 
@@ -84,8 +90,8 @@ public partial class ChartsWindow
                 X = _listOfChannelLength[i],
                 Y = Math.Round(_listOfViscosity[i], 0)
             });
-        PointLabel = chartPoint => $"Coordinate: {chartPoint.X}, Viscosity: {chartPoint.Y}";
-        new SeriesCollection
+        PointLabel = chartPoint => $"{"Coordinate"}: {chartPoint.X}, {"Viscosity"}: {chartPoint.Y}";
+        SeriesCollectionVisc = new SeriesCollection
         {
             new LineSeries
             {

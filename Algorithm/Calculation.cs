@@ -41,6 +41,7 @@ public class Calculation
         _variableParameters = variableParameters;
         SetFields();
         InitializingVariables();
+        
     }
 
     private void SetFields()

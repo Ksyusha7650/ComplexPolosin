@@ -174,4 +174,15 @@ where Name = @Name
             result = reader.GetInt32(0);
         return result;
     }
+    public async void AddUnit(string name)
+    {
+        const string sqlQuery = @"
+insert into unit (Name) values (@Name)";
+        await using var connection = await GetAndOpenConnection();
+        var cmd = new MySqlCommand();
+        cmd.Connection = connection;
+        cmd.Parameters.AddWithValue("@Name", name);
+        cmd.CommandText = sqlQuery;
+        cmd.ExecuteNonQuery();
+    }
 }

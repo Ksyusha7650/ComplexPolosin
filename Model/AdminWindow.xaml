@@ -94,7 +94,7 @@
                   VerticalAlignment="Top"
                   Width="128"
                   BorderBrush="{x:Null}" Cursor="Hand" SelectionChanged="MarkComboBox_OnSelectionChanged" />
-        <Grid x:Name="AddEmpiricCoefficientGrid" Margin="467,324,24,110" Visibility="Visible">
+        <Grid x:Name="AddEmpiricCoefficientGrid" Margin="467,324,24,110" Visibility="Hidden">
             <Label Content="Name:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="22,26,421,0"
                    VerticalAlignment="Top" />
             <Label Content="Symbol:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="22,56,421,0"

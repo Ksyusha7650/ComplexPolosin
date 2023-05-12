@@ -337,6 +337,9 @@ public partial class AdminWindow
     private void CreateUnitButton_OnClick(object sender, RoutedEventArgs e)
     {
         var unit = UnitTextBox.Text;
-        
+        _dataService.AddUnit(unit);
+        UnitComboBox.Items.Add(unit);
+        UnitComboBox.SelectedItem = unit;
+        UnitTextBox.Text = "";
     }
 }

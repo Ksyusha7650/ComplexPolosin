@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -98,15 +99,22 @@ public partial class MainWindow
 
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
+        var startTime = DateTime.Now;
+        string prcName = Process.GetCurrentProcess().ProcessName;
+        var counter = new PerformanceCounter("Process", "Working Set - Private", prcName);
         if (!Calculate())
         {
             MessageBox.Show("Fix highlighted red fields!");
             return;
         }
-
-        TemperatureProductTextBox.Text = GetTemperature().ToString();
-        ViscosityProductTextBox.Text = Math.Round(GetViscosity(), 0).ToString();
-        EfficiencyTextBox.Text = GetEfficiency().ToString();
+        TemperatureProductTextBox.Text = GetTemperature().ToString(CultureInfo.InvariantCulture);
+        ViscosityProductTextBox.Text = Math.Round(GetViscosity(), 0).ToString(CultureInfo.InvariantCulture);
+        EfficiencyTextBox.Text = GetEfficiency().ToString(CultureInfo.InvariantCulture);
+        var ts = DateTime.Now.Subtract(startTime);
+        var elapsedTime = $"{ts.Seconds:00}.{ts.Milliseconds:00} s";
+        var counter2 = new PerformanceCounter("Process", "Working Set - Private", prcName);
+        RamTextBox.Text = $"{Math.Abs(counter.RawValue / 1024 - counter2.RawValue/ 1024) } K";
+        TimeTextBox.Text = elapsedTime;
         ExportButton.IsEnabled = true;
         ShowResultsButton.IsEnabled = true;
     }
@@ -133,6 +141,7 @@ public partial class MainWindow
 
         try
         {
+            
             _calculation = new Calculation(
                 new EmpiricCoefficients(
                     Convert.ToDouble(_empiricCoefficients[0].Value),

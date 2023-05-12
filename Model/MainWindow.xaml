@@ -144,17 +144,15 @@
         <TextBox x:Name="RamTextBox" HorizontalAlignment="Left" Margin="655,15,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
-                 Width="81" Height="22" IsReadOnly="True" />
+                 Width="81" Height="22" IsReadOnly="True" Text="0 K" />
         <Label Content="RAM:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="610,19,341,0"
                VerticalAlignment="Top" />
         <Label Content="Time:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="784,17,168,0"
                VerticalAlignment="Top" />
-        <TextBox x:Name="TimeTextBox" Text="7.5" HorizontalAlignment="Left" Margin="828,14,0,0"
+        <TextBox x:Name="TimeTextBox" Text="00.00 s" HorizontalAlignment="Left" Margin="828,14,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
-                 Width="81" Height="22" IsReadOnly="True" />
-        <Label Content="ms" Padding="5,0,5,0" UseLayoutRounding="False" Margin="914,17,49,0"
-               VerticalAlignment="Top" />
+                 Width="65" Height="22" IsReadOnly="True" />
         <!--
                 <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"
                                     VerticalAlignment="Top" Margin="32,50,31,0" />
