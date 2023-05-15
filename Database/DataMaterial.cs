@@ -79,6 +79,24 @@ VALUES (@IdParameterSet, @Type);
         cmd.ExecuteNonQuery();
     }
 
+    public async void EditMaterial(PropertiesOfMaterialModel materialModel)
+    {
+        var idParameterSet = GetIdParameterSet(materialModel.Type);
+
+        _baseRepository.UpdateParameterInParameterSet(
+            idParameterSet,
+            await _baseRepository.GetIdParameter("Density"),
+            materialModel.Density);
+        _baseRepository.UpdateParameterInParameterSet(
+            idParameterSet,
+            await _baseRepository.GetIdParameter("Specific heat capacity"),
+            materialModel.SpecificHeat);
+        _baseRepository.UpdateParameterInParameterSet(
+            idParameterSet,
+            await _baseRepository.GetIdParameter("Melting point"),
+            materialModel.MeltingPoint);
+    }
+
     public async Task<PropertiesOfMaterialModel> GetMaterialProperties(int idMaterial)
     {
         const string sqlQuery = @"

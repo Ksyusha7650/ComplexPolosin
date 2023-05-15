@@ -137,6 +137,14 @@
                     FontFamily="Inter" Background="White" Margin="375,139,69,6" Click="AddEcButton_Click"
                     IsEnabled="False" />
         </Grid>
+        <Button x:Name="EditTypeButton" Content="Edit" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="False"
+            FontFamily="Inter" Background="White" Margin="438,183,495,396" Click="EditTypeButton_Click" />
+        <Button x:Name="DeleteTypeButton" Content="Delete" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="False"
+            FontFamily="Inter" Background="White" Margin="438,212,495,367" Click="CreateTypeButton_OnClick" />
+        <Button x:Name="EditMarkButton" Content="Edit" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="False"
+            FontFamily="Inter" Background="White" Margin="896,178,37,401" Click="CreateTypeButton_OnClick" />
+        <Button x:Name="DeleteMarkButton" Content="Delete" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="False"
+            FontFamily="Inter" Background="White" Margin="896,207,37,372" Click="CreateTypeButton_OnClick" />
         <!--
                 <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"
                                     VerticalAlignment="Top" Margin="32,50,31,0" />

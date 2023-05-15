@@ -100,6 +100,22 @@ values (@IdParameterSet, @IdParameter, @IdUnit, @Value);
         cmd.ExecuteNonQuery();
     }
 
+    public async void UpdateParameterInParameterSet(int idParameterSet, int idParameter, double value)
+    {
+        const string sqlQuery = @"
+update parameter_in_set set Value = @Value
+where ID_ParameterSet = @IdParameterSet and ID_Parameter = @IdParameter;
+";
+        await using var connection = await GetAndOpenConnection();
+        var cmd = new MySqlCommand();
+        cmd.Connection = connection;
+        cmd.Parameters.AddWithValue("@IdParameterSet", idParameterSet);
+        cmd.Parameters.AddWithValue("@IdParameter", idParameter);
+        cmd.Parameters.AddWithValue("@Value", value);
+        cmd.CommandText = sqlQuery;
+        cmd.ExecuteNonQuery();
+    }
+
     public async Task<string> GetNameUnit(int idUnit)
     {
         const string sqlQuery = @"

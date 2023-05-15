@@ -116,9 +116,10 @@ public partial class AdminWindow
         if (TypeComboBox.Items.Count == 0 || TypeComboBox.SelectedIndex == -1)
         {
             AddEmpiricCoefficientGrid.Visibility = Visibility.Hidden;
+            EditTypeButton.IsEnabled = false;
             return;
         }
-
+        EditTypeButton.IsEnabled = true;
         _TypeMaterial = TypeComboBox.SelectedItem.ToString()!;
         var idType = _dataService.MaterialDataBase.GetIdParameterSet(_TypeMaterial);
         EmpiricCoefficientsDataGrid.Items.Clear();
@@ -337,9 +338,25 @@ public partial class AdminWindow
     private void CreateUnitButton_OnClick(object sender, RoutedEventArgs e)
     {
         var unit = UnitTextBox.Text;
-        _dataService.AddUnit(unit);
+        _dataService.AddUnit(unit); //
         UnitComboBox.Items.Add(unit);
         UnitComboBox.SelectedItem = unit;
         UnitTextBox.Text = "";
+    }
+
+    private void EditTypeButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (!CheckMaterialTextBox)
+        {
+            MessageBox.Show("Fix fields!");
+            return;
+        }
+
+        _dataService.MaterialDataBase.EditMaterial(
+            new PropertiesOfMaterialModel(
+                TypeComboBox.SelectedItem.ToString(),
+                Convert.ToDouble(DensityTextBox.Text),
+                Convert.ToDouble(SpecificHeartTextBox.Text),
+                Convert.ToDouble(MeltingPointTextBox.Text)));
     }
 }
