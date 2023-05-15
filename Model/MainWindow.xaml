@@ -94,7 +94,7 @@
                                     VerticalAlignment="Top" Margin="32,50,31,0" />
             </Grid>
         </Expander>-->
-        <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="484,349,187,132" AutoGenerateColumns="False" />
+        <DataGrid x:Name="EmpiricCoefficientsDataGrid" Margin="484,349,150,115" AutoGenerateColumns="False" />
         <!--
             </Grid>
         </Expander>-->
@@ -144,7 +144,7 @@
         <TextBox x:Name="RamTextBox" HorizontalAlignment="Left" Margin="655,15,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
-                 Width="81" Height="22" IsReadOnly="True" Text="0 K" />
+                 Width="81" Height="22" IsReadOnly="True" Text="0.00 MB" />
         <Label Content="RAM:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="610,19,341,0"
                VerticalAlignment="Top" />
         <Label Content="Time:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="784,17,168,0"

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
@@ -53,11 +54,6 @@ public partial class MainWindow
         Thread.CurrentThread.CurrentCulture = customCulture;
         GetDataFromDataBase();
         SetUpColumns();
-        //MarkComboBox.Items.Add("--default");
-        //TypeComboBox.Items.Add("--default");
-        /*Timer99.Tick += SetRamAndTime; // don't freeze the ui
-        Timer99.Interval = new TimeSpan(0, 0, 0, 0, 1024);
-        Timer99.IsEnabled = true;*/
     }
     private bool CheckTextBox => _incorrectValues.Count == 0;
 
@@ -75,14 +71,7 @@ public partial class MainWindow
     private void ZeroValidationTextBox(object sender, TextChangedEventArgs e)
     {
         var textBox = sender as TextBox;
-        var exist = false;
-        foreach (var incorrectTextBox in _incorrectValues)
-            if (incorrectTextBox == textBox?.Name)
-            {
-                exist = true;
-                break;
-            }
-
+        var exist = _incorrectValues.Any(incorrectTextBox => incorrectTextBox == textBox?.Name);
         if (textBox?.Text is "0" or "")
         {
             textBox.BorderBrush = Brushes.Red;
@@ -100,8 +89,8 @@ public partial class MainWindow
     private void CalculateButton_Click(object sender, RoutedEventArgs e)
     {
         var startTime = DateTime.Now;
-        string prcName = Process.GetCurrentProcess().ProcessName;
-        var counter = new PerformanceCounter("Process", "Working Set - Private", prcName);
+        var currentProcess = Process.GetCurrentProcess();
+        var counter1 = currentProcess.WorkingSet64;
         if (!Calculate())
         {
             MessageBox.Show("Fix highlighted red fields!");
@@ -112,8 +101,9 @@ public partial class MainWindow
         EfficiencyTextBox.Text = GetEfficiency().ToString(CultureInfo.InvariantCulture);
         var ts = DateTime.Now.Subtract(startTime);
         var elapsedTime = $"{ts.Seconds:00}.{ts.Milliseconds:00} s";
-        var counter2 = new PerformanceCounter("Process", "Working Set - Private", prcName);
-        RamTextBox.Text = $"{Math.Abs(counter.RawValue / 1024 - counter2.RawValue/ 1024) } K";
+        currentProcess = Process.GetCurrentProcess();
+        var counter2 = currentProcess.WorkingSet64;
+        RamTextBox.Text = $"{Math.Round(counter2 / Math.Pow(1024, 2), 2) } MB";
         TimeTextBox.Text = elapsedTime;
         ExportButton.IsEnabled = true;
         ShowResultsButton.IsEnabled = true;
