@@ -7,8 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MySql.Data" Version="8.0.32.1"/>
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1"/>
+        <PackageReference Include="MySql.Data" Version="8.0.32.1" />
+        <PackageReference Include="MySqlBackup.NET" Version="2.3.8" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
     </ItemGroup>
 
 </Project>

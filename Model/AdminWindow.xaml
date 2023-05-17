@@ -71,8 +71,12 @@
         <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False" Margin="727,256,216,0"
                VerticalAlignment="Top" />
         <Menu Margin="22,10,0,562" Background="White">
-            <Button x:Name="ExitButton" Content="Exit" BorderBrush="{x:Null}" Cursor="Hand"
-                    FontFamily="Inter" Background="White" Click="ExitButton_Click" />
+               <Button x:Name="BackupButton" Content="Backup" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="True"
+                       FontFamily="Inter" Background="White" Click="BackupButton_OnClick" />
+               <Button x:Name="RestoreButton" Content="Restore" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="True"
+                       FontFamily="Inter" Background="White" Click="RestoreButton_OnClick" />
+               <Button x:Name="ExitButton" Content="Exit" BorderBrush="{x:Null}" Cursor="Hand"
+                       FontFamily="Inter" Background="White" Click="ExitButton_Click" />
         </Menu>
         <Button x:Name="CreateMarkButton" Content="Create" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="False"
                 FontFamily="Inter" Background="White" Margin="894,151,40,427" Click="CreateMarkButton_OnClick" />
@@ -140,11 +144,11 @@
         <Button x:Name="EditTypeButton" Content="Edit" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="False"
             FontFamily="Inter" Background="White" Margin="438,183,495,396" Click="EditTypeButton_Click" />
         <Button x:Name="DeleteTypeButton" Content="Delete" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="False"
-            FontFamily="Inter" Background="White" Margin="438,212,495,367" Click="CreateTypeButton_OnClick" />
+            FontFamily="Inter" Background="White" Margin="438,212,495,367" Click="DeleteTypeButton_OnClick" />
         <Button x:Name="EditMarkButton" Content="Edit" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="False"
-            FontFamily="Inter" Background="White" Margin="896,178,37,401" Click="CreateTypeButton_OnClick" />
+            FontFamily="Inter" Background="White" Margin="896,178,37,401" Click="EditMarkButton_OnClick" />
         <Button x:Name="DeleteMarkButton" Content="Delete" BorderBrush="{x:Null}" Cursor="Hand" IsEnabled="False"
-            FontFamily="Inter" Background="White" Margin="896,207,37,372" Click="CreateTypeButton_OnClick" />
+            FontFamily="Inter" Background="White" Margin="896,207,37,372" Click="DeleteMarkButton_OnClick" />
         <!--
                 <wpf:CartesianChart Name="Plot" Series="{Binding SeriesCollection}" LegendLocation="None" Height="184"
                                     VerticalAlignment="Top" Margin="32,50,31,0" />

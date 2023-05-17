@@ -115,6 +115,19 @@ where ID_ParameterSet = @IdParameterSet and ID_Parameter = @IdParameter;
         cmd.CommandText = sqlQuery;
         cmd.ExecuteNonQuery();
     }
+    
+    public async void DeleteParameterSet(int idParameterSet)
+    {
+        const string sqlQuery = @"
+delete from parameterset WHERE (`ID_ParameterSet` = @IdParameterSet);
+";
+        await using var connection = await GetAndOpenConnection();
+        var cmd = new MySqlCommand();
+        cmd.Connection = connection;
+        cmd.Parameters.AddWithValue("@IdParameterSet", idParameterSet);
+        cmd.CommandText = sqlQuery;
+        cmd.ExecuteNonQuery();
+    }
 
     public async Task<string> GetNameUnit(int idUnit)
     {
@@ -200,5 +213,27 @@ insert into unit (Name) values (@Name)";
         cmd.Parameters.AddWithValue("@Name", name);
         cmd.CommandText = sqlQuery;
         cmd.ExecuteNonQuery();
+    }
+    
+    public void Backup(string file)
+    {
+        using var conn = new MySqlConnection(_connectionString);
+        using var cmd = new MySqlCommand();
+        using var mb = new MySqlBackup(cmd);
+        cmd.Connection = conn;
+        conn.Open();
+        mb.ExportToFile(file);
+        conn.Close();
+    }
+    
+    public void Restore(string file)
+    {
+        using var conn = new MySqlConnection(_connectionString);
+        using var cmd = new MySqlCommand();
+        using var mb = new MySqlBackup(cmd);
+        cmd.Connection = conn;
+        conn.Open();
+        mb.ImportFromFile(file);
+        conn.Close();
     }
 }

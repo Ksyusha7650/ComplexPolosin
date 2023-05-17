@@ -41,7 +41,7 @@ public partial class MainWindow
     private EmpiricCoefficientsModel[] _empiricCoefficients;
     private string[] _marks, _types;
 
-    public Color borderColor = new()
+    public Color BorderColor = new()
     {
         A = 100
     };
@@ -80,7 +80,7 @@ public partial class MainWindow
         }
         else
         {
-            textBox.BorderBrush = new SolidColorBrush(borderColor);
+            textBox.BorderBrush = new SolidColorBrush(BorderColor);
             if (exist)
                 _incorrectValues.Remove(textBox.Name);
         }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using Algorithm.Models;
 using Database;
 using Database.Models;
+using Microsoft.Win32;
 using ModelPolosin.Models;
 
 namespace ModelPolosin;
@@ -26,7 +27,7 @@ public partial class AdminWindow
     private EmpiricCoefficientsModel[] _empiricCoefficients;
     private string _TypeMaterial = "";
 
-    private readonly Color BorderColor = new()
+    private readonly Color _BorderColor = new()
     {
         A = 100
     };
@@ -71,7 +72,7 @@ public partial class AdminWindow
         }
         else
         {
-            textBox!.BorderBrush = new SolidColorBrush(BorderColor);
+            textBox!.BorderBrush = new SolidColorBrush(_BorderColor);
             if (exist)
                 _incorrectValues.Remove(textBox.Name);
         }
@@ -117,9 +118,11 @@ public partial class AdminWindow
         {
             AddEmpiricCoefficientGrid.Visibility = Visibility.Hidden;
             EditTypeButton.IsEnabled = false;
+            DeleteTypeButton.IsEnabled = false;
             return;
         }
         EditTypeButton.IsEnabled = true;
+        DeleteTypeButton.IsEnabled = true;
         _TypeMaterial = TypeComboBox.SelectedItem.ToString()!;
         var idType = _dataService.MaterialDataBase.GetIdParameterSet(_TypeMaterial);
         EmpiricCoefficientsDataGrid.Items.Clear();
@@ -194,7 +197,14 @@ public partial class AdminWindow
     private void MarkComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (MarkComboBox.SelectedIndex == -1)
+        {
+            EditMarkButton.IsEnabled = false;
+            DeleteMarkButton.IsEnabled = false;
             return;
+        }
+
+        EditMarkButton.IsEnabled = true;
+        DeleteMarkButton.IsEnabled = true;
         var mark = MarkComboBox.SelectedItem.ToString();
         var result = _dataService.ChannelDataBase.GetGeometricParameters(mark).Result;
         var model = new GeometricParameters(
@@ -220,7 +230,6 @@ public partial class AdminWindow
     {
         SymbolTextBox.IsEnabled = !isReadOnly;
         UnitComboBox.IsEnabled = !isReadOnly;
-        ValueTextBox.IsEnabled = !isReadOnly;
     }
 
     private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -295,7 +304,6 @@ public partial class AdminWindow
                 .GetEmpiricCoefficient(idMaterial, NameComboBox.SelectedItem.ToString()).Result;
         SymbolTextBox.Text = ec.Symbol;
         UnitComboBox.SelectedItem = ec.Unit;
-        ValueTextBox.Text = ec.Value.ToString(CultureInfo.InvariantCulture);
         SetParameters(true);
         AddEcButton.IsEnabled = true;
     }
@@ -333,6 +341,8 @@ public partial class AdminWindow
             Convert.ToDouble(ValueTextBox.Text)
         );
         GetDataFromDataBase();
+        ValueTextBox.Text = "0.00";
+        UnitComboBox.SelectedItem = "-";
     }
 
     private void CreateUnitButton_OnClick(object sender, RoutedEventArgs e)
@@ -358,5 +368,96 @@ public partial class AdminWindow
                 Convert.ToDouble(DensityTextBox.Text),
                 Convert.ToDouble(SpecificHeartTextBox.Text),
                 Convert.ToDouble(MeltingPointTextBox.Text)));
+    }
+
+    private void DeleteTypeButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        var type = TypeComboBox.SelectedItem.ToString();
+        var result = MessageBox.Show($"{type} will be deleted!", "caption", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+        switch (result)
+        {
+            case MessageBoxResult.Cancel:
+            {
+                return;
+            }
+            case MessageBoxResult.OK:
+            {
+                _dataService.MaterialDataBase.DeleteMaterial(type);
+                GetDataFromDataBase();
+                _TypeMaterial = null;
+                TypeComboBox.SelectedIndex = -1;
+                DensityTextBox.Text = "0.00";
+                MeltingPointTextBox.Text = "0.00";
+                SpecificHeartTextBox.Text = "0.00";
+                break;
+            }
+        }
+    }
+
+    private void BackupButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        var saveFileDialog = new SaveFileDialog
+        {
+            Filter = "Sql files (*.sql)|*.sql|All files (*.sql)|*.sql",
+            FilterIndex = 2,
+            RestoreDirectory = true
+        };
+        if (saveFileDialog.ShowDialog() != true) return;
+        var filePath = saveFileDialog.FileName;
+        _dataService.Backup(filePath);
+        MessageBox.Show("Success!");
+    }
+
+    private void EditMarkButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (!CheckChannelTextBox)
+        {
+            MessageBox.Show("Fix fields!");
+            return;
+        }
+        _dataService.ChannelDataBase.EditChannel(
+            new GeometricParametersModel(
+                Convert.ToDouble(HeightTextBox.Text),
+                Convert.ToDouble(LengthTextBox.Text),
+                Convert.ToDouble(WidthTextBox.Text)),
+            MarkComboBox.SelectedItem.ToString());
+    }
+
+    private void DeleteMarkButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        var type = MarkComboBox.SelectedItem.ToString();
+        var result = MessageBox.Show($"{type} will be deleted!", "caption", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+        switch (result)
+        {
+            case MessageBoxResult.Cancel:
+            {
+                return;
+            }
+            case MessageBoxResult.OK:
+            {
+                _dataService.ChannelDataBase.DeleteChannel(type);
+                GetDataFromDataBase();
+                MarkComboBox.SelectedIndex = -1;
+                HeightTextBox.Text = "0.00";
+                WidthTextBox.Text = "0.00";
+                LengthTextBox.Text = "0.00";
+                break;
+            }
+        }
+    }
+
+    private void RestoreButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        var openFileDialog = new OpenFileDialog()
+        {
+            Filter = "Sql files (*.sql)|*.sql|All files (*.sql)|*.sql",
+            FilterIndex = 2,
+            RestoreDirectory = true
+        };
+        if (openFileDialog.ShowDialog() != true) return;
+        var filePath = openFileDialog.FileName;
+        _dataService.Restore(filePath);
+        GetDataFromDataBase();
+        MessageBox.Show("Success!");
     }
 }

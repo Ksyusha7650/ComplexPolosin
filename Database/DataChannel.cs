@@ -82,4 +82,54 @@ VALUES (@IdParameterSet, @Mark);
         cmd.CommandText = sqlQuery;
         cmd.ExecuteNonQuery();
     }
+    
+    public int GetIdParameterSet(string name)
+    {
+        const string sqlQuery = @"
+select ID_ParameterSet
+from channel
+where Mark = @MarkName;
+";
+        using var connection = _baseRepository.GetAndOpenConnection().Result;
+        var cmd = new MySqlCommand();
+        cmd.Connection = connection;
+        cmd.Parameters.AddWithValue("@MarkName", name);
+        cmd.CommandText = sqlQuery;
+        var reader = cmd.ExecuteReader();
+        var idMaterial = 0;
+        while (reader.Read())
+            idMaterial = reader.GetInt32(0);
+        return idMaterial;
+    }
+    public async void EditChannel(GeometricParametersModel channel, string mark)
+    {
+        var idParameterSet = GetIdParameterSet(mark);
+        _baseRepository.UpdateParameterInParameterSet(
+            idParameterSet,
+            await _baseRepository.GetIdParameter("Height"),
+            channel.Height);
+        _baseRepository.UpdateParameterInParameterSet(
+            idParameterSet,
+            await _baseRepository.GetIdParameter("Length"),
+            channel.Length);
+        _baseRepository.UpdateParameterInParameterSet(
+            idParameterSet,
+            await _baseRepository.GetIdParameter("Width"),
+            channel.Width);
+    }
+    
+    public async void DeleteChannel(string mark)
+    {
+        var idParameterSet = GetIdParameterSet(mark);
+        _baseRepository.DeleteParameterSet(idParameterSet);
+        const string sqlQuery = @"
+delete from channel WHERE (`ID_ParameterSet` = @IdParameterSet);
+";
+        await using var connection = await _baseRepository.GetAndOpenConnection();
+        var cmd = new MySqlCommand();
+        cmd.Connection = connection;
+        cmd.Parameters.AddWithValue("@IdParameterSet", idParameterSet);
+        cmd.CommandText = sqlQuery;
+        cmd.ExecuteNonQuery();
+    }
 }

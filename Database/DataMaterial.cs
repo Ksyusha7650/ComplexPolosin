@@ -96,6 +96,21 @@ VALUES (@IdParameterSet, @Type);
             await _baseRepository.GetIdParameter("Melting point"),
             materialModel.MeltingPoint);
     }
+    
+    public async void DeleteMaterial(string type)
+    {
+        var idParameterSet = GetIdParameterSet(type);
+        _baseRepository.DeleteParameterSet(idParameterSet);
+        const string sqlQuery = @"
+delete from material WHERE (`ID_ParameterSet` = @IdParameterSet);
+";
+        await using var connection = await _baseRepository.GetAndOpenConnection();
+        var cmd = new MySqlCommand();
+        cmd.Connection = connection;
+        cmd.Parameters.AddWithValue("@IdParameterSet", idParameterSet);
+        cmd.CommandText = sqlQuery;
+        cmd.ExecuteNonQuery();
+    }
 
     public async Task<PropertiesOfMaterialModel> GetMaterialProperties(int idMaterial)
     {

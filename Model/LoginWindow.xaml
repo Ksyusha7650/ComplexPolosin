@@ -15,7 +15,7 @@
         <!--
             </Grid>
         </Expander>-->
-        <TextBox x:Name="LoginTextBox" Text="admin" HorizontalAlignment="Left" Margin="104,107,0,0"
+        <TextBox x:Name="LoginTextBox" Text="" HorizontalAlignment="Left" Margin="104,107,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
                  Width="81" Height="22" />
@@ -23,9 +23,8 @@
                VerticalAlignment="Top" />
         <Label Content="Password:" Padding="5,0,5,0" UseLayoutRounding="False" Margin="34,146,287,0"
                VerticalAlignment="Top" />
-        <TextBox x:Name="PasswordTextBox" Text="123" HorizontalAlignment="Left" Margin="104,142,0,0"
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Top"
+        <PasswordBox x:Name="PasswordTextBox" HorizontalAlignment="Left" Margin="104,142,0,0"
+                     VerticalAlignment="Top"
                  Width="81" Height="22" />
         <Button x:Name="EnterAsExplorerButton" Background="White" BorderBrush="{x:Null}" Cursor="Hand"
                 Content="Enter as explorer" FontFamily="Inter" Click="EnterAsExplorerButton_Click"
