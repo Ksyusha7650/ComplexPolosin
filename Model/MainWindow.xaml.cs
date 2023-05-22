@@ -26,13 +26,7 @@ namespace ModelPolosin;
 public partial class MainWindow
 {
     private readonly List<string> _incorrectValues = new();
-
-    /*
-    public readonly PerformanceCounter
-        MyCounter = new("Processor", "% Processor Time", "_Total"); // фиг знает, что мы должны отображать
-        */
-
-    // private readonly DispatcherTimer Timer99 = new();
+    
     private Calculation _calculation;
 
     private DrawCharts _charts;
@@ -93,7 +87,7 @@ public partial class MainWindow
         var counter1 = currentProcess.WorkingSet64;
         if (!Calculate())
         {
-            MessageBox.Show("Fix highlighted red fields!");
+            
             return;
         }
         TemperatureProductTextBox.Text = GetTemperature().ToString(CultureInfo.InvariantCulture);
@@ -127,11 +121,17 @@ public partial class MainWindow
     private bool Calculate()
     {
         if (!CheckTextBox)
+        {
+            MessageBox.Show("Fix highlighted red fields!");
             return false;
-
+        }
         try
         {
-            
+            if (_empiricCoefficients.Length < 5)
+            {
+                MessageBox.Show("There are not enough empiric coefficients!");
+                return false;
+            }
             _calculation = new Calculation(
                 new EmpiricCoefficients(
                     Convert.ToDouble(_empiricCoefficients[0].Value),

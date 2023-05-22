@@ -136,7 +136,7 @@ where ID_ParameterSet = @IdMaterial and p.ID_Type = 3
         return new PropertiesOfMaterialModel(
             null,
             values[0],
-            MeltingPoint: values[1],
-            SpecificHeat: values[2]);
+            MeltingPoint: values[2],
+            SpecificHeat: values[1]);
     }
 }
