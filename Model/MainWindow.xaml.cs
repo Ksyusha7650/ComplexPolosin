@@ -305,6 +305,11 @@ public partial class MainWindow
         Close();
     }
 
+    private void AnimationButton_Click(object sender, RoutedEventArgs e) {
+        AnimationWindow animationWindow = new(double.Parse(HeightTextBox.Text), double.Parse(LengthTextBox.Text), double.Parse(CoverVelocityTextBox.Text));
+        animationWindow.ShowDialog();
+    }
+
     private void ExcelButton_Click(object sender, RoutedEventArgs e)
     {
         if (!CheckTextBox || _calculation is null)

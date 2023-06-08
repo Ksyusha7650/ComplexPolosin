@@ -6,7 +6,7 @@ namespace Database;
 public abstract class BaseRepository : IDbRepository
 {
     private readonly string _connectionString =
-        "host=localhost;port=3306;database=programcomplex;username=root;password=04042002Mm!";
+        "host=127.0.0.1;port=3306;database=programcomplex;username=root;password=OlgaBezdudnaya8";
 
     public async Task<MySqlConnection> GetAndOpenConnection()
     {
