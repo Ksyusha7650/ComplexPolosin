@@ -9,8 +9,9 @@
         FontFamily="{StaticResource Inter}">
     <Grid>
         <Button Name="ButtonDo" Content="Run"  Background="White" BorderBrush="White" Cursor="Hand" HorizontalAlignment="Left" Margin="729,424,0,0" VerticalAlignment="Top" Width="96" Click="ButtonDo_Click"/>
+        <Button Name="ButtonApply" Content="Apply"  Background="White" BorderBrush="White" Cursor="Hand" HorizontalAlignment="Left" Margin="589,424,0,0" VerticalAlignment="Top" Width="96" Click="ButtonApply_Click"/>
         <Border x:Name="CanvasBorder" BorderThickness="0,2,0,2">
-            <Canvas Margin="40,35,40,26" Name="MyCanvas"/>
+            <Canvas Margin="40,35,40,26" Name="MyCanvas" />
         </Border>
         <Rectangle HorizontalAlignment="Center" Height="81" Margin="0,403,0,0" Stroke="#7F797979"
                    VerticalAlignment="Top" Width="900" />
@@ -21,7 +22,7 @@
         <Label Content="Height:" Padding="5,0,5,0" UseLayoutRounding="False"
                VerticalAlignment="Top" Margin="26,426,807,0" Height="18" />
         <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False"
-            VerticalAlignment="Top" Margin="128,426,751,0" Height="18" />
+            VerticalAlignment="Top" Margin="139,426,739,0" Height="18" />
         <TextBox x:Name="LengthTextBox" Text="7.5" HorizontalAlignment="Left" Margin="231,422,0,0"
             TextWrapping="Wrap"
             VerticalAlignment="Top"
@@ -29,7 +30,7 @@
         <Label Content="Length:" Padding="5,0,5,0" UseLayoutRounding="False"
             VerticalAlignment="Top" Margin="179,426,644,0" Height="18" />
         <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False"
-            VerticalAlignment="Top" Margin="281,426,598,0" Height="18" />
+            VerticalAlignment="Top" Margin="293,426,586,0" Height="18" />
         <TextBox x:Name="CoverVelocityTextBox" Text="0.5" HorizontalAlignment="Left" Margin="445,422,0,0"
             TextWrapping="Wrap"
             VerticalAlignment="Top"
