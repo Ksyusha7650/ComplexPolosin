@@ -138,7 +138,7 @@
                     Content="Show results" FontFamily="Inter" Click="ButtonShowResult_Click" />
             <Button x:Name="ExportButton" Background="White" BorderBrush="White" Cursor="Hand" Content="Export to xls"
                     FontFamily="Inter" Click="ExcelButton_Click" />
-            <Button x:Name="AnimationButton" Background="White" BorderBrush="White" Cursor="Hand" Content="Animation"
+            <Button x:Name="AnimationButton" Background="White" BorderBrush="White" Cursor="Hand" Content="Kinematic model"
                     FontFamily="Inter" Click="AnimationButton_Click" />
             <Button x:Name="ExitButton" Content="Exit" BorderBrush="{x:Null}" Cursor="Hand"
                     FontFamily="Inter" Background="White" Click="ExitButton_Click" />

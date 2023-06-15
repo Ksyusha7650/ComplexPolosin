@@ -5,39 +5,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:ModelPolosin"
         mc:Ignorable="d"
-        Title="Animation" Height="500" Width="900" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Title="Kinematic model" Height="500" Width="1000" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         FontFamily="{StaticResource Inter}">
-    <Grid>
-        <Button Name="ButtonDo" Content="Run"  Background="White" BorderBrush="White" Cursor="Hand" HorizontalAlignment="Left" Margin="729,424,0,0" VerticalAlignment="Top" Width="96" Click="ButtonDo_Click"/>
-        <Button Name="ButtonApply" Content="Apply"  Background="White" BorderBrush="White" Cursor="Hand" HorizontalAlignment="Left" Margin="589,424,0,0" VerticalAlignment="Top" Width="96" Click="ButtonApply_Click"/>
-        <Border x:Name="CanvasBorder" BorderThickness="0,2,0,2">
+    <Grid Name="MyForm">
+
+        <Button Name="ButtonDo" Content="Run"  Background="White" BorderBrush="White" Cursor="Hand" HorizontalAlignment="Left" Margin="804,425,0,0" VerticalAlignment="Top" Width="96" Click="ButtonDo_Click"/>
+        <Button Name="ButtonApply" Content="Apply"  Background="White" BorderBrush="White" Cursor="Hand" HorizontalAlignment="Left" Margin="647,424,0,0" VerticalAlignment="Top" Width="96" Click="ButtonApply_Click"/>
+        <Border x:Name="CanvasBorder"  BorderThickness="0,0,0,2">
             <Canvas Margin="40,35,40,26" Name="MyCanvas" />
         </Border>
+        <Border x:Name="TextBorder" BorderThickness="1,1,1,1">
+            <Canvas Margin="0,35,40,26" Name="CanvaText" />
+        </Border>
         <Rectangle HorizontalAlignment="Center" Height="81" Margin="0,403,0,0" Stroke="#7F797979"
-                   VerticalAlignment="Top" Width="900" />
-        <TextBox x:Name="HeightTextBox" Text="0.02" HorizontalAlignment="Left" Margin="78,422,0,0"
+                   VerticalAlignment="Top" Width="1000" />
+        <TextBox x:Name="HeightTextBox" Text="0.02" HorizontalAlignment="Left" Margin="138,422,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
                  Width="50" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox" TextAlignment="Center" />
-        <Label Content="Height:" Padding="5,0,5,0" UseLayoutRounding="False"
-               VerticalAlignment="Top" Margin="26,426,807,0" Height="18" />
-        <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False"
-            VerticalAlignment="Top" Margin="139,426,739,0" Height="18" />
-        <TextBox x:Name="LengthTextBox" Text="7.5" HorizontalAlignment="Left" Margin="231,422,0,0"
+        <Label Content="Height:" Padding="0,0,0,0" UseLayoutRounding="True"
+               VerticalAlignment="Top" Margin="76,424,0,0" Height="18" HorizontalAlignment="Left" Width="62" Grid.IsSharedSizeScope="True" MinWidth="50" ScrollViewer.VerticalScrollBarVisibility="Disabled" VerticalContentAlignment="Center" />
+        <Label Content="m" Padding="0,0,0,0" UseLayoutRounding="False"
+            VerticalAlignment="Top" Margin="193,424,0,0" Height="18" Width="35" MinWidth="25" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Grid.IsSharedSizeScope="True" MaxWidth="30" />
+        <TextBox x:Name="LengthTextBox" Text="7.5" HorizontalAlignment="Left" Margin="291,422,0,0"
             TextWrapping="Wrap"
             VerticalAlignment="Top"
             Width="50" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox" TextAlignment="Center" />
-        <Label Content="Length:" Padding="5,0,5,0" UseLayoutRounding="False"
-            VerticalAlignment="Top" Margin="179,426,644,0" Height="18" />
-        <Label Content="m" Padding="5,0,5,0" UseLayoutRounding="False"
-            VerticalAlignment="Top" Margin="293,426,586,0" Height="18" />
-        <TextBox x:Name="CoverVelocityTextBox" Text="0.5" HorizontalAlignment="Left" Margin="445,422,0,0"
+        <Label Content="Length:" Padding="0,0,0,0" UseLayoutRounding="False"
+            VerticalAlignment="Top" Margin="228,424,0,0" Height="18" HorizontalAlignment="Left" Width="63" />
+        <Label Content="m" Padding="0,0,0,0" UseLayoutRounding="False"
+            VerticalAlignment="Top" Margin="346,426,0,0" Height="18" MinWidth="25" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="42" />
+        <TextBox x:Name="CoverVelocityTextBox" Text="0.5" HorizontalAlignment="Left" Margin="500,422,0,0"
             TextWrapping="Wrap"
             VerticalAlignment="Top"
             Width="50" Height="22" PreviewTextInput="NumberValidationTextBox" TextChanged="ZeroValidationTextBox" TextAlignment="Center" />
         <Label Content="Cover velocity:" Padding="5,0,5,0" UseLayoutRounding="False"
-            VerticalAlignment="Top" Margin="353,426,440,0" Height="18" />
+            VerticalAlignment="Top" Margin="393,426,0,0" Height="18" HorizontalAlignment="Left" Width="107" />
         <Label Content="m/s" Padding="5,0,5,0" UseLayoutRounding="False"
-            VerticalAlignment="Top" Margin="496,426,343,0" Height="18" />
+            VerticalAlignment="Top" Margin="556,426,348,0" Height="18" />
     </Grid>
 </Window>

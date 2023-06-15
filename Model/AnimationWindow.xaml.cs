@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -11,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -95,8 +97,9 @@ public partial class AnimationWindow : Window {
     private int _countOfRows;
     private const int _maxHeight = 325;
     private const int _maxLength = 778;
-    private const int _minHeight = 84;
+    private const int _minHeight = 90;
     private const int _minLength = 100;
+    private const int _maxVelocity = 8;
     private int _canvasWidth;
     
         
@@ -113,6 +116,7 @@ public partial class AnimationWindow : Window {
         
     private BallMovement[] balls;
     private BallMovement[] ballsNew;
+    private Path myPath;
     
     public AnimationWindow(double height, double length, double coverVelocity) {
         InitializeComponent();
@@ -135,6 +139,10 @@ public partial class AnimationWindow : Window {
         
         if (_length < _minLength) {
             _length = _minLength;
+        }
+        
+        if (_coverVelocity > _maxVelocity) {
+            _coverVelocity = _maxVelocity;
         }
         
         HeightTextBox.Text = height.ToString();
@@ -163,8 +171,13 @@ public partial class AnimationWindow : Window {
         MyCanvas.Background = Brushes.Transparent;
         CanvasBorder.BorderBrush = Brushes.Black;
         CanvasBorder.Height = _height;
+        //TextBorder.BorderBrush = Brushes.Black;
+        TextBorder.Height = _height;
+        TextBorder.Width = 50;
+        TextBorder.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
         //CanvasBorder.Width = _length;
-        
+
+
         balls = new BallMovement[_count * _countOfRows];
         int k = 0;
         for (int j = 0; j < _countOfRows; j++) {
@@ -189,10 +202,10 @@ public partial class AnimationWindow : Window {
                 MyCanvas.Width = (_count - 1) * 19;
                 CanvasBorder.Width = (_count - 1) * 19;
             }
-            if (_count == 19) {
-                MyCanvas.Width = _count * 19 + 2;
-                CanvasBorder.Width = _count * 19 + 2;
-            }
+            // if (_count == 19) {
+            //     MyCanvas.Width = _count * 19 + 2;
+            //     CanvasBorder.Width = _count * 19 + 2;
+            // }
 
             if (_count == 18 || _count == 19) {
                 MyCanvas.Width = _count * 19 - 7;
@@ -209,6 +222,12 @@ public partial class AnimationWindow : Window {
                 CanvasBorder.Width = _count * 19 - 3;
             }
 
+
+            
+            //TextBorder.VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
+            //TextBorder.Margin = new Thickness(20,  0, 0,  35  + 26+ MyCanvas.Height / 2 + TextBorder.Width / 2);
+            
+
             int widthBetween = -60;
             foreach (var ellipse in circles) {
      
@@ -221,7 +240,55 @@ public partial class AnimationWindow : Window {
                 widthBetween += 20;
                 k++;
             }
+            
         }
+
+        double velocityOfRow = _coverVelocity;
+        double differnece = _coverVelocity / (_countOfRows - 1);
+        for (int i = 0; i < _countOfRows - 1; i++) {
+            TextBlock text = new TextBlock();
+            // text.Text = "Vu = " + Math.Round(_coverVelocity / _height * (_height - j * 20), 2) + " m/s";
+            text.Text = "Vu = " + Math.Round(velocityOfRow, 2) + " m/s";
+            velocityOfRow -= differnece;
+            // text.Text = "Vu = " + Math.Round(_coverVelocity / _height * (i * 20), 2) + " m/s";
+            text.FontSize = 13;
+            text.FontWeight = FontWeights.Bold;
+            text.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            text.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            text.Margin = new Thickness(-145, -25 + i * 20, 0, 0);
+            MyCanvas.Children.Add(text);
+        }
+        TextBlock lastText = new TextBlock();
+        lastText.Text = "Vu = 0 m/s";
+        // text.Text = "Vu = " + Math.Round(_coverVelocity / _height * (i * 20), 2) + " m/s";
+        lastText.FontSize = 13;
+        lastText.FontWeight = FontWeights.Bold;
+        lastText.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+        lastText.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+        lastText.Margin = new Thickness(-145, -25 + (_countOfRows - 1) * 20, 0, 0);
+        MyCanvas.Children.Add(lastText);
+        
+        TextBlock textForCover = new TextBlock();
+        textForCover.Text = "Vu = " + Math.Round(_coverVelocity, 2) + " m/s";
+        textForCover.FontSize = 13;
+        textForCover.FontWeight = FontWeights.Bold;
+        textForCover.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+        textForCover.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+        textForCover.Margin = new Thickness(MyCanvas.Width / 2 - 80, -50, 0, 0);
+        MyCanvas.Children.Add(textForCover);
+        
+
+
+        myPath = new Path();
+        myPath.Stroke = Brushes.Black;
+        myPath.StrokeThickness = 3;
+        myPath.Data = new LineGeometry(new Point(-42, -30), new Point(MyCanvas.Width - 42, -30));
+        MyCanvas.Children.Add(myPath);
+        
+        DoubleCollection dashes = new DoubleCollection { 4, 1 };
+        myPath.StrokeDashArray = dashes;
+        myPath.StrokeDashOffset = 0;
+        
     }
 
     private Storyboard myStoryboard;
@@ -240,7 +307,7 @@ public partial class AnimationWindow : Window {
         Storyboard.SetTarget(myDoubleAnimation, ball.Ball.Shape);
         Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath(Canvas.LeftProperty));
         myStoryboard = new Storyboard {
-            SpeedRatio = ball.Speed / 10
+            SpeedRatio = ball.Speed / 11
         };
         myStoryboard.Children.Add(myDoubleAnimation);
         myStoryboard.Begin();
@@ -256,10 +323,13 @@ public partial class AnimationWindow : Window {
                 return;
             }
             ButtonDo.Content = "Stop";
+            MakeAnimationForBorder();
             try {
                 for (int i = 0; i < _count * (_countOfRows - 1); i++) {
                     MakeAnimation(balls[i], true);
                 }
+
+
             } catch (Exception) {
                 MessageBox.Show("Animation Error!");
             }
@@ -344,6 +414,18 @@ public partial class AnimationWindow : Window {
             _length = _minLength;
         }
         
+        if (_coverVelocity > _maxVelocity) {
+            _coverVelocity = _maxVelocity;
+        }
+        
+        for (int i = MyForm.Children.Count - 1; i >= 0; i--)
+        {
+            if (MyForm.Children[i] is TextBlock)
+            {
+                MyForm.Children.RemoveAt(i);
+            }
+        }
+        
         _count = (int)(_length / 19);
 
         // if (Math.Round(_length / 19, 3) - _count >= 0.5) {
@@ -367,6 +449,27 @@ public partial class AnimationWindow : Window {
        
         DrawBalls();
         
+        
     }
-    
+
+    private void MakeAnimationForBorder() {
+        DoubleAnimation myAnimation = new DoubleAnimation
+        {
+            From = 0,
+            To = -110,
+            //Duration = TimeSpan.FromSeconds(3),
+            // Duration = new Duration(
+            //     new TimeSpan((long)((MyCanvas.Width - 50 + 57) * 30000))),
+            
+            RepeatBehavior = RepeatBehavior.Forever
+        };
+        Storyboard.SetTargetProperty(myAnimation, new PropertyPath("StrokeDashOffset"));
+        Storyboard storyBoard = new Storyboard();
+        storyBoard = new Storyboard {
+            SpeedRatio = _coverVelocity / 11
+        };
+        storyBoard.Children.Add(myAnimation);
+        
+        storyBoard.Begin(myPath);
+    }
 }
