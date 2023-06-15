@@ -374,12 +374,12 @@ public partial class MainWindow
 
                 excelWork.SetData("D", 6, "Empiric Coefficients:");
                 var numberRow = 7;
-                // foreach (var emp in _empiricCoefficients)
-                // {
-                //     excelWork.SetData("D", numberRow, emp.Name);
-                //     excelWork.SetData("E", numberRow, emp.Value.ToString());
-                //     numberRow++;
-                // }
+                foreach (var emp in _empiricCoefficients)
+                {
+                    excelWork.SetData("D", numberRow, emp.Name);
+                    excelWork.SetData("E", numberRow, emp.Value.ToString());
+                    numberRow++;
+                }
 
                 var listOfChannelLength = _calculation.ListOfChannelLength();
                 var listOfTemperatures = _calculation.ListOfTemperatures(listOfChannelLength);
